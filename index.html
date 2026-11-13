@@ -7,8 +7,8 @@
 <meta name="description" content="こまりごとラボは、暮らしや仕事の「ちょっと困った」を、ブラウザですぐ使える無料ツールで一つずつ解決します。登録不要。まずは消費税の計算もできる「かんたん電卓」から。">
 <meta property="og:title" content="こまりごとラボ｜暮らしと仕事の小さな悩みを、ツールで解決する">
 <meta property="og:site_name" content="こまりごとラボ">
-<meta property="og:url" content="https://mmcreate-site.vercel.app/">
-<link rel="canonical" href="https://mmcreate-site.vercel.app/">
+<meta property="og:url" content="https://komarigoto-lab.pages.dev/">
+<link rel="canonical" href="https://komarigoto-lab.pages.dev/">
 <meta property="og:description" content="暮らしや仕事の「ちょっと困った」を、登録不要の無料ツールで解決します。">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ja_JP">
@@ -171,10 +171,10 @@ footer{padding:40px 0 56px;font-size:13px;color:var(--ink-soft)}
 }
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Organization","name":"こまりごとラボ","alternateName":["MMCreate","こまりごと ラボ"],"url":"https://mmcreate-site.vercel.app/","email":"mmcreate7@gmail.com","address":{"@type":"PostalAddress","addressRegion":"福岡県","addressLocality":"福岡市南区","addressCountry":"JP"},"sameAs":["https://x.com/masaki_develop","https://www.instagram.com/mmcreate777/","https://note.com/mmcreate777","https://mmcreate.booth.pm/"]}
+{"@context":"https://schema.org","@type":"Organization","name":"こまりごとラボ","alternateName":["MMCreate","こまりごと ラボ"],"url":"https://komarigoto-lab.pages.dev/","email":"mmcreate7@gmail.com","address":{"@type":"PostalAddress","addressRegion":"福岡県","addressLocality":"福岡市南区","addressCountry":"JP"},"sameAs":["https://x.com/masaki_develop","https://www.instagram.com/mmcreate777/","https://note.com/mmcreate777","https://mmcreate.booth.pm/"]}
 </script>
 <script>
-/* Vercel Web Analytics。自分の閲覧は ?mmc-internal=1 を一度開くと、そのブラウザでは数えない */
+/* Cloudflare Web Analytics。自分の閲覧は ?mmc-internal=1 を一度開くと、そのブラウザでは数えない */
 (function(){
   var KEY="mmc-internal";
   try{
@@ -183,8 +183,9 @@ footer{padding:40px 0 56px;font-size:13px;color:var(--ink-soft)}
     if(q==="0") localStorage.removeItem(KEY);
     if(localStorage.getItem(KEY)==="1") return;
   }catch(e){}
-  window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};
-  var s=document.createElement("script");s.defer=true;s.src="/_vercel/insights/script.js";document.head.appendChild(s);
+  var s=document.createElement("script");s.defer=true;s.src="https://static.cloudflareinsights.com/beacon.min.js";
+  s.setAttribute("data-cf-beacon",'{"token": "e55a5ba713c8410a937f899c57e3e167"}');
+  document.head.appendChild(s);
 })();
 </script>
 </head>

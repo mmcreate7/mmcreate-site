@@ -10,8 +10,8 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="こまりごとラボ">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:url" content="https://mmcreate-site.vercel.app/tools/calculator/">
-<link rel="canonical" href="https://mmcreate-site.vercel.app/tools/calculator/">
+<meta property="og:url" content="https://komarigoto-lab.pages.dev/tools/calculator/">
+<link rel="canonical" href="https://komarigoto-lab.pages.dev/tools/calculator/">
 <meta name="theme-color" content="#F4F7F9">
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -103,10 +103,10 @@ footer a{margin-right:16px}
 }
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"かんたん電卓（消費税の計算つき）","url":"https://mmcreate-site.vercel.app/tools/calculator/","applicationCategory":"UtilitiesApplication","operatingSystem":"All","inLanguage":"ja","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"publisher":{"@type":"Organization","name":"こまりごとラボ","url":"https://mmcreate-site.vercel.app/"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"かんたん電卓（消費税の計算つき）","url":"https://komarigoto-lab.pages.dev/tools/calculator/","applicationCategory":"UtilitiesApplication","operatingSystem":"All","inLanguage":"ja","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"publisher":{"@type":"Organization","name":"こまりごとラボ","url":"https://komarigoto-lab.pages.dev/"}}
 </script>
 <script>
-/* Vercel Web Analytics。自分の閲覧は ?mmc-internal=1 を一度開くと、そのブラウザでは数えない */
+/* Cloudflare Web Analytics。自分の閲覧は ?mmc-internal=1 を一度開くと、そのブラウザでは数えない */
 (function(){
   var KEY="mmc-internal";
   try{
@@ -115,8 +115,9 @@ footer a{margin-right:16px}
     if(q==="0") localStorage.removeItem(KEY);
     if(localStorage.getItem(KEY)==="1") return;
   }catch(e){}
-  window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};
-  var s=document.createElement("script");s.defer=true;s.src="/_vercel/insights/script.js";document.head.appendChild(s);
+  var s=document.createElement("script");s.defer=true;s.src="https://static.cloudflareinsights.com/beacon.min.js";
+  s.setAttribute("data-cf-beacon",'{"token": "e55a5ba713c8410a937f899c57e3e167"}');
+  document.head.appendChild(s);
 })();
 </script>
 </head>
