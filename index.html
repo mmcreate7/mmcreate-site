@@ -173,6 +173,20 @@ footer{padding:40px 0 56px;font-size:13px;color:var(--ink-soft)}
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Organization","name":"こまりごとラボ","alternateName":["MMCreate","こまりごと ラボ"],"url":"https://mmcreate-site.vercel.app/","email":"mmcreate7@gmail.com","address":{"@type":"PostalAddress","addressRegion":"福岡県","addressLocality":"福岡市南区","addressCountry":"JP"},"sameAs":["https://x.com/masaki_develop","https://www.instagram.com/mmcreate777/","https://note.com/mmcreate777","https://mmcreate.booth.pm/"]}
 </script>
+<script>
+/* Vercel Web Analytics。自分の閲覧は ?mmc-internal=1 を一度開くと、そのブラウザでは数えない */
+(function(){
+  var KEY="mmc-internal";
+  try{
+    var q=new URLSearchParams(location.search).get(KEY);
+    if(q==="1") localStorage.setItem(KEY,"1");
+    if(q==="0") localStorage.removeItem(KEY);
+    if(localStorage.getItem(KEY)==="1") return;
+  }catch(e){}
+  window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};
+  var s=document.createElement("script");s.defer=true;s.src="/_vercel/insights/script.js";document.head.appendChild(s);
+})();
+</script>
 </head>
 <body>
 <div class="wrap">

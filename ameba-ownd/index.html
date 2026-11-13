@@ -172,6 +172,20 @@ footer{padding:40px 0 56px;font-size:13px;color:var(--ink-soft)}
 {"@type":"Question","name":"引っ越しの料金はいくらですか？","acceptedAnswer":{"@type":"Answer","text":"1ページの引っ越しライトが19,800円、3〜5ページの標準プランが5万円前後です。ブログ記事の移し替えや、SNS・予約サイトなどのリンクの張り替えは別途お見積もりです。お支払いは公開後の銀行振込です。"}}
 ]}
 </script>
+<script>
+/* Vercel Web Analytics。自分の閲覧は ?mmc-internal=1 を一度開くと、そのブラウザでは数えない */
+(function(){
+  var KEY="mmc-internal";
+  try{
+    var q=new URLSearchParams(location.search).get(KEY);
+    if(q==="1") localStorage.setItem(KEY,"1");
+    if(q==="0") localStorage.removeItem(KEY);
+    if(localStorage.getItem(KEY)==="1") return;
+  }catch(e){}
+  window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};
+  var s=document.createElement("script");s.defer=true;s.src="/_vercel/insights/script.js";document.head.appendChild(s);
+})();
+</script>
 </head>
 <body>
 <div class="wrap">
