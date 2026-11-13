@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mmcreate-site.vercel.app/sitemap.xml

@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>かんたん電卓（消費税の計算つき）｜こまりごとラボ</title>
+<meta name="description" content="スマホでもパソコンでもすぐ使える、無料のかんたん電卓。式がそのまま見えて、税込・税抜（10%・8%）の計算もボタンひとつ。計算の履歴とコピーにも対応。登録不要。">
+<meta property="og:title" content="かんたん電卓（消費税の計算つき）｜こまりごとラボ">
+<meta property="og:description" content="式が見える、税込・税抜もボタンひとつの無料電卓。登録不要。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="こまりごとラボ">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://mmcreate-site.vercel.app/tools/calculator/">
+<link rel="canonical" href="https://mmcreate-site.vercel.app/tools/calculator/">
+<meta name="theme-color" content="#F4F7F9">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F4F7F9;--sheet:#FFFFFF;--ink:#1B2A4A;--ink-soft:#4A5872;
+  --grid:#D6E0E8;--marker:#FFE45C;--check:#2E7D74;--line:#C3CED8;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Zen Kaku Gothic New",system-ui,sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--check);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+.site-head{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+.logo{font-weight:900;font-size:20px;letter-spacing:.02em;text-decoration:none}
+.logo span{display:inline-block;background:var(--ink);color:var(--paper);padding:0 6px;margin-right:2px;border-radius:3px}
+.site-head nav a{font-size:14px;font-weight:700;text-decoration:none}
+.site-head nav a:hover{text-decoration:underline;text-underline-offset:5px}
+
+.crumb{font-size:13px;color:var(--ink-soft);margin:4px 0 18px}
+.crumb a{text-decoration:none;border-bottom:1px solid var(--line)}
+
+.layout{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:56px;align-items:start;padding-bottom:72px}
+h1{font-size:clamp(26px,3.6vw,38px);line-height:1.35;font-weight:900;margin:0 0 10px}
+.lead{color:var(--ink-soft);margin:0 0 26px}
+.worry{font-family:"Klee One",cursive;font-weight:600;font-size:17px;margin:0 0 6px;color:var(--ink-soft)}
+.worry mark{background:linear-gradient(transparent 55%,var(--marker) 55%);color:inherit}
+
+/* calculator */
+.calc{background:var(--sheet);border:2px solid var(--ink);border-radius:18px;padding:14px;box-shadow:0 18px 40px -26px rgba(27,42,74,.45)}
+.screen{position:relative;border-radius:10px;padding:14px 16px 12px;min-height:116px;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-end;
+  background-color:#FBFCFD;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:18px 18px;background-position:-1px -1px;border:1px solid var(--line)}
+.expr{font-size:15px;color:var(--ink-soft);min-height:1.6em;max-width:100%;overflow-x:auto;white-space:nowrap;font-variant-numeric:tabular-nums;scrollbar-width:none}
+.expr::-webkit-scrollbar{display:none}
+.result{font-size:clamp(34px,9vw,44px);font-weight:700;line-height:1.2;max-width:100%;overflow-x:auto;white-space:nowrap;font-variant-numeric:tabular-nums;letter-spacing:.01em;scrollbar-width:none}
+.result::-webkit-scrollbar{display:none}
+.result.err{font-size:20px;color:#B3261E}
+.copy{position:absolute;top:8px;left:8px;font:inherit;font-size:12px;font-weight:700;background:var(--sheet);border:1.5px solid var(--line);color:var(--ink);border-radius:999px;padding:2px 10px;cursor:pointer}
+.copy:hover{border-color:var(--ink)}
+
+.tax{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0 8px}
+.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+button.k{font:inherit;font-variant-numeric:tabular-nums;border:0;border-radius:12px;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+  min-height:58px;font-size:22px;font-weight:500;background:#EEF2F6;color:var(--ink);transition:transform .06s,background .15s}
+button.k:active{transform:scale(.96)}
+button.k:hover{background:#E3E9F0}
+button.k.op{background:#DCE5EE;font-weight:700}
+button.k.op:hover{background:#CFDAE5}
+button.k.fn{font-size:17px;font-weight:700;color:var(--ink-soft)}
+button.k.eq{background:var(--ink);color:var(--paper);font-weight:700}
+button.k.eq:hover{background:#2c3f66}
+button.k.t{min-height:44px;font-size:13.5px;font-weight:700;background:var(--sheet);border:1.5px solid var(--line);line-height:1.25}
+button.k.t:hover{border-color:var(--check);color:var(--check)}
+button.k.t small{display:block;font-size:11px;font-weight:500;color:var(--ink-soft)}
+.zero{grid-column:span 2}
+.hint{font-size:12.5px;color:var(--ink-soft);margin:10px 2px 0}
+
+/* side */
+.side h2{font-size:19px;font-weight:900;margin:0 0 10px}
+.hist{list-style:none;margin:0 0 8px;padding:0;border-top:2px solid var(--ink)}
+.hist li{border-bottom:1px solid var(--line)}
+.hist button{all:unset;box-sizing:border-box;display:grid;grid-template-columns:1fr auto;gap:12px;width:100%;padding:10px 4px;cursor:pointer;font-variant-numeric:tabular-nums}
+.hist button:hover .h-r{text-decoration:underline;text-underline-offset:4px}
+.hist button:focus-visible{outline:3px solid var(--check);outline-offset:-3px}
+.h-e{color:var(--ink-soft);font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.h-r{font-weight:700}
+.empty{color:var(--ink-soft);font-size:14px;padding:12px 4px;border-bottom:1px solid var(--line)}
+.clear-hist{font:inherit;font-size:13px;background:none;border:0;color:var(--ink-soft);text-decoration:underline;cursor:pointer;padding:4px}
+.howto{margin-top:36px}
+.howto dl{margin:0}
+.howto dt{font-weight:700;margin-top:14px}
+.howto dd{margin:2px 0 0;color:var(--ink-soft);font-size:15px}
+.note-s{font-size:13px;color:var(--ink-soft);margin-top:18px}
+
+footer{border-top:1px solid var(--line);padding:28px 0 48px;font-size:13px;color:var(--ink-soft)}
+footer a{margin-right:16px}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:860px){
+  .layout{grid-template-columns:1fr;gap:40px}
+  .calc-col{max-width:440px;width:100%;margin:0 auto}
+}
+@media (max-width:380px){
+  button.k{min-height:52px;font-size:20px}
+  .calc{padding:10px}
+}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"かんたん電卓（消費税の計算つき）","url":"https://mmcreate-site.vercel.app/tools/calculator/","applicationCategory":"UtilitiesApplication","operatingSystem":"All","inLanguage":"ja","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"publisher":{"@type":"Organization","name":"こまりごとラボ","url":"https://mmcreate-site.vercel.app/"}}
+</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="site-head">
+    <a class="logo" href="../../" aria-label="こまりごとラボ トップへ"><span>こまりごと</span>ラボ</a>
+    <nav><a href="../../#tools">ツール一覧</a></nav>
+  </header>
+  <p class="crumb"><a href="../../">トップ</a> ／ <a href="../../#tools">ツール</a> ／ かんたん電卓</p>
+
+  <main class="layout">
+    <div class="calc-col">
+      <p class="worry">「<mark>税込でいくら？</mark>」がすぐ知りたい</p>
+      <h1>かんたん電卓</h1>
+      <p class="lead">式がそのまま見えるので、打ち間違いに気づけます。税込・税抜もボタンひとつ。登録なしで、すぐ使えます。</p>
+
+      <div class="calc" role="application" aria-label="電卓">
+        <div class="screen">
+          <button type="button" class="copy" id="copy" aria-label="結果をコピー">コピー</button>
+          <div class="expr" id="expr" aria-label="入力中の式"></div>
+          <div class="result" id="result" aria-live="polite">0</div>
+        </div>
+
+        <div class="tax" aria-label="消費税の計算">
+          <button type="button" class="k t" data-tax="in10">税込<small>10%</small></button>
+          <button type="button" class="k t" data-tax="in8">税込<small>8%</small></button>
+          <button type="button" class="k t" data-tax="ex10">税抜<small>10%</small></button>
+          <button type="button" class="k t" data-tax="ex8">税抜<small>8%</small></button>
+        </div>
+
+        <div class="keys">
+          <button type="button" class="k fn" data-act="clear" aria-label="すべて消す">AC</button>
+          <button type="button" class="k fn" data-act="back" aria-label="1文字消す">⌫</button>
+          <button type="button" class="k fn" data-act="pct" aria-label="パーセント">%</button>
+          <button type="button" class="k op" data-op="÷" aria-label="割る">÷</button>
+          <button type="button" class="k" data-num="7">7</button>
+          <button type="button" class="k" data-num="8">8</button>
+          <button type="button" class="k" data-num="9">9</button>
+          <button type="button" class="k op" data-op="×" aria-label="掛ける">×</button>
+          <button type="button" class="k" data-num="4">4</button>
+          <button type="button" class="k" data-num="5">5</button>
+          <button type="button" class="k" data-num="6">6</button>
+          <button type="button" class="k op" data-op="−" aria-label="引く">−</button>
+          <button type="button" class="k" data-num="1">1</button>
+          <button type="button" class="k" data-num="2">2</button>
+          <button type="button" class="k" data-num="3">3</button>
+          <button type="button" class="k op" data-op="+" aria-label="足す">+</button>
+          <button type="button" class="k zero" data-num="0">0</button>
+          <button type="button" class="k" data-num=".">.</button>
+          <button type="button" class="k eq" data-act="eq" aria-label="イコール">=</button>
+        </div>
+        <p class="hint">パソコンではキーボードでも打てます（Enter で計算、Esc で全消去）。</p>
+      </div>
+    </div>
+
+    <aside class="side">
+      <h2>計算の履歴</h2>
+      <ul class="hist" id="hist" aria-label="計算の履歴（押すと結果を使えます）"></ul>
+      <button type="button" class="clear-hist" id="clearHist">履歴を消す</button>
+
+      <section class="howto" aria-labelledby="howto-h">
+        <h2 id="howto-h">使い方</h2>
+        <dl>
+          <dt>税込・税抜</dt>
+          <dd>金額を入れて「税込」を押すと消費税を足した額、「税抜」を押すと消費税を除いた額になります。1円未満は切り捨てて表示します。</dd>
+          <dt>%（パーセント）</dt>
+          <dd>「2000 − 15 %」で2000円の15%引き（1,700）、「2000 × 15 %」で2000円の15%（300）が出ます。</dd>
+          <dt>掛け算・割り算が先</dt>
+          <dd>「1 + 2 × 3」は 7 になります（学校で習う順番どおり）。</dd>
+          <dt>履歴</dt>
+          <dd>押すと、その答えから続けて計算できます。履歴はこの端末のブラウザにだけ残り、どこにも送信しません。</dd>
+        </dl>
+        <p class="note-s">税込・税抜の端数の扱い（切り捨て・四捨五入など）はお店によって異なります。正式な金額はレシートや請求書でご確認ください。</p>
+      </section>
+    </aside>
+  </main>
+</div>
+
+<footer><div class="wrap"><a href="../../">こまりごとラボ トップ</a><a href="../../#tools">ほかのツール</a>© 2026 こまりごとラボ</div></footer>
+
+<script>
+(function(){
+  "use strict";
+  var OPS = {"+":1,"−":1,"×":2,"÷":2};
+  var MAX_DIGITS = 15;
+  var tokens = [];      // numbers as strings, operators as symbols
+  var cur = "";         // number being typed
+  var justEvaluated = false;
+  var history = [];
+
+  var $expr = document.getElementById("expr");
+  var $result = document.getElementById("result");
+  var $hist = document.getElementById("hist");
+
+  // ---- number helpers ----
+  function clean(n){
+    if (!isFinite(n)) return n;
+    var r = parseFloat(Number(n).toPrecision(12));
+    return Object.is(r, -0) ? 0 : r;
+  }
+  function fmt(n){
+    if (typeof n === "string") n = parseFloat(n);
+    if (!isFinite(n)) return "—";
+    var a = Math.abs(n);
+    if (a !== 0 && (a >= 1e15 || a < 1e-9)) return n.toExponential(8).replace(/\.?0+e/, "e");
+    return n.toLocaleString("ja-JP", {maximumFractionDigits: 10});
+  }
+  function fmtInput(s){
+    // keep what the user typed (e.g. "12." or "0.50"), add commas to the integer part
+    if (s === "" ) return "";
+    var neg = s.charAt(0) === "-"; if (neg) s = s.slice(1);
+    var parts = s.split(".");
+    var intPart = parts[0] === "" ? "0" : parts[0];
+    intPart = Number(intPart).toLocaleString("ja-JP");
+    return (neg ? "-" : "") + intPart + (parts.length > 1 ? "." + parts[1] : "");
+  }
+
+  // ---- evaluation (no eval): × ÷ first, then + − ----
+  function evaluate(list){
+    if (!list.length) return 0;
+    var vals = [parseFloat(list[0])], ops = [];
+    for (var i = 1; i < list.length; i += 2){
+      var op = list[i], v = parseFloat(list[i+1]);
+      if (op === "×" || op === "÷"){
+        var last = vals.pop();
+        if (op === "÷" && v === 0) return NaN;
+        vals.push(op === "×" ? last * v : last / v);
+      } else { ops.push(op); vals.push(v); }
+    }
+    var total = vals[0];
+    for (var j = 0; j < ops.length; j++) total = ops[j] === "+" ? total + vals[j+1] : total - vals[j+1];
+    return clean(total);
+  }
+
+  function liveTokens(){
+    var t = tokens.slice();
+    if (cur !== "" && cur !== "-") t.push(cur);
+    else if (t.length && OPS[t[t.length-1]]) t.pop();
+    return t;
+  }
+  function exprText(){
+    var s = tokens.map(function(x){ return OPS[x] ? " " + x + " " : fmt(x); }).join("");
+    return s + fmtInput(cur);
+  }
+
+  function render(){
+    $expr.textContent = exprText();
+    $result.classList.remove("err");
+    if (justEvaluated){ return; }
+    var t = liveTokens();
+    var v = t.length ? evaluate(t) : 0;
+    if (isNaN(v)){ $result.textContent = "0では割れません"; $result.classList.add("err"); return; }
+    $result.textContent = (t.length <= 1 && cur !== "") ? fmtInput(cur) : fmt(v);
+  }
+
+  function showFinal(v){
+    if (isNaN(v)){ $result.textContent = "0では割れません"; $result.classList.add("err"); return; }
+    $result.classList.remove("err");
+    $result.textContent = fmt(v);
+  }
+
+  // ---- input ----
+  function startFresh(){ if (justEvaluated){ tokens = []; cur = ""; justEvaluated = false; } }
+
+  function inputNum(d){
+    startFresh();
+    var digits = cur.replace(/[-.]/g, "").length;
+    if (d === "."){
+      if (cur.indexOf(".") >= 0) return;
+      cur = (cur === "" || cur === "-") ? cur + "0." : cur + ".";
+    } else {
+      if (digits >= MAX_DIGITS) return;
+      if (cur === "0") cur = d;
+      else if (cur === "-0") cur = "-" + d;
+      else cur += d;
+    }
+    render();
+  }
+
+  function inputOp(op){
+    if (justEvaluated){ tokens = [$lastValue(), op]; cur = ""; justEvaluated = false; render(); return; }
+    if (cur === "" || cur === "-"){
+      if (!tokens.length){
+        if (op === "−"){ cur = "-"; render(); }   // negative first number
+        return;
+      }
+      if (cur === "-") cur = "";
+      tokens[tokens.length-1] = op;                // replace last operator
+    } else {
+      tokens.push(normalize(cur)); tokens.push(op); cur = "";
+    }
+    render();
+  }
+
+  function normalize(s){
+    if (s === "-" || s === "") return "0";
+    return String(clean(parseFloat(s)));
+  }
+
+  var lastValue = 0;
+  function $lastValue(){ return String(lastValue); }
+
+  function percent(){
+    startFresh();
+    if (cur === "" || cur === "-") return;
+    var p = parseFloat(cur);
+    var n = tokens.length;
+    if (n >= 2 && (tokens[n-1] === "+" || tokens[n-1] === "−")){
+      var base = evaluate(tokens.slice(0, n-1));      // "2000 − 15 %" -> 2000 − 300
+      cur = String(clean(base * p / 100));
+    } else {
+      cur = String(clean(p / 100));                   // "2000 × 15 %" -> 2000 × 0.15
+    }
+    render();
+  }
+
+  function back(){
+    if (justEvaluated){ justEvaluated = false; tokens = []; cur = $lastValue(); if (cur === "0") cur = ""; render(); return; }
+    if (cur !== ""){ cur = cur.slice(0, -1); if (cur === "-") cur = ""; }
+    else if (tokens.length){
+      tokens.pop();                                   // remove operator
+      cur = tokens.length ? tokens.pop() : "";        // put previous number back in edit
+    }
+    render();
+  }
+
+  function clearAll(){ tokens = []; cur = ""; justEvaluated = false; lastValue = 0; render(); $result.textContent = "0"; }
+
+  function equals(){
+    if (justEvaluated) return;
+    var t = liveTokens();
+    if (!t.length) return;
+    var text = t.map(function(x){ return OPS[x] ? " " + x + " " : fmt(x); }).join("");
+    var v = evaluate(t);
+    $expr.textContent = text + " =";
+    showFinal(v);
+    if (!isNaN(v)){
+      lastValue = v;
+      if (t.length > 1) addHistory(text, v);
+    } else { lastValue = 0; }
+    tokens = []; cur = ""; justEvaluated = true;
+  }
+
+  var TAX = {in10:[1.10,"税込10%"], in8:[1.08,"税込8%"], ex10:[1/1.10,"税抜10%"], ex8:[1/1.08,"税抜8%"]};
+  function tax(kind){
+    var t = justEvaluated ? [$lastValue()] : liveTokens();
+    var base = t.length ? evaluate(t) : 0;
+    if (isNaN(base)) return;
+    var info = TAX[kind];
+    var raw = kind.indexOf("in") === 0 ? base * (kind === "in10" ? 110 : 108) / 100
+                                        : base * 100 / (kind === "ex10" ? 110 : 108);
+    var v = clean(raw);
+    v = v >= 0 ? Math.floor(clean(v) + 1e-9) : -Math.floor(-v + 1e-9);   // 1円未満切り捨て
+    var text = (t.length > 1 ? "(" + t.map(function(x){ return OPS[x] ? " " + x + " " : fmt(x); }).join("") + ")" : fmt(base)) + " → " + info[1];
+    $expr.textContent = text;
+    showFinal(v);
+    lastValue = v;
+    addHistory(text, v);
+    tokens = []; cur = ""; justEvaluated = true;
+  }
+
+  // ---- history (this browser only) ----
+  var KEY = "komarigoto-calc-history";
+  try { history = JSON.parse(localStorage.getItem(KEY) || "[]") || []; } catch(e){ history = []; }
+  function saveHist(){ try { localStorage.setItem(KEY, JSON.stringify(history.slice(0, 30))); } catch(e){} }
+  function addHistory(e, r){ history.unshift({e:e, r:r}); history = history.slice(0, 30); saveHist(); drawHist(); }
+  function drawHist(){
+    $hist.innerHTML = "";
+    if (!history.length){
+      var li = document.createElement("li"); li.className = "empty"; li.textContent = "まだありません。計算すると、ここに残ります。"; $hist.appendChild(li); return;
+    }
+    history.forEach(function(h){
+      var li = document.createElement("li"), b = document.createElement("button");
+      b.type = "button";
+      var e = document.createElement("span"); e.className = "h-e"; e.textContent = h.e;
+      var r = document.createElement("span"); r.className = "h-r"; r.textContent = fmt(h.r);
+      b.appendChild(e); b.appendChild(r);
+      b.setAttribute("aria-label", h.e + " の答え " + fmt(h.r) + " を使う");
+      b.addEventListener("click", function(){
+        tokens = []; cur = ""; lastValue = h.r; justEvaluated = true;
+        $expr.textContent = h.e + " ="; showFinal(h.r);
+      });
+      li.appendChild(b); $hist.appendChild(li);
+    });
+  }
+  document.getElementById("clearHist").addEventListener("click", function(){ history = []; saveHist(); drawHist(); });
+
+  // ---- copy ----
+  var $copy = document.getElementById("copy");
+  $copy.addEventListener("click", function(){
+    var text = $result.textContent.replace(/,/g, "");
+    if ($result.classList.contains("err")) return;
+    function done(){ $copy.textContent = "コピーしました"; setTimeout(function(){ $copy.textContent = "コピー"; }, 1400); }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done, function(){});
+    } else {
+      var ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); done(); } catch(e){}
+      document.body.removeChild(ta);
+    }
+  });
+
+  // ---- wiring ----
+  document.querySelector(".calc").addEventListener("click", function(ev){
+    var b = ev.target.closest("button.k"); if (!b) return;
+    if (b.dataset.num) inputNum(b.dataset.num);
+    else if (b.dataset.op) inputOp(b.dataset.op);
+    else if (b.dataset.tax) tax(b.dataset.tax);
+    else if (b.dataset.act === "eq") equals();
+    else if (b.dataset.act === "clear") clearAll();
+    else if (b.dataset.act === "back") back();
+    else if (b.dataset.act === "pct") percent();
+  });
+  document.addEventListener("keydown", function(ev){
+    if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
+    var k = ev.key, map = {"+":"+","-":"−","*":"×","x":"×","/":"÷"};
+    if (/^[0-9]$/.test(k) || k === ".") inputNum(k);
+    else if (map[k]) inputOp(map[k]);
+    else if (k === "Enter" || k === "="){ if (document.activeElement && document.activeElement.tagName === "BUTTON" && k === "Enter") return; equals(); }
+    else if (k === "Backspace") back();
+    else if (k === "Escape" || k === "Delete") clearAll();
+    else if (k === "%") percent();
+    else return;
+    ev.preventDefault();
+  });
+
+  // expose for tests
+  window.__calc = {evaluate: evaluate, press: function(seq){
+    seq.split(" ").forEach(function(s){
+      if (/^[0-9.]+$/.test(s)) s.split("").forEach(inputNum);
+      else if (OPS[s]) inputOp(s);
+      else if (s === "=") equals(); else if (s === "%") percent(); else if (s === "AC") clearAll(); else if (s === "BS") back();
+      else if (TAX[s]) tax(s);
+    });
+    return $result.textContent;
+  }};
+
+  drawHist(); render();
+})();
+</script>
+</body>
+</html>

@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>こまりごとラボ｜小さな悩みを、一つずつ解決する（福岡）</title>
-<meta name="description" content="こまりごとラボ（旧MMCreate）は、個人サロン・BOOTH作家・推し活をする方の「ちょっと困っている」を、スプレッドシートやWebサイトで一つずつ解決する福岡の小さな制作所です。">
-<meta property="og:title" content="こまりごとラボ｜小さな悩みを、一つずつ解決する">
+<title>こまりごとラボ｜暮らしと仕事の小さな悩みを、ツールで解決する</title>
+<meta name="description" content="こまりごとラボは、暮らしや仕事の「ちょっと困った」を、ブラウザですぐ使える無料ツールで一つずつ解決します。登録不要。まずは消費税の計算もできる「かんたん電卓」から。">
+<meta property="og:title" content="こまりごとラボ｜暮らしと仕事の小さな悩みを、ツールで解決する">
 <meta property="og:site_name" content="こまりごとラボ">
 <meta property="og:url" content="https://mmcreate-site.vercel.app/">
 <link rel="canonical" href="https://mmcreate-site.vercel.app/">
-<meta property="og:description" content="個人サロン・BOOTH作家・推し活の「ちょっと困っている」を、スプレッドシートやWebサイトで解決します。">
+<meta property="og:description" content="暮らしや仕事の「ちょっと困った」を、登録不要の無料ツールで解決します。">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ja_JP">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -82,6 +82,22 @@ section{padding:88px 0}
 .sec-head{display:grid;grid-template-columns:1fr 1.4fr;gap:40px;margin-bottom:48px;align-items:end}
 .sec-head h2{font-size:clamp(26px,3.4vw,38px);line-height:1.4;margin:0;font-weight:900}
 .sec-head p{margin:0;color:var(--ink-soft);max-width:36em}
+
+/* tools */
+#tools{padding-top:24px}
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+.tool{position:relative;display:flex;flex-direction:column;gap:6px;background:var(--sheet);border:2px solid var(--ink);border-radius:10px;padding:22px 22px 20px;text-decoration:none;transition:transform .15s,box-shadow .15s}
+.tool:hover{transform:translateY(-3px);box-shadow:0 14px 28px -18px rgba(27,42,74,.5)}
+.tool .q{font-family:"Klee One",cursive;font-weight:600;font-size:15px;color:var(--ink-soft)}
+.tool h3{margin:0;font-size:21px;font-weight:900}
+.tool p{margin:0;font-size:14px;color:var(--ink-soft)}
+.tool .go{margin-top:8px;font-weight:700;font-size:14px}
+.tag{position:absolute;top:-11px;right:16px;background:var(--marker);font-size:12px;font-weight:700;padding:1px 10px;border-radius:999px;border:1.5px solid var(--ink)}
+.more{margin-top:24px;font-size:14px;color:var(--ink-soft)}
+.web-mini{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;border-top:2px solid var(--ink);border-bottom:1px solid var(--line);padding:28px 0}
+.web-mini h2{margin:0 0 4px;font-size:20px;font-weight:900}
+.web-mini p{margin:0;color:var(--ink-soft);font-size:15px}
+@media (max-width:860px){.web-mini{grid-template-columns:1fr}}
 
 /* products */
 #products{background:var(--sheet)}
@@ -163,8 +179,8 @@ footer{padding:40px 0 56px;font-size:13px;color:var(--ink-soft)}
   <header class="site-head">
     <a class="logo" href="#top" aria-label="こまりごとラボ トップへ"><span>こまりごと</span>ラボ</a>
     <nav aria-label="ページ内">
-      <a href="#products">シート</a>
-      <a href="#web">Web制作</a>
+      <a href="#tools">ツール</a>
+      <a href="#products">テンプレート</a>
       <a href="#about">こまりごとラボについて</a>
       <a href="#contact">お問い合わせ</a>
     </nav>
@@ -173,11 +189,11 @@ footer{padding:40px 0 56px;font-size:13px;color:var(--ink-soft)}
   <main id="top">
     <div class="hero">
       <div>
-        <h1><span class="l name">こまりごとラボ</span><span class="l">小さな悩みを、</span><span class="l">一つずつ解決する。</span></h1>
-        <p>こまりごとラボは、個人サロンの方、BOOTHで作品を売る方、推し活をする方の「ちょっと困っている」を、すぐ使えるスプレッドシートとWebサイトで解決する、福岡の小さな制作所です。</p>
+        <h1><span class="l name">こまりごとラボ</span><span class="l">暮らしの小さな悩みを、</span><span class="l">ツールで解決する。</span></h1>
+        <p>「税込でいくら？」「これ、どう計算するんだっけ」。暮らしや仕事のなかの「ちょっと困った」を、ブラウザですぐ使える無料ツールで一つずつ解決していきます。登録も、アプリのインストールもいりません。</p>
         <div class="btns">
-          <a class="btn primary" href="#products">シートを見る</a>
-          <a class="btn ghost" href="#web">Web制作の相談</a>
+          <a class="btn primary" href="tools/calculator/">電卓を使う</a>
+          <a class="btn ghost" href="#tools">ツール一覧</a>
         </div>
       </div>
 
@@ -186,8 +202,8 @@ footer{padding:40px 0 56px;font-size:13px;color:var(--ink-soft)}
         <ul class="worries">
           <li>
             <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span class="w">あのお客さま、前回いつ来てくれたっけ…</span>
-            <span class="fix"><a href="https://mmcreate.booth.pm/items/9053388">来店間隔で連絡どきがわかる「失客チェック表」</a></span>
+            <span class="w">この値段、税込だといくら？</span>
+            <span class="fix"><a href="tools/calculator/">税込・税抜もボタンひとつの「かんたん電卓」</a></span>
           </li>
           <li>
             <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -210,10 +226,29 @@ footer{padding:40px 0 56px;font-size:13px;color:var(--ink-soft)}
   </main>
 </div>
 
+<section id="tools" aria-labelledby="tools-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="tools-h">すぐ使える、<br>無料ツール</h2>
+      <p>どれも登録不要・無料です。入力した内容はお使いの端末の中だけで計算し、どこにも送りません。</p>
+    </div>
+    <div class="tool-grid">
+      <a class="tool" href="tools/calculator/">
+        <span class="tag">新しい</span>
+        <span class="q">「税込でいくら？」がすぐ知りたい</span>
+        <h3>かんたん電卓</h3>
+        <p>式が見えるので打ち間違いに気づける。税込・税抜（10%・8%）、%引き、履歴とコピーにも対応。</p>
+        <span class="go">使ってみる →</span>
+      </a>
+    </div>
+    <p class="more">ツールは、よく聞く小さな悩みから順番に増やしていきます。「こんなことで困っている」があれば、<a href="#contact">お気軽に教えてください</a>。</p>
+  </div>
+</section>
+
 <section id="products" aria-labelledby="products-h">
   <div class="wrap">
     <div class="sec-head">
-      <h2 id="products-h">すぐ使える、<br>スプレッドシート</h2>
+      <h2 id="products-h">記録して管理するなら、<br>スプレッドシート</h2>
       <p>ExcelとGoogleスプレッドシートで使えます。まずは無料版で試して、合えば有料版へ。どれもBOOTHでダウンロードできます。</p>
     </div>
 
@@ -260,22 +295,16 @@ footer{padding:40px 0 56px;font-size:13px;color:var(--ink-soft)}
   </div>
 </section>
 
-<section id="web" aria-labelledby="web-h">
-  <div class="wrap web">
-    <div class="web-lead">
-      <h2 id="web-h">古くなったホームページを、作り直します</h2>
-      <p>「何年も更新していない」「スマホで見ると崩れる」「自分では直し方がわからない」。個人サロンのホームページ制作をお手伝いしています。</p>
-      <p>ご依頼の前に、完成イメージを実際に見ていただけます。</p>
-      <p><a class="btn primary" href="ameba-ownd/">Ameba Owndをお使いの方へ（12/24終了）</a></p>
+<section id="web" aria-labelledby="web-h" style="padding:56px 0">
+  <div class="wrap">
+    <div class="web-mini">
+      <div>
+        <h2 id="web-h">ホームページのご相談も受け付けています</h2>
+        <p>Ameba Owndの終了にともなう引っ越しなど、小さなホームページづくりをお手伝いしています。</p>
+      </div>
+      <a class="btn ghost" href="ameba-ownd/">Ameba Owndをお使いの方へ</a>
     </div>
-    <ol class="steps">
-      <li><div><h3>ご相談</h3><p>メールで、いまのホームページと困っていることを教えてください。</p></div></li>
-      <li><div><h3>完成イメージを見る</h3><p>新しいデザインのイメージを作り、URLでお送りします。スマホでそのまま確認できます。</p></div></li>
-      <li><div><h3>制作</h3><p>内容とお見積りに納得いただいてから制作に入ります。メニューや料金、写真を一緒に整えます。</p></div></li>
-      <li><div><h3>公開</h3><p>公開後の小さな修正の方法もお伝えします。</p></div></li>
-    </ol>
   </div>
-  <div class="wrap"><p class="fine">料金は内容によって変わるため、ご相談のうえお見積りします。</p></div>
 </section>
 
 <section id="about" aria-labelledby="about-h">
@@ -285,12 +314,12 @@ footer{padding:40px 0 56px;font-size:13px;color:var(--ink-soft)}
       <ul class="values" aria-label="大切にしていること">
         <li><strong>悩みから始める</strong><span>誰の、どんな悩みを解決するかを決めてから作ります。</span></li>
         <li><strong>正直である</strong><span>根拠のない数字や効果はうたいません。</span></li>
-        <li><strong>手の届く価格で</strong><span>気軽に試せるよう、無料版や100円の商品から用意しています。</span></li>
+        <li><strong>まずは無料で</strong><span>ツールは登録不要・無料。気軽に試せることを大切にしています。</span></li>
         <li><strong>相手の言葉で話す</strong><span>専門用語ではなく、使う方の言葉で説明します。</span></li>
       </ul>
       <dl class="info">
         <dt>屋号</dt><dd>こまりごとラボ（旧 MMCreate）</dd>
-        <dt>事業内容</dt><dd>スプレッドシートテンプレートの制作・販売<br>Webサイト制作<br>iPhoneアプリの開発</dd>
+        <dt>事業内容</dt><dd>暮らしと仕事の小さな悩みを解決するWebツールの制作・公開<br>スプレッドシートテンプレートの制作・販売<br>Webサイト制作<br>iPhoneアプリの開発</dd>
         <dt>所在地</dt><dd>福岡県福岡市南区</dd>
         <dt>連絡先</dt><dd><a href="mailto:mmcreate7@gmail.com">mmcreate7@gmail.com</a></dd>
       </dl>
@@ -303,7 +332,7 @@ footer{padding:40px 0 56px;font-size:13px;color:var(--ink-soft)}
     <div class="contact-box">
       <div>
         <h2 id="contact-h">お問い合わせ</h2>
-        <p>商品のこと、ホームページ制作のご相談など、お気軽にメールでどうぞ。</p>
+        <p>「こんなツールがほしい」「こんなことで困っている」、商品やホームページのご相談など、お気軽にメールでどうぞ。</p>
       </div>
       <div>
         <a class="mail" href="mailto:mmcreate7@gmail.com">mmcreate7@gmail.com</a>
