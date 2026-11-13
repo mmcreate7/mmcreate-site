@@ -1,4 +1,7 @@
 {
+  "framework": null,
+  "buildCommand": "",
+  "outputDirectory": "_vercel-redirect",
   "redirects": [
     { "source": "/:path*", "destination": "https://komarigoto-lab.pages.dev/:path*", "permanent": true }
   ]
