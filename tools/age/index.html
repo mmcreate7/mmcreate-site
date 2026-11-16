@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>年齢・和暦西暦早見表｜何歳？令和何年？学年は？がすぐわかる｜こまりごとラボ</title>
+<meta name="description" content="生年月日から満年齢・数え年・干支・学年の目安を計算し、西暦と和暦（令和・平成・昭和・大正・明治）を相互に変換できる無料ツール。1926年から今年までの年齢早見表つき。書類や年賀状の作成に。登録不要。">
+<meta property="og:title" content="年齢・和暦西暦早見表｜何歳？令和何年？学年は？がすぐわかる">
+<meta property="og:description" content="満年齢・数え年・学年の目安と、西暦⇔和暦の変換、年齢早見表。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="こまりごとラボ">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://komarigoto-lab.pages.dev/tools/age/">
+<link rel="canonical" href="https://komarigoto-lab.pages.dev/tools/age/">
+<meta name="theme-color" content="#F4F7F9">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/tool.css">
+<style>
+.three{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:6px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.conv{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:end}
+.conv .eq{font-weight:900;font-size:20px;padding-bottom:10px;color:var(--ink-soft)}
+.conv-out{min-height:48px;display:flex;align-items:center;font-weight:700;font-size:17px;padding:8px 12px;border-radius:10px;background:#FFF6C8;font-variant-numeric:tabular-nums;line-height:1.4}
+.wide{grid-column:1 / -1}
+@media (max-width:420px){.conv{grid-template-columns:1fr}.conv .eq{display:none}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"年齢・和暦西暦早見表","url":"https://komarigoto-lab.pages.dev/tools/age/","applicationCategory":"UtilitiesApplication","operatingSystem":"All","inLanguage":"ja","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"publisher":{"@type":"Organization","name":"こまりごとラボ","url":"https://komarigoto-lab.pages.dev/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"満年齢と数え年の違いは？","acceptedAnswer":{"@type":"Answer","text":"満年齢は生まれた日を0歳とし、誕生日ごとに1歳ずつ増える数え方で、書類や法律で使われます。数え年は生まれた年を1歳とし、元日（1月1日）ごとに1歳増える数え方で、厄年や長寿のお祝いなどで使われることがあります。"}},
+{"@type":"Question","name":"1月1日〜4月1日生まれの学年はどうなりますか？","acceptedAnswer":{"@type":"Answer","text":"日本の学年は4月2日生まれから翌年4月1日生まれまでが同じ学年です。1月1日〜4月1日生まれ（早生まれ）は、前の年に生まれた子と同じ学年になります。"}}
+]}
+</script>
+<script src="../../assets/analytics.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="site-head">
+    <a class="logo" href="../../" aria-label="こまりごとラボ トップへ"><span>こまりごと</span>ラボ</a>
+    <nav><a href="../../#tools">ツール一覧</a></nav>
+  </header>
+  <p class="crumb"><a href="../../">トップ</a> ／ <a href="../../#tools">ツール</a> ／ 年齢・和暦早見表</p>
+
+  <main class="layout">
+    <div class="tool-col">
+      <p class="worry">「<mark>平成○年生まれって、今何歳？</mark>」書類の前に</p>
+      <h1>年齢・和暦早見表</h1>
+      <p class="lead">生年月日から満年齢・数え年・学年の目安がわかります。西暦と和暦の変換と、1926年から今年までの早見表もあります。</p>
+
+      <section class="card" aria-labelledby="h-age">
+        <h2 id="h-age">生年月日から年齢を調べる</h2>
+        <div class="field"><label for="birth">生年月日</label><input type="date" id="birth" min="1868-01-01"></div>
+        <div class="field"><label for="ref">いつ時点？</label><input type="date" id="ref"><p class="hint">ふだんは今日のままで大丈夫です。</p></div>
+        <div class="result" id="r-age" aria-live="polite"></div>
+      </section>
+
+      <section class="card" aria-labelledby="h-conv">
+        <h2 id="h-conv">西暦と和暦を変換する</h2>
+        <div class="conv">
+          <div><label class="legend" for="c-year">西暦</label><div class="inline"><input type="number" id="c-year" inputmode="numeric" min="1868" max="2100"><span class="unit">年</span></div></div>
+          <span class="eq" aria-hidden="true">→</span>
+          <div class="conv-out" id="c-out" aria-live="polite"></div>
+        </div>
+        <div class="conv" style="margin-top:14px">
+          <div><span class="legend" id="w-legend">和暦</span>
+            <div class="two-col" role="group" aria-labelledby="w-legend">
+              <select id="w-era" aria-label="元号"></select>
+              <div class="inline"><input type="number" id="w-year" inputmode="numeric" min="1" max="99" aria-label="年"><span class="unit">年</span></div>
+            </div></div>
+          <span class="eq" aria-hidden="true">→</span>
+          <div class="conv-out" id="w-out" aria-live="polite"></div>
+        </div>
+        <p class="hint">「元年」は1年と入れてください。改元の年は、改元日の前後で元号が変わります。</p>
+      </section>
+    </div>
+
+    <aside class="side">
+      <h2 id="h-table">年齢早見表（<span id="t-year"></span>年）</h2>
+      <p class="hint" style="margin:0 0 10px">生年月日を入れると、その年の行に色がつきます。</p>
+      <div class="table-wrap" tabindex="0" aria-labelledby="h-table">
+        <table class="list">
+          <thead><tr><th scope="col">西暦</th><th scope="col">和暦</th><th scope="col">干支</th><th scope="col">誕生日後</th><th scope="col">誕生日前</th></tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+
+      <h2 style="margin-top:32px">使い方</h2>
+      <dl>
+        <dt>満年齢・数え年</dt>
+        <dd>書類に書くのは満年齢です。数え年は生まれた年を1歳とし、元日に1歳増える数え方で、厄年などで使われます。</dd>
+        <dt>学年の目安</dt>
+        <dd>4月2日〜翌年4月1日生まれが同じ学年です。幼稚園・保育園の年少〜年長と、小学校〜高校の学年の目安を表示します。</dd>
+      </dl>
+      <p class="note-s">学年は一般的な目安です。入園・入学の時期はお住まいの地域や園・学校の案内をご確認ください。入力した内容は、お使いの端末の中だけで計算し、どこにも送信しません。</p>
+
+      <section class="related" aria-labelledby="rel-h">
+        <h2 id="rel-h">ほかのツール</h2>
+        <ul>
+          <li><a href="../days/">日数計算 <span>何日間？あと何日？</span></a></li>
+          <li><a href="../warikan/">割り勘計算 <span>端数・傾斜つき</span></a></li>
+          <li><a href="../calculator/">かんたん電卓 <span>税込・税抜もボタンひとつ</span></a></li>
+        </ul>
+      </section>
+    </aside>
+  </main>
+</div>
+
+<footer><div class="wrap"><a href="../../">こまりごとラボ トップ</a><a href="../../#tools">ほかのツール</a>© 2026 こまりごとラボ</div></footer>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+  // 元号と改元日（新しい順）
+  var ERAS = [
+    {name: "令和", y: 2019, m: 5, d: 1},
+    {name: "平成", y: 1989, m: 1, d: 8},
+    {name: "昭和", y: 1926, m: 12, d: 25},
+    {name: "大正", y: 1912, m: 7, d: 30},
+    {name: "明治", y: 1868, m: 10, d: 23}
+  ];
+  var ETO = ["子（ね）","丑（うし）","寅（とら）","卯（う）","辰（たつ）","巳（み）","午（うま）","未（ひつじ）","申（さる）","酉（とり）","戌（いぬ）","亥（い）"];
+  function eto(y){ return ETO[((y - 4) % 12 + 12) % 12]; }
+  function yname(n){ return n === 1 ? "元" : String(n); }
+
+  // 日付 → 和暦
+  function warekiDate(y, m, d){
+    var key = y * 10000 + m * 100 + d;
+    for (var i = 0; i < ERAS.length; i++){ var e = ERAS[i]; if (key >= e.y * 10000 + e.m * 100 + e.d) return e.name + yname(y - e.y + 1) + "年"; }
+    return null;
+  }
+  // 西暦年 → 和暦（改元の年は両方）
+  function warekiYear(y){
+    if (!(y >= 1868 && y <= 2100) || Math.floor(y) !== y) return null;
+    var out = [];
+    for (var i = ERAS.length - 1; i >= 0; i--){       // 古い元号から
+      var e = ERAS[i], next = ERAS[i - 1];
+      if (e.y <= y && (!next || y <= next.y)) out.push(e.name + yname(y - e.y + 1) + "年");
+    }
+    return out;                                         // 改元の年は「昭和64年／平成元年」のように両方
+  }
+  // 和暦 → 西暦
+  function seireki(era, n){
+    var e = ERAS.filter(function(x){ return x.name === era; })[0];
+    if (!e || !(n >= 1) || Math.floor(n) !== n) return {error: "年を入れてください。"};
+    var y = e.y + n - 1, idx = ERAS.indexOf(e), next = ERAS[idx - 1];
+    if (next && y > next.y) return {error: era + "は" + yname(next.y - e.y + 1) + "年（" + next.y + "年）までです。"};
+    return {year: y};
+  }
+  // 年齢
+  function parse(s){ if (!/^\d{4}-\d{2}-\d{2}$/.test(s || "")) return null; var p = s.split("-").map(Number); var dt = new Date(Date.UTC(p[0], p[1]-1, p[2])); return dt.getUTCDate() === p[2] ? {y: p[0], m: p[1], d: p[2]} : null; }
+  function age(b, r){
+    var a = r.y - b.y; if (r.m < b.m || (r.m === b.m && r.d < b.d)) a--; return a;
+  }
+  function grade(b, r){
+    // 小学校に入る年：4/2〜12/31生まれ→翌々…(生年+7)、1/1〜4/1生まれ→生年+6
+    var early = (b.m < 4) || (b.m === 4 && b.d === 1);
+    var entry = b.y + (early ? 6 : 7);
+    var fy = r.m >= 4 ? r.y : r.y - 1; // 年度
+    var k = fy - entry + 1;
+    if (k >= 1 && k <= 6) return "小学" + k + "年生";
+    if (k >= 7 && k <= 9) return "中学" + (k - 6) + "年生";
+    if (k >= 10 && k <= 12) return "高校" + (k - 9) + "年生";
+    if (k === 0) return "年長（5歳児クラス）";
+    if (k === -1) return "年中（4歳児クラス）";
+    if (k === -2) return "年少（3歳児クラス）";
+    if (k >= -5 && k <= -3) return (k + 5) + "歳児クラス";
+    if (k >= 13 && k <= 16) return "高校卒業から" + (k - 12) + "年目（大学なら" + (k - 12) + "年生）";
+    return null;
+  }
+  function ageInfo(bs, rs){
+    var b = parse(bs), r = parse(rs);
+    if (!b) return {error: "生年月日を選んでください。"};
+    if (!r) return {error: "いつ時点かを選んでください。"};
+    var bk = b.y * 10000 + b.m * 100 + b.d, rk = r.y * 10000 + r.m * 100 + r.d;
+    if (rk < bk) return {error: "生年月日が「いつ時点」より後になっています。"};
+    return {age: age(b, r), kazoe: r.y - b.y + 1, wareki: warekiDate(b.y, b.m, b.d), eto: eto(b.y), grade: grade(b, r), b: b};
+  }
+
+  // ---- UI ----
+  function today(){ var n = new Date(); return n.getFullYear() + "-" + String(n.getMonth()+1).padStart(2,"0") + "-" + String(n.getDate()).padStart(2,"0"); }
+  var T = today(), CY = Number(T.slice(0, 4));
+  $("ref").value = T;
+  ERAS.forEach(function(e){ var o = document.createElement("option"); o.value = e.name; o.textContent = e.name; $("w-era").appendChild(o); });
+  $("c-year").value = CY; $("w-era").value = "平成"; $("w-year").value = 1;
+
+  function drawAge(){
+    var el = $("r-age"), r = ageInfo($("birth").value, $("ref").value);
+    hl(null);
+    if (!$("birth").value){ el.innerHTML = '<p class="r-label" style="margin:0">生年月日を選ぶと、ここに年齢が出ます。</p>'; return; }
+    if (r.error){ el.innerHTML = '<p class="err"></p>'; el.firstChild.textContent = r.error; return; }
+    el.innerHTML = '<div class="r-label">満年齢</div><div class="r-big">' + r.age + '<small>歳</small></div>' +
+      '<ul class="r-sub"><li><span>数え年</span><span>' + r.kazoe + '歳</span></li>' +
+      '<li><span>生まれ年（和暦）</span><span>' + (r.wareki || "—") + '</span></li>' +
+      '<li><span>干支</span><span>' + r.eto + '</span></li>' +
+      (r.grade ? '<li><span>学年の目安（' + ($("ref").value === T ? "今年度" : "その年度") + '）</span><span>' + r.grade + '</span></li>' : '') + '</ul>';
+    hl(r.b.y);
+  }
+  function drawConv(){
+    var y = Number($("c-year").value), w = warekiYear(y);
+    $("c-out").textContent = w ? w.join("／") : "1868〜2100年で入れてください";
+    var s = seireki($("w-era").value, Number($("w-year").value));
+    $("w-out").textContent = s.error ? s.error : "西暦" + s.year + "年";
+  }
+  function buildTable(){
+    $("t-year").textContent = CY;
+    var rows = [];
+    for (var y = CY; y >= 1926; y--){
+      rows.push('<tr data-y="' + y + '"><td>' + y + '年</td><td>' + warekiYear(y).join("／") + '</td><td>' + eto(y).replace(/（.*）/, "") + '</td><td class="num">' + (CY - y) + '歳</td><td class="num">' + (y === CY ? "—" : (CY - y - 1) + "歳") + '</td></tr>');
+    }
+    $("tbody").innerHTML = rows.join("");
+  }
+  function hl(y){
+    var cur = document.querySelector("#tbody tr.hl"); if (cur) cur.classList.remove("hl");
+    if (!y) return;
+    var tr = document.querySelector('#tbody tr[data-y="' + y + '"]');
+    if (tr){ tr.classList.add("hl"); var wrap = tr.closest(".table-wrap"); wrap.scrollTop = tr.offsetTop - wrap.clientHeight / 2; }
+  }
+
+  ["birth","ref"].forEach(function(id){ $(id).addEventListener("input", drawAge); $(id).addEventListener("change", drawAge); });
+  ["c-year","w-era","w-year"].forEach(function(id){ $(id).addEventListener("input", drawConv); $(id).addEventListener("change", drawConv); });
+  buildTable(); drawAge(); drawConv();
+
+  window.__age = {warekiYear: warekiYear, warekiDate: warekiDate, seireki: seireki, ageInfo: ageInfo, eto: eto};
+})();
+</script>
+</body>
+</html>

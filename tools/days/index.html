@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>日数計算｜何日間？何日後？あと何日？がすぐわかる｜こまりごとラボ</title>
+<meta name="description" content="2つの日付の間が何日か（初日を含める・含めないも選べる）、○日後・○日前は何月何日何曜日か、今日からあと何日かをすぐに計算できる無料ツール。クリスマスや大晦日、元日までのカウントダウンもワンタップ。登録不要。">
+<meta property="og:title" content="日数計算｜何日間？何日後？あと何日？がすぐわかる">
+<meta property="og:description" content="日付の間の日数、○日後の日付、あと何日かを計算できる無料ツール。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="こまりごとラボ">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://komarigoto-lab.pages.dev/tools/days/">
+<link rel="canonical" href="https://komarigoto-lab.pages.dev/tools/days/">
+<meta name="theme-color" content="#F4F7F9">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/tool.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"日数計算","url":"https://komarigoto-lab.pages.dev/tools/days/","applicationCategory":"UtilitiesApplication","operatingSystem":"All","inLanguage":"ja","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"publisher":{"@type":"Organization","name":"こまりごとラボ","url":"https://komarigoto-lab.pages.dev/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"「初日を含める」とは何ですか？","acceptedAnswer":{"@type":"Answer","text":"11月1日から11月3日までを「3日間」と数えるのが初日を含める数え方（旅行の日数や期間の数え方）、「2日」と数えるのが含めない数え方（何日たったか）です。用途に合わせて選んでください。"}},
+{"@type":"Question","name":"平日の日数に祝日は含まれますか？","acceptedAnswer":{"@type":"Answer","text":"このツールの「平日」は土日を除いた日数で、祝日は平日として数えています。祝日を除きたい場合は、その日数を差し引いてください。"}}
+]}
+</script>
+<script src="../../assets/analytics.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="site-head">
+    <a class="logo" href="../../" aria-label="こまりごとラボ トップへ"><span>こまりごと</span>ラボ</a>
+    <nav><a href="../../#tools">ツール一覧</a></nav>
+  </header>
+  <p class="crumb"><a href="../../">トップ</a> ／ <a href="../../#tools">ツール</a> ／ 日数計算</p>
+
+  <main class="layout">
+    <div class="tool-col">
+      <p class="worry">「<mark>締め切りまで、あと何日？</mark>」をすぐに</p>
+      <h1>日数計算</h1>
+      <p class="lead">2つの日付の間は何日か、○日後は何月何日か、今日からあと何日か。カレンダーで指を折って数えなくても、すぐにわかります。</p>
+
+      <div class="card">
+        <div class="tabs" role="tablist" aria-label="計算の種類">
+          <button type="button" role="tab" id="t-between" aria-controls="p-between" aria-selected="true">何日間？</button>
+          <button type="button" role="tab" id="t-after" aria-controls="p-after" aria-selected="false">○日後・○日前</button>
+          <button type="button" role="tab" id="t-until" aria-controls="p-until" aria-selected="false">あと何日？</button>
+        </div>
+
+        <section id="p-between" role="tabpanel" aria-labelledby="t-between">
+          <div class="field"><label for="b-start">はじめの日</label><input type="date" id="b-start"></div>
+          <div class="field"><label for="b-end">おわりの日</label><input type="date" id="b-end"></div>
+          <label class="check"><input type="checkbox" id="b-incl">初日も1日として数える（例：旅行や期間の「○日間」）</label>
+          <div class="result" id="r-between" aria-live="polite"></div>
+        </section>
+
+        <section id="p-after" role="tabpanel" aria-labelledby="t-after" hidden>
+          <div class="field"><label for="a-base">基準の日</label><input type="date" id="a-base"></div>
+          <div class="field">
+            <label for="a-n">何日？</label>
+            <div class="inline"><input type="number" id="a-n" class="big" inputmode="numeric" step="1" value="30"><span class="unit">日</span>
+              <select id="a-dir" aria-label="後か前か" style="width:auto"><option value="1">後</option><option value="-1">前</option></select></div>
+            <div class="chips" aria-label="よく使う日数">
+              <button type="button" data-n="7">7日</button><button type="button" data-n="14">14日</button><button type="button" data-n="30">30日</button><button type="button" data-n="60">60日</button><button type="button" data-n="90">90日</button><button type="button" data-n="100">100日</button>
+            </div>
+          </div>
+          <div class="result" id="r-after" aria-live="polite"></div>
+        </section>
+
+        <section id="p-until" role="tabpanel" aria-labelledby="t-until" hidden>
+          <div class="field"><label for="u-target">いつまで？</label><input type="date" id="u-target"></div>
+          <div class="chips" id="u-chips" aria-label="よく使う日"></div>
+          <div class="result" id="r-until" aria-live="polite"></div>
+        </section>
+      </div>
+    </div>
+
+    <aside class="side">
+      <h2>使い方</h2>
+      <dl>
+        <dt>何日間？</dt>
+        <dd>2つの日付を選ぶと、間の日数のほか、「○週と○日」「○か月と○日」、土日を除いた平日の日数もわかります。</dd>
+        <dt>初日を含めるかどうか</dt>
+        <dd>11月1日〜3日を「3日間」と数えるなら、「初日も1日として数える」にチェックを入れます。何日たったかを知りたいときは外します。</dd>
+        <dt>○日後・○日前</dt>
+        <dd>支払い期限や「30日以内」の締め切りが何月何日何曜日になるかを調べられます。</dd>
+        <dt>あと何日？</dt>
+        <dd>今日から目標の日までの日数です。クリスマスや大晦日、元日はボタンひとつで入ります。</dd>
+      </dl>
+      <p class="note-s">「平日」は土日を除いた日数で、祝日は平日として数えています。期限の正式な数え方は、契約書や案内に書かれたルールを確認してください。</p>
+
+      <section class="related" aria-labelledby="rel-h">
+        <h2 id="rel-h">ほかのツール</h2>
+        <ul>
+          <li><a href="../age/">年齢・和暦早見表 <span>何歳？令和何年？がすぐわかる</span></a></li>
+          <li><a href="../warikan/">割り勘計算 <span>端数・傾斜つき</span></a></li>
+          <li><a href="../calculator/">かんたん電卓 <span>税込・税抜もボタンひとつ</span></a></li>
+        </ul>
+      </section>
+    </aside>
+  </main>
+</div>
+
+<footer><div class="wrap"><a href="../../">こまりごとラボ トップ</a><a href="../../#tools">ほかのツール</a>© 2026 こまりごとラボ</div></footer>
+
+<script>
+(function(){
+  "use strict";
+  var DAY = 86400000, WD = ["日","月","火","水","木","金","土"];
+  var $ = function(id){ return document.getElementById(id); };
+
+  // dates are handled as UTC midnight to avoid time-zone drift
+  function parse(s){ if (!/^\d{4}-\d{2}-\d{2}$/.test(s || "")) return null; var p = s.split("-").map(Number); var t = Date.UTC(p[0], p[1]-1, p[2]); var d = new Date(t); return d.getUTCDate() === p[2] ? t : null; }
+  function iso(t){ var d = new Date(t); return d.getUTCFullYear() + "-" + String(d.getUTCMonth()+1).padStart(2,"0") + "-" + String(d.getUTCDate()).padStart(2,"0"); }
+  function jp(t){ var d = new Date(t); return d.getUTCFullYear() + "年" + (d.getUTCMonth()+1) + "月" + d.getUTCDate() + "日（" + WD[d.getUTCDay()] + "）"; }
+  function today(){ var n = new Date(); return Date.UTC(n.getFullYear(), n.getMonth(), n.getDate()); }
+  function n(x){ return x.toLocaleString("ja-JP"); }
+
+  // months+days between a<=b
+  function monthsDays(a, b){
+    var da = new Date(a), db = new Date(b);
+    var m = (db.getUTCFullYear() - da.getUTCFullYear()) * 12 + (db.getUTCMonth() - da.getUTCMonth());
+    function addM(t, k){ var d = new Date(t); var y = d.getUTCFullYear(), mo = d.getUTCMonth() + k, day = d.getUTCDate();
+      var last = new Date(Date.UTC(y, mo + 1, 0)).getUTCDate(); return Date.UTC(y, mo, Math.min(day, last)); }
+    if (addM(a, m) > b) m--;
+    return {months: m, days: Math.round((b - addM(a, m)) / DAY)};
+  }
+  function weekdays(a, b){ // inclusive of both ends, a<=b
+    var cnt = 0; for (var t = a; t <= b; t += DAY){ var w = new Date(t).getUTCDay(); if (w !== 0 && w !== 6) cnt++; } return cnt;
+  }
+
+  function between(sa, sb, incl){
+    var a = parse(sa), b = parse(sb);
+    if (a === null || b === null) return {error: "2つの日付を選んでください。"};
+    var swapped = false; if (b < a){ var x = a; a = b; b = x; swapped = true; }
+    var diff = Math.round((b - a) / DAY);
+    var days = diff + (incl ? 1 : 0);
+    var md = monthsDays(a, incl ? b + DAY : b);
+    var wdStart = incl ? a : a + DAY;
+    return {days: days, weeks: Math.floor(days / 7), rem: days % 7, months: md.months, mdays: md.days,
+            weekdays: wdStart <= b ? weekdays(wdStart, b) : 0, swapped: swapped, a: a, b: b};
+  }
+  function after(sb, k){
+    var a = parse(sb); if (a === null) return {error: "基準の日を選んでください。"};
+    if (!isFinite(k) || Math.floor(k) !== k) return {error: "日数は整数で入れてください。"};
+    if (Math.abs(k) > 100000) return {error: "日数が大きすぎます。"};
+    return {t: a + k * DAY};
+  }
+  function until(st, base){
+    var t = parse(st); if (t === null) return {error: "日付を選んでください。"};
+    return {days: Math.round((t - base) / DAY), t: t};
+  }
+
+  // ---- tabs ----
+  var tabs = document.querySelectorAll('[role=tab]');
+  function select(tab){
+    tabs.forEach(function(x){ var on = x === tab; x.setAttribute("aria-selected", on); x.tabIndex = on ? 0 : -1; $(x.getAttribute("aria-controls")).hidden = !on; });
+  }
+  tabs.forEach(function(t, i){
+    t.addEventListener("click", function(){ select(t); });
+    t.addEventListener("keydown", function(e){ var j = e.key === "ArrowRight" ? i + 1 : e.key === "ArrowLeft" ? i - 1 : null; if (j === null) return; j = (j + tabs.length) % tabs.length; tabs[j].focus(); select(tabs[j]); });
+  });
+
+  // ---- render ----
+  function err(el, msg){ el.innerHTML = '<p class="err"></p>'; el.firstChild.textContent = msg; }
+  function drawBetween(){
+    var r = between($("b-start").value, $("b-end").value, $("b-incl").checked), el = $("r-between");
+    if (r.error) return err(el, r.error);
+    el.innerHTML = '<div class="r-label">' + (r.swapped ? "（日付の前後を入れ替えて計算）" : "") + ($("b-incl").checked ? "初日を含めて" : "間の日数") + '</div>' +
+      '<div class="r-big">' + n(r.days) + '<small>日' + ($("b-incl").checked ? "間" : "") + '</small></div>' +
+      '<ul class="r-sub"><li><span>週にすると</span><span>' + r.weeks + '週と' + r.rem + '日</span></li>' +
+      '<li><span>月にすると</span><span>' + r.months + 'か月と' + r.mdays + '日</span></li>' +
+      '<li><span>うち平日（土日を除く）</span><span>' + n(r.weekdays) + '日</span></li></ul>';
+  }
+  function drawAfter(){
+    var k = Number($("a-n").value) * Number($("a-dir").value), r = after($("a-base").value, k), el = $("r-after");
+    if (r.error) return err(el, r.error);
+    var abs = Math.abs(k);
+    el.innerHTML = '<div class="r-label">' + jp(parse($("a-base").value)) + 'の' + n(abs) + '日' + (k < 0 ? "前" : "後") + '</div>' +
+      '<div class="r-big" style="font-size:clamp(24px,6.5vw,32px)">' + jp(r.t) + '</div>';
+  }
+  function drawUntil(){
+    var base = today(), r = until($("u-target").value, base), el = $("r-until");
+    if (r.error) return err(el, r.error);
+    var head = '<div class="r-label">今日 ' + jp(base) + ' から ' + jp(r.t) + ' まで</div>';
+    if (r.days > 0) el.innerHTML = head + '<div class="r-big">あと ' + n(r.days) + '<small>日</small></div>' +
+      '<ul class="r-sub"><li><span>週にすると</span><span>' + Math.floor(r.days / 7) + '週と' + (r.days % 7) + '日</span></li>' +
+      '<li><span>うち平日（土日を除く・今日を除く）</span><span>' + n(weekdays(base + DAY, r.t)) + '日</span></li></ul>';
+    else if (r.days === 0) el.innerHTML = head + '<div class="r-big">今日です</div>';
+    else el.innerHTML = head + '<div class="r-big">' + n(-r.days) + '<small>日前に過ぎました</small></div>';
+  }
+
+  // ---- defaults & events ----
+  var t0 = today(), y = new Date(t0).getUTCFullYear(), md = new Date(t0).getUTCMonth()*100 + new Date(t0).getUTCDate();
+  $("b-start").value = iso(t0); $("b-end").value = iso(Date.UTC(y, 11, 31));
+  $("a-base").value = iso(t0);
+  var events = [
+    ["クリスマス", 11, 25], ["大晦日", 11, 31], ["元日", 0, 1], ["バレンタイン", 1, 14], ["ゴールデンウィーク", 4, 3]
+  ];
+  var chips = $("u-chips");
+  events.forEach(function(e){
+    var yy = (e[1]*100 + e[2] < md) ? y + 1 : y;
+    var b = document.createElement("button"); b.type = "button"; b.textContent = e[0];
+    b.dataset.date = iso(Date.UTC(yy, e[1], e[2]));
+    b.addEventListener("click", function(){ $("u-target").value = b.dataset.date; drawUntil(); });
+    chips.appendChild(b);
+  });
+  $("u-target").value = chips.firstChild.dataset.date;
+
+  ["b-start","b-end","b-incl"].forEach(function(id){ $(id).addEventListener("input", drawBetween); $(id).addEventListener("change", drawBetween); });
+  ["a-base","a-n","a-dir"].forEach(function(id){ $(id).addEventListener("input", drawAfter); $(id).addEventListener("change", drawAfter); });
+  document.querySelectorAll("[data-n]").forEach(function(b){ b.addEventListener("click", function(){ $("a-n").value = b.dataset.n; drawAfter(); }); });
+  $("u-target").addEventListener("input", drawUntil); $("u-target").addEventListener("change", drawUntil);
+
+  window.__days = {between: between, after: function(s, k){ var r = after(s, k); return r.error ? r : iso(r.t); }, until: function(s, b){ return until(s, parse(b)); }, monthsDays: function(a, b){ return monthsDays(parse(a), parse(b)); }};
+  drawBetween(); drawAfter(); drawUntil();
+})();
+</script>
+</body>
+</html>
