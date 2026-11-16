@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>時給・月給・年収の換算｜時給1,200円は年収いくら？がすぐわかる｜こまりごとラボ</title>
+<meta name="description" content="時給・日給・月給・年収のどれか1つを入れると、残りをまとめて換算できる無料ツール。1日の勤務時間、月の勤務日数、ボーナスの月数も変えられます。転職やパート・アルバイトの比較に。登録不要。">
+<meta property="og:title" content="時給・月給・年収の換算｜時給1,200円は年収いくら？がすぐわかる">
+<meta property="og:description" content="時給・日給・月給・年収を相互に換算。勤務時間・日数・ボーナスも変えられる無料ツール。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="こまりごとラボ">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://komarigoto-lab.pages.dev/tools/salary/">
+<link rel="canonical" href="https://komarigoto-lab.pages.dev/tools/salary/">
+<meta name="theme-color" content="#F4F7F9">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/tool.css">
+<style>
+.kind{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px}
+.kind input{position:absolute;opacity:0;pointer-events:none}
+.kind label{display:flex;align-items:center;justify-content:center;min-height:44px;border:1.5px solid var(--line);border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;background:var(--sheet)}
+.kind input:checked + label{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.kind input:focus-visible + label{outline:3px solid var(--check);outline-offset:2px}
+.cond{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.cond label{font-size:12.5px;font-weight:700;color:var(--ink-soft);display:block;margin-bottom:2px;line-height:1.4}
+.grid4{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.cell{background:var(--sheet);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.cell .k{font-size:13px;font-weight:700;color:var(--ink-soft)}
+.cell .v{font-size:clamp(20px,5.5vw,26px);font-weight:700;font-variant-numeric:tabular-nums;line-height:1.3;white-space:nowrap}
+.cell .v small{font-size:.55em;margin-left:2px}
+.cell.src{border:2px solid var(--ink);background:#FFF6C8}
+@media (max-width:420px){.cond{grid-template-columns:1fr 1fr}.cond .full{grid-column:1 / -1}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"時給・月給・年収の換算","url":"https://komarigoto-lab.pages.dev/tools/salary/","applicationCategory":"FinanceApplication","operatingSystem":"All","inLanguage":"ja","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"publisher":{"@type":"Organization","name":"こまりごとラボ","url":"https://komarigoto-lab.pages.dev/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"時給1,200円で1日8時間・月20日働くと年収はいくら？","acceptedAnswer":{"@type":"Answer","text":"1,200円×8時間＝日給9,600円、×20日＝月給192,000円、×12か月＝年収2,304,000円（ボーナスなし・額面）です。"}},
+{"@type":"Question","name":"計算結果は手取りですか？","acceptedAnswer":{"@type":"Answer","text":"いいえ、税金や社会保険料を引く前の額面です。手取りは、ここから所得税・住民税・社会保険料などが引かれた額になります。"}}
+]}
+</script>
+<script src="../../assets/analytics.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="site-head">
+    <a class="logo" href="../../" aria-label="こまりごとラボ トップへ"><span>こまりごと</span>ラボ</a>
+    <nav><a href="../../#tools">ツール一覧</a></nav>
+  </header>
+  <p class="crumb"><a href="../../">トップ</a> ／ <a href="../../#tools">ツール</a> ／ 時給・月給・年収の換算</p>
+
+  <main class="layout">
+    <div class="tool-col">
+      <p class="worry">「<mark>時給1,200円って、年収にするといくら？</mark>」</p>
+      <h1>時給・月給・年収の換算</h1>
+      <p class="lead">時給・日給・月給・年収のどれか1つを入れると、残りをまとめて換算します。求人の比較や、働き方を変えるときの見通しに。</p>
+
+      <form class="card" id="form" autocomplete="off" onsubmit="return false">
+        <div class="field">
+          <span class="legend" id="kLegend">わかっている金額</span>
+          <div class="kind" role="radiogroup" aria-labelledby="kLegend">
+            <input type="radio" name="kind" id="kH" value="hour" checked><label for="kH">時給</label>
+            <input type="radio" name="kind" id="kD" value="day"><label for="kD">日給</label>
+            <input type="radio" name="kind" id="kM" value="month"><label for="kM">月給</label>
+            <input type="radio" name="kind" id="kY" value="year"><label for="kY">年収</label>
+          </div>
+          <div class="inline"><input type="number" id="amount" class="big" inputmode="numeric" min="0" step="1" placeholder="例）1200" aria-label="金額"><span class="unit">円</span></div>
+        </div>
+        <div class="cond">
+          <div><label for="hours">1日の勤務時間</label><div class="inline"><input type="number" id="hours" inputmode="decimal" min="0.5" max="24" step="0.5" value="8"><span class="unit">時間</span></div></div>
+          <div><label for="days">月の勤務日数</label><div class="inline"><input type="number" id="days" inputmode="decimal" min="1" max="31" step="1" value="20"><span class="unit">日</span></div></div>
+          <div class="full"><label for="bonus">ボーナス（月給の何か月分）</label><div class="inline"><input type="number" id="bonus" inputmode="decimal" min="0" max="24" step="0.5" value="0"><span class="unit">か月</span></div></div>
+        </div>
+        <div class="chips" aria-label="よくある働き方">
+          <button type="button" data-h="8" data-d="20">フルタイム（8時間×20日）</button>
+          <button type="button" data-h="8" data-d="21">8時間×21日</button>
+          <button type="button" data-h="5" data-d="16">パート（5時間×週4）</button>
+          <button type="button" data-h="4" data-d="12">短時間（4時間×週3）</button>
+        </div>
+        <div class="result" id="result" aria-live="polite"></div>
+      </form>
+    </div>
+
+    <aside class="side">
+      <h2>使い方</h2>
+      <dl>
+        <dt>計算のしかた</dt>
+        <dd>日給＝時給×1日の勤務時間、月給＝日給×月の勤務日数、年収＝月給×12か月＋ボーナス（月給×月数）です。</dd>
+        <dt>月の勤務日数の目安</dt>
+        <dd>土日休みのフルタイムなら20〜21日です。週4日なら約16〜17日、週3日なら約12〜13日になります。</dd>
+        <dt>ボーナス</dt>
+        <dd>「月給の○か月分」で入れます。年収から逆算するときは、ボーナスを除いた月給で表示します。</dd>
+      </dl>
+      <p class="note-s">結果はすべて額面（税金や社会保険料を引く前）で、残業代や手当、交通費は含みません。実際の給与は会社の決まりや契約によります。入力した内容は、お使いの端末の中だけで計算し、どこにも送信しません。</p>
+
+      <section class="related" aria-labelledby="rel-h">
+        <h2 id="rel-h">ほかのツール</h2>
+        <ul>
+          <li><a href="../ikukyu/">育休給付金の計算 <span>手取り10割の上乗せつき</span></a></li>
+          <li><a href="../days/">日数計算 <span>何日間？あと何日？</span></a></li>
+          <li><a href="../calculator/">かんたん電卓 <span>税込・税抜もボタンひとつ</span></a></li>
+        </ul>
+      </section>
+    </aside>
+  </main>
+</div>
+
+<footer><div class="wrap"><a href="../../">こまりごとラボ トップ</a><a href="../../#tools">ほかのツール</a>© 2026 こまりごとラボ</div></footer>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+  function num(v){ v = String(v == null ? "" : v).replace(/[,，円\s]/g, "").replace(/[０-９．]/g, function(c){ return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); }); return v === "" ? NaN : Number(v); }
+  function yen(n){ return Math.round(n).toLocaleString("ja-JP"); }
+
+  function calc(kind, amount, hours, days, bonus){
+    if (!(amount > 0)) return {error: "金額を入れてください。"};
+    if (!(hours > 0 && hours <= 24)) return {error: "1日の勤務時間は0〜24時間で入れてください。"};
+    if (!(days > 0 && days <= 31)) return {error: "月の勤務日数は1〜31日で入れてください。"};
+    if (!(bonus >= 0 && bonus <= 24)) return {error: "ボーナスは0〜24か月で入れてください。"};
+    var h;
+    if (kind === "hour") h = amount;
+    else if (kind === "day") h = amount / hours;
+    else if (kind === "month") h = amount / hours / days;
+    else h = amount / (12 + bonus) / days / hours;
+    var d = h * hours, m = d * days, y = m * 12 + m * bonus;
+    return {hour: h, day: d, month: m, year: y, bonusYear: m * bonus, weekHours: hours * days * 12 / 52};
+  }
+
+  var form = $("form");
+  function kind(){ return form.querySelector('input[name=kind]:checked').value; }
+  var PH = {hour: "例）1200", day: "例）9600", month: "例）250000", year: "例）4000000"};
+  function draw(){
+    var el = $("result"), a = num($("amount").value);
+    if (isNaN(a)){ el.innerHTML = '<p class="r-label" style="margin:0">金額を入れると、ここに換算結果が出ます。</p>'; return; }
+    var r = calc(kind(), a, num($("hours").value), num($("days").value), num($("bonus").value) || 0);
+    if (r.error){ el.innerHTML = '<p class="err"></p>'; el.firstChild.textContent = r.error; return; }
+    var k = kind();
+    function cell(key, label, v){ return '<div class="cell' + (key === k ? " src" : "") + '"><div class="k">' + label + '</div><div class="v">' + yen(v) + '<small>円</small></div></div>'; }
+    el.innerHTML = '<div class="r-label">額面の換算（色つきが入れた金額）</div><div class="grid4">' +
+      cell("hour", "時給", r.hour) + cell("day", "日給", r.day) + cell("month", "月給", r.month) + cell("year", "年収", r.year) + '</div>' +
+      '<ul class="r-sub"><li><span>週の勤務時間（平均）</span><span>' + (Math.round(r.weekHours * 10) / 10) + '時間</span></li>' +
+      (r.bonusYear ? '<li><span>年収のうちボーナス</span><span>' + yen(r.bonusYear) + '円</span></li>' : '') + '</ul>';
+  }
+  form.addEventListener("input", draw);
+  form.addEventListener("change", function(e){
+    if (e.target.name === "kind"){ $("amount").placeholder = PH[kind()]; }
+    draw();
+  });
+  document.querySelectorAll("[data-h]").forEach(function(b){
+    b.addEventListener("click", function(){ $("hours").value = b.dataset.h; $("days").value = b.dataset.d; draw(); });
+  });
+  window.__salary = {calc: calc};
+  draw();
+})();
+</script>
+</body>
+</html>
