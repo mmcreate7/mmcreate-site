@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>育休給付金の計算｜手取り10割の出生後休業支援給付金つき（2026年8月からの上限額）｜こまりごとラボ</title>
+<meta name="description" content="育児休業給付金（67%・181日目から50%）と、2025年4月に始まった出生後休業支援給付金（13%上乗せ・最大28日）の目安を、月給と育休の期間から計算できる無料ツール。厚生労働省の令和8年8月1日からの上限額・下限額に対応。登録不要。">
+<meta property="og:title" content="育休給付金の計算｜手取り10割の出生後休業支援給付金つき">
+<meta property="og:description" content="月給と育休の期間から、育児休業給付金と出生後休業支援給付金の目安を計算。令和8年8月1日からの上限額に対応。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="こまりごとラボ">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://komarigoto-lab.pages.dev/tools/ikukyu/">
+<link rel="canonical" href="https://komarigoto-lab.pages.dev/tools/ikukyu/">
+<meta name="theme-color" content="#F4F7F9">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/tool.css">
+<style>
+.seg2{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}
+.seg2 input{position:absolute;opacity:0;pointer-events:none}
+.seg2 label{display:flex;align-items:center;justify-content:center;min-height:42px;border:1.5px solid var(--line);border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;background:var(--sheet);text-align:center;line-height:1.3;padding:4px}
+.seg2 input:checked + label{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.seg2 input:focus-visible + label{outline:3px solid var(--check);outline-offset:2px}
+.dates{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+.dates input{min-width:0}
+@media (max-width:420px){.dates{grid-template-columns:1fr}}
+.dates label{font-size:13px;font-weight:700;color:var(--ink-soft);display:block;margin-bottom:2px}
+.box{border:1px solid var(--line);border-radius:12px;padding:12px;background:#FBFCFD;margin-top:8px}
+.box .check{align-items:flex-start}
+.box .check input{margin-top:3px;flex:none}
+.box ul{margin:6px 0 0;padding-left:1.2em;font-size:13px;color:var(--ink-soft)}
+.r-rows{list-style:none;margin:4px 0 0;padding:0}
+.r-rows li{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px dashed var(--line);font-variant-numeric:tabular-nums}
+.r-rows li:first-child{border-top:0}
+.r-rows .who{font-weight:700}
+.r-rows .who small{display:block;font-weight:400;font-size:12.5px;color:var(--ink-soft)}
+.r-rows .amt{font-weight:700;font-size:20px;white-space:nowrap}
+.r-total{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;margin-top:6px;padding-top:10px;border-top:2px solid var(--ink)}
+.cap{font-size:12.5px;color:var(--warn);font-weight:700;margin-top:8px}
+.src{font-size:13px;color:var(--ink-soft)}
+.src a{color:var(--ink)}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"育休給付金の計算","url":"https://komarigoto-lab.pages.dev/tools/ikukyu/","applicationCategory":"FinanceApplication","operatingSystem":"All","inLanguage":"ja","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"publisher":{"@type":"Organization","name":"こまりごとラボ","url":"https://komarigoto-lab.pages.dev/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"育児休業給付金はいくらもらえますか？","acceptedAnswer":{"@type":"Answer","text":"休業開始前6か月の賃金の合計を180で割った「休業開始時賃金日額」に、支給日数（原則30日ごと）と給付率を掛けた額です。給付率は育休開始から180日目までが67%、181日目からが50%です。賃金日額には上限額と下限額があります。"}},
+{"@type":"Question","name":"「手取り10割」とは何ですか？","acceptedAnswer":{"@type":"Answer","text":"2025年4月に始まった出生後休業支援給付金（休業開始時賃金日額の13%・最大28日分）を、育児休業給付金の67%に上乗せすると80%になります。育休中は社会保険料が免除され、給付金は非課税のため、休業前の手取りとほぼ同じになることから「手取り10割相当」と呼ばれます。"}}
+]}
+</script>
+<script src="../../assets/analytics.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="site-head">
+    <a class="logo" href="../../" aria-label="こまりごとラボ トップへ"><span>こまりごと</span>ラボ</a>
+    <nav><a href="../../#tools">ツール一覧</a></nav>
+  </header>
+  <p class="crumb"><a href="../../">トップ</a> ／ <a href="../../#tools">ツール</a> ／ 育休給付金の計算</p>
+
+  <main class="layout">
+    <div class="tool-col">
+      <p class="worry">「<mark>育休中、いくらもらえる？</mark>」家計の見通しに</p>
+      <h1>育休給付金の計算</h1>
+      <p class="lead">月給と育休の期間を入れると、育児休業給付金と、2025年4月に始まった出生後休業支援給付金（「手取り10割」の上乗せ）の目安がわかります。2026年8月1日からの上限額に対応しています。</p>
+
+      <form class="card" id="form" autocomplete="off" onsubmit="return false">
+        <div class="field">
+          <span class="legend" id="wLegend">育休前の給与</span>
+          <div class="seg2" role="radiogroup" aria-labelledby="wLegend">
+            <input type="radio" name="wmode" id="wm1" value="month" checked><label for="wm1">月給で入れる</label>
+            <input type="radio" name="wmode" id="wm6" value="six"><label for="wm6">6か月の合計で入れる</label>
+          </div>
+          <div class="inline"><input type="number" id="wage" class="big" inputmode="numeric" min="0" step="1000" placeholder="例）300000"><span class="unit" id="wUnit">円／月</span></div>
+          <p class="hint" id="wHint">額面（税金や社会保険料を引く前）。残業代・通勤手当などを含み、ボーナスは含めません。</p>
+        </div>
+
+        <div class="field">
+          <span class="legend" id="pLegend">育休の期間</span>
+          <div class="seg2" role="radiogroup" aria-labelledby="pLegend">
+            <input type="radio" name="pmode" id="pmD" value="dates" checked><label for="pmD">開始日・終了日</label>
+            <input type="radio" name="pmode" id="pmN" value="days"><label for="pmN">日数で入れる</label>
+          </div>
+          <div class="dates" id="pDates">
+            <div><label for="ps">育休の開始日</label><input type="date" id="ps"></div>
+            <div><label for="pe">育休の終了日</label><input type="date" id="pe"></div>
+          </div>
+          <div class="inline" id="pDays" hidden><input type="number" id="pn" class="big" inputmode="numeric" min="1" step="1" placeholder="例）365"><span class="unit">日</span></div>
+          <div class="chips" aria-label="よくある期間">
+            <button type="button" data-days="28">4週間</button><button type="button" data-days="91">3か月</button><button type="button" data-days="182">6か月</button><button type="button" data-days="365">1年</button>
+          </div>
+          <p class="hint">産後パパ育休（出生時育児休業）も含めて、続けて休む期間で入れてください。</p>
+        </div>
+
+        <div class="box">
+          <label class="check"><input type="checkbox" id="bonus"><span><b>出生後休業支援給付金（13%上乗せ）の対象</b></span></label>
+          <ul>
+            <li>子の出生後8週間以内（産休を取った人は16週間以内）に、本人が通算14日以上の育休を取る</li>
+            <li>配偶者も出生後8週間以内に通算14日以上の育休を取る（配偶者が会社員でない・ひとり親などは不要）</li>
+          </ul>
+        </div>
+
+        <div class="result" id="result" aria-live="polite"></div>
+      </form>
+    </div>
+
+    <aside class="side">
+      <h2>計算のしかた</h2>
+      <dl>
+        <dt>休業開始時賃金日額</dt>
+        <dd>育休を始める前6か月の賃金の合計 ÷ 180。上限は16,540円、下限は3,203円です（2026年8月1日から）。</dd>
+        <dt>育児休業給付金（産後パパ育休を含む）</dt>
+        <dd>賃金日額 × 日数 × 給付率。育休開始から180日目までは67%、181日目からは50%です。30日ごとに区切って計算します。</dd>
+        <dt>出生後休業支援給付金</dt>
+        <dd>賃金日額 × 日数（最大28日）× 13%。育児休業給付金の67%とあわせて80%になります。</dd>
+        <dt>なぜ「手取り10割」？</dt>
+        <dd>育休中は社会保険料が免除され、給付金には税金がかかりません。そのため給付率80%で、休業前の手取りとほぼ同じになると言われています。</dd>
+      </dl>
+      <p class="note-s">この計算は目安です。雇用保険に加入していること（育休前2年間に、11日以上働いた月が12か月以上など）が前提で、実際に支給されるか・いくらかはハローワークが決めます。育休中に会社から賃金が出ると減ることがあります。2027年8月に上限額・下限額が変わる場合は更新します。入力した内容は、お使いの端末の中だけで計算し、どこにも送信しません。</p>
+      <p class="src">出典：厚生労働省「<a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000160564_00050.html" rel="noopener">令和8年8月1日からの基本手当日額等の適用について</a>」、同「<a href="https://www.mhlw.go.jp/content/001728499.pdf" rel="noopener">高年齢雇用継続給付金・介護休業給付金・育児休業等給付の受給者の皆さまへ</a>」（PDF）。2026年11月16日確認。</p>
+
+      <section class="related" aria-labelledby="rel-h">
+        <h2 id="rel-h">ほかのツール</h2>
+        <ul>
+          <li><a href="../days/">日数計算 <span>育休は何日間？復帰まであと何日？</span></a></li>
+          <li><a href="../age/">年齢・和暦早見表 <span>学年の目安もわかる</span></a></li>
+          <li><a href="../calculator/">かんたん電卓 <span>税込・税抜もボタンひとつ</span></a></li>
+        </ul>
+      </section>
+    </aside>
+  </main>
+</div>
+
+<footer><div class="wrap"><a href="../../">こまりごとラボ トップ</a><a href="../../#tools">ほかのツール</a>© 2026 こまりごとラボ</div></footer>
+
+<script>
+(function(){
+  "use strict";
+  // 令和8年8月1日からの額（厚生労働省）
+  var DAILY_MAX = 16540, DAILY_MIN = 3203;   // 休業開始時賃金日額の上限・下限（賃金月額 496,200円・96,090円 ÷ 30）
+  var DAY = 86400000;
+  var $ = function(id){ return document.getElementById(id); };
+
+  function num(v){ v = String(v == null ? "" : v).replace(/[,，円\s]/g, "").replace(/[０-９]/g, function(c){ return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); }); return v === "" ? NaN : Number(v); }
+  function yen(n){ return Math.floor(n).toLocaleString("ja-JP"); }
+  function parse(s){ if (!/^\d{4}-\d{2}-\d{2}$/.test(s || "")) return null; var p = s.split("-").map(Number); var t = Date.UTC(p[0], p[1]-1, p[2]); return new Date(t).getUTCDate() === p[2] ? t : null; }
+  function iso(t){ var d = new Date(t); return d.getUTCFullYear() + "-" + String(d.getUTCMonth()+1).padStart(2,"0") + "-" + String(d.getUTCDate()).padStart(2,"0"); }
+
+  // core: sixMonthTotal = 育休前6か月の賃金合計, days = 育休日数, bonus = 出生後休業支援給付金の対象
+  function calc(sixMonthTotal, days, bonus){
+    if (!(sixMonthTotal > 0)) return {error: "給与を入れてください。"};
+    if (!(days >= 1) || Math.floor(days) !== days) return {error: "育休の期間を入れてください。"};
+    if (days > 731) return {error: "育休の期間は最長2年（731日）までで入れてください。"};
+    var raw = Math.floor(sixMonthTotal / 180);
+    var daily = Math.min(Math.max(raw, DAILY_MIN), DAILY_MAX);
+    var capped = raw > DAILY_MAX ? "max" : raw < DAILY_MIN ? "min" : null;
+    var periods = [], left = days, start = 0, sum67 = 0, sum50 = 0, d67 = 0, d50 = 0;
+    while (left > 0){
+      var d = Math.min(30, left);
+      var rate = start < 180 ? 0.67 : 0.50;     // 180は30の倍数なので、区切りの途中で率は変わらない
+      var amt = Math.floor(daily * d * rate);
+      periods.push({days: d, rate: rate, amount: amt});
+      if (rate === 0.67){ sum67 += amt; d67 += d; } else { sum50 += amt; d50 += d; }
+      start += d; left -= d;
+    }
+    var bonusDays = bonus ? Math.min(28, days) : 0;
+    var bonusAmt = bonus ? Math.floor(daily * bonusDays * 0.13) : 0;
+    return {
+      raw: raw, daily: daily, capped: capped,
+      month67: Math.floor(daily * 30 * 0.67), month50: Math.floor(daily * 30 * 0.50),
+      periods: periods, d67: d67, d50: d50, sum67: sum67, sum50: sum50,
+      bonusDays: bonusDays, bonus: bonusAmt, total: sum67 + sum50 + bonusAmt, days: days
+    };
+  }
+
+  // ---- UI ----
+  var form = $("form");
+  function radio(n){ return form.querySelector('input[name="' + n + '"]:checked').value; }
+  function getDays(){
+    if (radio("pmode") === "days") return num($("pn").value);
+    var a = parse($("ps").value), b = parse($("pe").value);
+    if (a === null || b === null) return NaN;
+    return b < a ? -1 : Math.round((b - a) / DAY) + 1;
+  }
+  function draw(){
+    var w = num($("wage").value), six = radio("wmode") === "month" ? w * 6 : w;
+    var el = $("result");
+    if (isNaN(w)){ el.innerHTML = '<p class="r-label" style="margin:0">給与と育休の期間を入れると、ここに目安が出ます。</p>'; return; }
+    var days = getDays();
+    if (days === -1){ el.innerHTML = '<p class="err">終了日が開始日より前になっています。</p>'; return; }
+    var r = calc(six, days, $("bonus").checked);
+    if (r.error){ el.innerHTML = '<p class="err"></p>'; el.firstChild.textContent = r.error; return; }
+    var rows = '<li><span class="who">1か月（30日）あたり<small>育休開始から180日目まで・67%</small></span><span class="amt">' + yen(r.month67) + '円</span></li>';
+    if (r.d50 > 0) rows += '<li><span class="who">1か月（30日）あたり<small>181日目から・50%</small></span><span class="amt">' + yen(r.month50) + '円</span></li>';
+    if (r.bonusDays) rows += '<li><span class="who">出生後休業支援給付金<small>13%・' + r.bonusDays + '日分（上乗せ・1回）</small></span><span class="amt">' + yen(r.bonus) + '円</span></li>';
+    el.innerHTML = '<div class="r-label">育休 ' + r.days + '日間でもらえる合計の目安</div>' +
+      '<div class="r-big">' + yen(r.total) + '<small>円</small></div>' +
+      '<ul class="r-rows" style="margin-top:8px;border-top:2px solid var(--ink)">' + rows + '</ul>' +
+      '<ul class="r-sub"><li><span>休業開始時賃金日額</span><span>' + yen(r.daily) + '円</span></li>' +
+      '<li><span>育児休業給付金（67%・' + r.d67 + '日）</span><span>' + yen(r.sum67) + '円</span></li>' +
+      (r.d50 ? '<li><span>育児休業給付金（50%・' + r.d50 + '日）</span><span>' + yen(r.sum50) + '円</span></li>' : '') +
+      (r.bonusDays ? '<li><span>出生後休業支援給付金</span><span>' + yen(r.bonus) + '円</span></li>' : '') + '</ul>' +
+      (r.capped === "max" ? '<p class="cap">給与が上限を超えているため、上限額（賃金日額16,540円）で計算しています。</p>' : r.capped === "min" ? '<p class="cap">給与が下限を下回っているため、下限額（賃金日額3,203円）で計算しています。</p>' : '');
+  }
+
+  form.addEventListener("change", function(e){
+    if (e.target.name === "wmode"){
+      var m = radio("wmode") === "month";
+      $("wUnit").textContent = m ? "円／月" : "円／6か月";
+      $("wage").placeholder = m ? "例）300000" : "例）1800000";
+      var v = num($("wage").value); if (!isNaN(v)) $("wage").value = m ? Math.round(v / 6) : v * 6;
+    }
+    if (e.target.name === "pmode"){
+      var d = radio("pmode") === "dates";
+      $("pDates").hidden = !d; $("pDays").hidden = d;
+      if (!d){ var n = getDaysFromDates(); if (n > 0) $("pn").value = n; }
+    }
+    draw();
+  });
+  function getDaysFromDates(){ var a = parse($("ps").value), b = parse($("pe").value); return (a !== null && b !== null && b >= a) ? Math.round((b - a) / DAY) + 1 : NaN; }
+  form.addEventListener("input", draw);
+  document.querySelectorAll("[data-days]").forEach(function(b){
+    b.addEventListener("click", function(){
+      var n = Number(b.dataset.days);
+      if (radio("pmode") === "days") $("pn").value = n;
+      else { var a = parse($("ps").value); if (a === null){ var t = new Date(); a = Date.UTC(t.getFullYear(), t.getMonth(), t.getDate()); $("ps").value = iso(a); } $("pe").value = iso(a + (n - 1) * DAY); }
+      draw();
+    });
+  });
+
+  window.__ikukyu = {calc: calc};
+  draw();
+})();
+</script>
+</body>
+</html>
