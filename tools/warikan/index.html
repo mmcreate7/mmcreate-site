@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>割り勘計算｜端数・幹事多め・役職ごとの傾斜もすぐわかる｜こまりごとラボ</title>
+<meta name="description" content="飲み会や忘年会の割り勘を、端数の切り上げ（100円単位など）や、上司は多め・飲まない人は少なめといった傾斜つきで計算できる無料ツール。おつりや幹事の負担額もわかり、LINEに貼れる案内文もコピーできます。登録不要。">
+<meta property="og:title" content="割り勘計算｜端数・幹事多め・役職ごとの傾斜もすぐわかる">
+<meta property="og:description" content="端数の切り上げや傾斜つきの割り勘を計算。LINEに貼れる案内文もコピーできる無料ツール。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="こまりごとラボ">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://komarigoto-lab.pages.dev/tools/warikan/">
+<link rel="canonical" href="https://komarigoto-lab.pages.dev/tools/warikan/">
+<meta name="theme-color" content="#F4F7F9">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F4F7F9;--sheet:#FFFFFF;--ink:#1B2A4A;--ink-soft:#4A5872;
+  --grid:#D6E0E8;--marker:#FFE45C;--check:#2E7D74;--line:#C3CED8;--warn:#B3261E;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Zen Kaku Gothic New",system-ui,sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--check);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+.site-head{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+.logo{font-weight:900;font-size:20px;letter-spacing:.02em;text-decoration:none}
+.logo span{display:inline-block;background:var(--ink);color:var(--paper);padding:0 6px;margin-right:2px;border-radius:3px}
+.site-head nav a{font-size:14px;font-weight:700;text-decoration:none}
+.site-head nav a:hover{text-decoration:underline;text-underline-offset:5px}
+.crumb{font-size:13px;color:var(--ink-soft);margin:4px 0 18px}
+.crumb a{text-decoration:none;border-bottom:1px solid var(--line)}
+
+.layout{display:grid;grid-template-columns:minmax(0,460px) minmax(0,1fr);gap:56px;align-items:start;padding-bottom:72px}
+h1{font-size:clamp(26px,3.6vw,38px);line-height:1.35;font-weight:900;margin:0 0 10px}
+.lead{color:var(--ink-soft);margin:0 0 26px}
+.worry{font-family:"Klee One",cursive;font-weight:600;font-size:17px;margin:0 0 6px;color:var(--ink-soft)}
+.worry mark{background:linear-gradient(transparent 55%,var(--marker) 55%);color:inherit}
+
+.card{background:var(--sheet);border:2px solid var(--ink);border-radius:18px;padding:20px;box-shadow:0 18px 40px -26px rgba(27,42,74,.45)}
+.field{margin-bottom:16px}
+.field > label,.legend{display:block;font-weight:700;font-size:15px;margin-bottom:6px}
+.inline{display:flex;align-items:center;gap:8px}
+input[type=number],input[type=text],select{font:inherit;font-variant-numeric:tabular-nums;color:var(--ink);background:#FBFCFD;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;min-height:48px;width:100%}
+input[type=number]:focus,input[type=text]:focus,select:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3px rgba(46,125,116,.25)}
+.big{font-size:22px;font-weight:700}
+.unit{font-weight:700;color:var(--ink-soft);white-space:nowrap}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:44px;border:1.5px solid var(--line);border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;background:var(--sheet);text-align:center;line-height:1.3}
+.seg input:checked + label{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.seg input:focus-visible + label{outline:3px solid var(--check);outline-offset:2px}
+.seg.two{grid-template-columns:repeat(3,1fr)}
+.seg label small{display:block;font-size:11px;font-weight:500;opacity:.8;line-height:1.2}
+input:disabled{opacity:.5}
+.hint{font-size:12.5px;color:var(--ink-soft);margin:6px 2px 0}
+
+details.slope{border-top:1px dashed var(--line);margin-top:4px;padding-top:12px}
+details.slope summary{cursor:pointer;font-weight:700;list-style:none;display:flex;align-items:center;gap:8px}
+details.slope summary::-webkit-details-marker{display:none}
+details.slope summary::before{content:"+";display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--paper);font-size:15px;line-height:1}
+details.slope[open] summary::before{content:"−"}
+.groups{margin-top:12px;display:grid;gap:10px}
+.grp{position:relative;display:grid;grid-template-columns:1.2fr .6fr 1.8fr;gap:8px;align-items:end;border:1px solid var(--line);border-radius:12px;padding:10px 36px 10px 10px;background:#FBFCFD}
+.grp label{font-size:11.5px;font-weight:700;color:var(--ink-soft);display:block;margin-bottom:2px}
+.grp input,.grp select{min-height:42px;padding:6px 8px;font-size:15px}
+.grp .wrow{display:grid;grid-template-columns:1.2fr 1fr;gap:4px}
+.grp .wrow label{grid-column:1 / -1}
+.rm{position:absolute;top:4px;right:4px;font:inherit;border:0;background:none;color:var(--ink-soft);font-size:20px;line-height:1;cursor:pointer;padding:6px 8px;border-radius:8px}
+.rm:hover{background:#EEF2F6;color:var(--warn)}
+.add{font:inherit;font-weight:700;font-size:14px;border:1.5px dashed var(--ink);background:none;border-radius:10px;padding:10px;cursor:pointer;width:100%}
+.add:hover{background:#EEF2F6}
+.presets{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.presets button{font:inherit;font-size:12.5px;font-weight:700;border:1.5px solid var(--line);background:var(--sheet);border-radius:999px;padding:3px 10px;cursor:pointer}
+.presets button:hover{border-color:var(--check);color:var(--check)}
+
+/* result */
+.result{margin-top:18px;border-radius:12px;padding:16px 16px 14px;background-color:#FBFCFD;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:18px 18px;background-position:-1px -1px;border:1px solid var(--line)}
+.r-main{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.r-label{font-size:14px;font-weight:700;color:var(--ink-soft)}
+.r-amount{font-size:clamp(34px,9vw,44px);font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2}
+.r-amount small{font-size:.45em;margin-left:2px}
+.r-rows{list-style:none;margin:6px 0 0;padding:0}
+.r-rows li{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px dashed var(--line);font-variant-numeric:tabular-nums}
+.r-rows li:first-child{border-top:0}
+.r-rows .who{font-weight:700}
+.r-rows .amt{font-weight:700;font-size:20px;white-space:nowrap}
+.r-sum{margin-top:10px;padding-top:10px;border-top:2px solid var(--ink);font-size:14px;display:grid;gap:2px;font-variant-numeric:tabular-nums}
+.r-sum div{display:flex;justify-content:space-between}
+.r-sum .diff{font-weight:700}
+.r-sum .diff.plus{color:var(--check)}
+.r-sum .diff.minus{color:var(--warn)}
+.err{color:var(--warn);font-weight:700;font-size:15px}
+.copy{margin-top:12px;font:inherit;font-weight:700;font-size:15px;width:100%;min-height:48px;border:0;border-radius:10px;background:var(--ink);color:var(--paper);cursor:pointer}
+.copy:hover{background:#2c3f66}
+.copy:disabled{opacity:.4;cursor:default}
+
+/* side */
+.side h2{font-size:19px;font-weight:900;margin:0 0 10px}
+.side dl{margin:0}
+.side dt{font-weight:700;margin-top:14px}
+.side dd{margin:2px 0 0;color:var(--ink-soft);font-size:15px}
+.note-s{font-size:13px;color:var(--ink-soft);margin-top:18px}
+.related{margin-top:36px}
+.related ul{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+.related li{border-bottom:1px solid var(--line)}
+.related a{display:flex;justify-content:space-between;gap:12px;padding:12px 4px;text-decoration:none;font-weight:700}
+.related a span{font-weight:400;font-size:14px;color:var(--ink-soft)}
+.related a:hover{text-decoration:underline;text-underline-offset:4px}
+
+footer{border-top:1px solid var(--line);padding:28px 0 48px;font-size:13px;color:var(--ink-soft)}
+footer a{margin-right:16px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:860px){
+  .layout{grid-template-columns:1fr;gap:40px}
+  .tool-col{max-width:520px;width:100%;margin:0 auto}
+}
+@media (max-width:420px){
+  .card{padding:14px}
+  .grp{grid-template-columns:.7fr 2fr}
+  .grp .name-c{grid-column:1 / -1}
+}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"割り勘計算","url":"https://komarigoto-lab.pages.dev/tools/warikan/","applicationCategory":"UtilitiesApplication","operatingSystem":"All","inLanguage":"ja","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"publisher":{"@type":"Organization","name":"こまりごとラボ","url":"https://komarigoto-lab.pages.dev/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"割り勘の端数はどうするのがいいですか？","acceptedAnswer":{"@type":"Answer","text":"集金しやすいように100円単位で切り上げ、出たおつりを幹事が預かって次回に回すか、2次会代に充てる方法がよく使われます。不足を出したくない場合は「切り上げ」を選んでください。"}},
+{"@type":"Question","name":"上司や先輩に多めに払ってもらう計算はできますか？","acceptedAnswer":{"@type":"Answer","text":"「金額に差をつける（傾斜）」を開き、グループごとに比率（例：1.5倍）か固定額（例：1人1万円）を入れると、残りをほかの人で割った金額がわかります。"}}
+]}
+</script>
+<script>
+/* Cloudflare Web Analytics。自分の閲覧は ?mmc-internal=1 を一度開くと、そのブラウザでは数えない */
+(function(){
+  var KEY="mmc-internal";
+  try{
+    var q=new URLSearchParams(location.search).get(KEY);
+    if(q==="1") localStorage.setItem(KEY,"1");
+    if(q==="0") localStorage.removeItem(KEY);
+    if(localStorage.getItem(KEY)==="1") return;
+  }catch(e){}
+  var s=document.createElement("script");s.defer=true;s.src="https://static.cloudflareinsights.com/beacon.min.js";
+  s.setAttribute("data-cf-beacon",'{"token": "e55a5ba713c8410a937f899c57e3e167"}');
+  document.head.appendChild(s);
+})();
+</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="site-head">
+    <a class="logo" href="../../" aria-label="こまりごとラボ トップへ"><span>こまりごと</span>ラボ</a>
+    <nav><a href="../../#tools">ツール一覧</a></nav>
+  </header>
+  <p class="crumb"><a href="../../">トップ</a> ／ <a href="../../#tools">ツール</a> ／ 割り勘計算</p>
+
+  <main class="layout">
+    <div class="tool-col">
+      <p class="worry">「<mark>端数、どうしよう…</mark>」幹事のお悩みに</p>
+      <h1>割り勘計算</h1>
+      <p class="lead">合計金額と人数を入れるだけ。100円単位の切り上げ、上司は多め・飲まない人は少なめといった傾斜もすぐ計算できます。LINEに貼れる案内文もコピーできます。</p>
+
+      <form class="card" id="form" autocomplete="off" onsubmit="return false">
+        <div class="field">
+          <label for="total">お会計の合計</label>
+          <div class="inline"><input id="total" class="big" type="number" inputmode="numeric" min="0" step="1" placeholder="例）32000" value=""><span class="unit">円</span></div>
+        </div>
+        <div class="field" id="peopleField">
+          <label for="people">人数</label>
+          <div class="inline"><input id="people" class="big" type="number" inputmode="numeric" min="1" step="1" value="" placeholder="例）8"><span class="unit">人</span></div>
+          <p class="hint" id="peopleHint" hidden>傾斜を使っているときは、グループの人数で計算します。</p>
+        </div>
+
+        <div class="field">
+          <span class="legend" id="unitLegend">集めやすい単位にそろえる</span>
+          <div class="seg" role="radiogroup" aria-labelledby="unitLegend">
+            <input type="radio" name="unit" id="u1" value="1"><label for="u1">1円</label>
+            <input type="radio" name="unit" id="u10" value="10"><label for="u10">10円</label>
+            <input type="radio" name="unit" id="u100" value="100" checked><label for="u100">100円</label>
+            <input type="radio" name="unit" id="u500" value="500"><label for="u500">500円</label>
+          </div>
+        </div>
+        <div class="field">
+          <span class="legend" id="modeLegend">端数の扱い</span>
+          <div class="seg two" role="radiogroup" aria-labelledby="modeLegend">
+            <input type="radio" name="mode" id="mUp" value="up" checked><label for="mUp">切り上げ<small>不足なし</small></label>
+            <input type="radio" name="mode" id="mDown" value="down"><label for="mDown">切り捨て<small>幹事が補う</small></label>
+            <input type="radio" name="mode" id="mRound" value="round"><label for="mRound">四捨五入</label>
+          </div>
+        </div>
+
+        <details class="slope" id="slope">
+          <summary>金額に差をつける（傾斜）</summary>
+          <p class="hint">上司は1.5倍、飲まない人は0.7倍など、グループごとに比率か固定額を入れます。固定額の人を除いた残りを、比率で分けます。</p>
+          <div class="groups" id="groups"></div>
+          <div class="presets" aria-label="よく使う設定">
+            <button type="button" data-preset="boss">上司は多め</button>
+            <button type="button" data-preset="nodrink">飲まない人は少なめ</button>
+            <button type="button" data-preset="fixed">1人だけ固定額</button>
+          </div>
+          <p style="margin:10px 0 0"><button type="button" class="add" id="addGroup">＋ グループを追加</button></p>
+        </details>
+
+        <div class="result" aria-live="polite" id="result"></div>
+        <button type="button" class="copy" id="copy" disabled>LINE用の案内文をコピー</button>
+      </form>
+    </div>
+
+    <aside class="side">
+      <h2>使い方</h2>
+      <dl>
+        <dt>まずは合計と人数だけ</dt>
+        <dd>1人あたりの金額と、集まる合計、おつり（または不足）がすぐに出ます。</dd>
+        <dt>集めやすい単位にそろえる</dt>
+        <dd>100円単位の「切り上げ」なら、集金で不足が出ません。出たおつりは幹事が預かって、2次会代や次回に回すとスムーズです。</dd>
+        <dt>上司は多め・飲まない人は少なめ</dt>
+        <dd>「金額に差をつける（傾斜）」を開くと、グループごとに比率（1.5倍など）か固定額（1人1万円など）を決められます。</dd>
+        <dt>LINEで連絡</dt>
+        <dd>計算結果をそのままLINEやメッセージに貼れる文章でコピーできます。</dd>
+      </dl>
+      <p class="note-s">入力した内容は、お使いの端末の中だけで計算し、どこにも送信しません。</p>
+
+      <section class="related" aria-labelledby="rel-h">
+        <h2 id="rel-h">ほかのツール</h2>
+        <ul>
+          <li><a href="../calculator/">かんたん電卓 <span>税込・税抜もボタンひとつ</span></a></li>
+        </ul>
+      </section>
+    </aside>
+  </main>
+</div>
+
+<footer><div class="wrap"><a href="../../">こまりごとラボ トップ</a><a href="../../#tools">ほかのツール</a>© 2026 こまりごとラボ</div></footer>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+  var form = $("form"), $groups = $("groups"), $result = $("result"), $copy = $("copy"), $slope = $("slope");
+  var lastText = "";
+
+  function yen(n){ return Math.round(n).toLocaleString("ja-JP"); }
+  function num(v){ v = String(v == null ? "" : v).replace(/[,，円人\s]/g, "").replace(/[０-９．]/g, function(c){ return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); }); return v === "" ? NaN : Number(v); }
+  function radio(name){ var r = form.querySelector('input[name="' + name + '"]:checked'); return r ? r.value : null; }
+
+  function roundTo(x, unit, mode){
+    var q = x / unit;
+    q = Math.round(q * 1e9) / 1e9;           // 浮動小数の誤差を消す
+    if (mode === "up") q = Math.ceil(q);
+    else if (mode === "down") q = Math.floor(q);
+    else q = Math.round(q);
+    return q * unit;
+  }
+
+  // ---- core calculation (exposed for tests) ----
+  // groups: [{name, count, kind:"ratio"|"fixed", value}]
+  function calc(total, groups, unit, mode){
+    if (!(total > 0)) return {error: "合計金額を入れてください。"};
+    var people = 0, fixedSum = 0, weightSum = 0;
+    for (var i = 0; i < groups.length; i++){
+      var g = groups[i];
+      if (!(g.count >= 1) || Math.floor(g.count) !== g.count) return {error: "人数は1以上の整数で入れてください。"};
+      if (!(g.value >= 0) || (g.kind === "ratio" && g.value === 0)) return {error: (g.kind === "fixed" ? "固定額" : "比率") + "を入れてください。"};
+      people += g.count;
+      if (g.kind === "fixed") fixedSum += g.count * g.value; else weightSum += g.count * g.value;
+    }
+    if (people === 0) return {error: "人数を入れてください。"};
+    var rest = total - fixedSum;
+    if (weightSum === 0){
+      if (Math.abs(rest) > 0.5) return {error: "全員が固定額のため、合計と一致しません（差額 " + yen(rest) + "円）。比率で払うグループを1つ以上入れてください。"};
+    } else if (rest < 0) {
+      return {error: "固定額の合計（" + yen(fixedSum) + "円）が、お会計を超えています。"};
+    }
+    var base = weightSum ? rest / weightSum : 0;
+    var rows = groups.map(function(g){
+      var each = g.kind === "fixed" ? g.value : roundTo(base * g.value, unit, mode);
+      return {name: g.name, count: g.count, each: each, kind: g.kind};
+    });
+    var collected = rows.reduce(function(s, r){ return s + r.each * r.count; }, 0);
+    return {rows: rows, collected: collected, diff: collected - total, people: people, total: total};
+  }
+
+  // ---- groups UI ----
+  var gid = 0;
+  function addGroup(name, count, kind, value){
+    gid++;
+    var div = document.createElement("div");
+    div.className = "grp"; div.dataset.id = gid;
+    div.innerHTML =
+      '<div class="name-c"><label for="gn' + gid + '">グループ名</label><input type="text" id="gn' + gid + '" class="g-name" maxlength="20"></div>' +
+      '<div><label for="gc' + gid + '">人数</label><input type="number" inputmode="numeric" min="1" step="1" id="gc' + gid + '" class="g-count"></div>' +
+      '<div class="wrow"><label for="gk' + gid + '">払い方</label><select id="gk' + gid + '" class="g-kind"><option value="ratio">比率（倍）</option><option value="fixed">固定額（円）</option></select>' +
+      '<input type="number" inputmode="decimal" min="0" step="0.1" class="g-value" aria-label="比率または固定額"></div>' +
+      '<button type="button" class="rm" aria-label="このグループを削除">×</button>';
+    div.querySelector(".g-name").value = name;
+    div.querySelector(".g-count").value = count;
+    div.querySelector(".g-kind").value = kind;
+    div.querySelector(".g-value").value = value;
+    $groups.appendChild(div);
+    update();
+    return div;
+  }
+  function readGroups(){
+    return Array.prototype.map.call($groups.querySelectorAll(".grp"), function(d){
+      return {
+        name: d.querySelector(".g-name").value.trim() || "参加者",
+        count: num(d.querySelector(".g-count").value),
+        kind: d.querySelector(".g-kind").value,
+        value: num(d.querySelector(".g-value").value)
+      };
+    });
+  }
+  function slopeOn(){ return $slope.open && $groups.children.length > 0; }
+
+  function ensureBaseGroup(){
+    if ($groups.children.length) return;
+    var p = num($("people").value);
+    addGroup("みんな", p >= 1 ? p : 1, "ratio", 1);
+  }
+
+  $groups.addEventListener("input", update);
+  $groups.addEventListener("change", function(e){
+    if (e.target.classList.contains("g-kind")){
+      var v = e.target.parentNode.querySelector(".g-value");
+      if (e.target.value === "fixed"){ v.step = "100"; v.inputMode = "numeric"; if (num(v.value) < 100) v.value = ""; v.placeholder = "例）10000"; }
+      else { v.step = "0.1"; v.inputMode = "decimal"; if (num(v.value) >= 100 || v.value === "") v.value = 1; v.placeholder = ""; }
+    }
+    update();
+  });
+  $groups.addEventListener("click", function(e){
+    if (e.target.classList.contains("rm")){ e.target.closest(".grp").remove(); update(); }
+  });
+  $("addGroup").addEventListener("click", function(){ var d = addGroup("", 1, "ratio", 1); d.querySelector(".g-name").focus(); });
+  $slope.addEventListener("toggle", function(){
+    if ($slope.open) ensureBaseGroup();
+    update();
+  });
+  document.querySelector(".presets").addEventListener("click", function(e){
+    var p = e.target.dataset.preset; if (!p) return;
+    $slope.open = true; ensureBaseGroup();
+    var first = $groups.querySelector(".grp .g-count");
+    function take(n){ var c = num(first.value); if (c > n) first.value = c - n; }
+    if (p === "boss"){ take(1); addGroup("上司・先輩", 1, "ratio", 1.5); }
+    if (p === "nodrink"){ take(1); addGroup("飲まない人", 1, "ratio", 0.7); }
+    if (p === "fixed"){ take(1); var d = addGroup("部長", 1, "fixed", 10000); d.querySelector(".g-value").step = "100"; }
+    update();
+  });
+
+  // ---- render ----
+  function update(){
+    var total = num($("total").value);
+    var unit = Number(radio("unit")), mode = radio("mode");
+    var on = slopeOn();
+    $("people").disabled = on;
+    $("peopleHint").hidden = !on;
+    var groups = on ? readGroups() : [{name: "1人あたり", count: num($("people").value), kind: "ratio", value: 1}];
+    if (!on && !(num($("people").value) >= 1)) groups = [{name: "1人あたり", count: NaN, kind: "ratio", value: 1}];
+
+    if (isNaN(total) && !on && isNaN(num($("people").value))){
+      $result.innerHTML = '<p class="r-label" style="margin:0">合計金額と人数を入れると、ここに結果が出ます。</p>';
+      $copy.disabled = true; lastText = ""; return;
+    }
+    var r = calc(total, groups, unit, mode);
+    if (r.error){
+      $result.innerHTML = '<p class="err" style="margin:0"></p>'; $result.firstChild.textContent = r.error;
+      $copy.disabled = true; lastText = ""; return;
+    }
+    var html = "";
+    if (!on){
+      html += '<div class="r-main"><span class="r-label">1人あたり（' + r.people + '人）</span><span class="r-amount">' + yen(r.rows[0].each) + '<small>円</small></span></div>';
+    } else {
+      html += '<ul class="r-rows">' + r.rows.map(function(x){
+        return '<li><span><span class="who"></span>（' + x.count + '人）</span><span class="amt">' + yen(x.each) + '円</span></li>';
+      }).join("") + '</ul>';
+    }
+    var diffTxt = r.diff > 0 ? "おつり（幹事が預かる）" : r.diff < 0 ? "不足（幹事が補う）" : "過不足";
+    var cls = r.diff > 0 ? "plus" : r.diff < 0 ? "minus" : "";
+    html += '<div class="r-sum"><div><span>お会計</span><span>' + yen(r.total) + '円</span></div>' +
+            '<div><span>集まる合計</span><span>' + yen(r.collected) + '円</span></div>' +
+            '<div class="diff ' + cls + '"><span>' + diffTxt + '</span><span>' + (r.diff ? yen(Math.abs(r.diff)) + "円" : "ぴったり") + '</span></div></div>';
+    $result.innerHTML = html;
+    if (on){
+      var whos = $result.querySelectorAll(".who");
+      r.rows.forEach(function(x, i){ whos[i].textContent = x.name; });
+    }
+    // LINE text
+    var lines = ["【お会計のご案内】", "合計 " + yen(r.total) + "円（" + r.people + "人）"];
+    if (!on) lines.push("お一人 " + yen(r.rows[0].each) + "円 でお願いします！");
+    else r.rows.forEach(function(x){ lines.push(x.name + "（" + x.count + "人）：お一人 " + yen(x.each) + "円"); });
+    if (r.diff > 0) lines.push("※おつり " + yen(r.diff) + "円は幹事が預かります");
+    lastText = lines.join("\n");
+    $copy.disabled = false;
+  }
+
+  form.addEventListener("input", function(e){ if (!e.target.closest(".grp")) {
+    if (e.target.id === "people" && slopeOn()) return;
+    update(); } });
+  form.addEventListener("change", function(e){ if (e.target.name === "unit" || e.target.name === "mode") update(); });
+
+  $copy.addEventListener("click", function(){
+    if (!lastText) return;
+    function done(){ $copy.textContent = "コピーしました"; setTimeout(function(){ $copy.textContent = "LINE用の案内文をコピー"; }, 1500); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(lastText).then(done, function(){});
+    else { var t = document.createElement("textarea"); t.value = lastText; document.body.appendChild(t); t.select(); try { document.execCommand("copy"); done(); } catch(e){} document.body.removeChild(t); }
+  });
+
+  window.__warikan = {calc: calc, text: function(){ return lastText; }, addGroup: addGroup, update: update};
+  update();
+})();
+</script>
+</body>
+</html>
