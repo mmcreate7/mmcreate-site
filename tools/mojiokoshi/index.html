@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>音声文字起こし｜話すだけで日本語のテキストに・そのままコピペ｜こまりごとラボ</title>
+<meta name="description" content="ボタンを押して話すだけで、日本語をリアルタイムで文字にする無料ツール。出てきた文字はその場で直せて、ボタンひとつでコピー。メール・LINE・SNS・フォームへの貼り付けに。登録不要。">
+<meta property="og:title" content="音声文字起こし｜話すだけで日本語のテキストに・そのままコピペ">
+<meta property="og:description" content="話すだけでリアルタイムに文字起こし。直してコピーして、ほかのサイトに貼るだけ。登録不要・無料。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="こまりごとラボ">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://komarigoto-lab.pages.dev/tools/mojiokoshi/">
+<link rel="canonical" href="https://komarigoto-lab.pages.dev/tools/mojiokoshi/">
+<meta name="theme-color" content="#F4F7F9">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/tool.css">
+<style>
+.mic{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:60px;font:inherit;font-size:18px;font-weight:900;border:0;border-radius:14px;background:var(--ink);color:var(--paper);cursor:pointer}
+.mic:hover{background:#2c3f66}
+.mic:disabled{background:#9AA6B8;cursor:not-allowed}
+.mic .dot{width:14px;height:14px;border-radius:50%;background:#FF6B5E;flex:none}
+.mic.on{background:var(--warn)}
+.mic.on:hover{background:#951f19}
+.mic.on .dot{background:#fff;border-radius:3px;animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.mic.on .dot{animation:none}}
+.status{font-size:13.5px;font-weight:700;color:var(--ink-soft);margin:8px 2px 0;min-height:1.6em}
+.status.err{color:var(--warn)}
+textarea#text{display:block;font:inherit;font-size:17px;line-height:1.8;color:var(--ink);background:#FBFCFD;border:1.5px solid var(--line);border-radius:10px;padding:12px;width:100%;min-height:260px;resize:vertical;margin-top:12px}
+textarea#text:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3px rgba(46,125,116,.25)}
+.interim{font-size:15px;color:var(--ink-soft);background:#FFF6C8;border-radius:8px;padding:6px 10px;margin-top:8px}
+.row2{display:flex;gap:8px;margin-top:10px}
+.row2 .copy{margin-top:0;flex:1}
+.ghost{font:inherit;font-weight:700;font-size:15px;min-height:46px;padding:0 16px;border:1.5px solid var(--line);border-radius:10px;background:var(--sheet);color:var(--ink);cursor:pointer;white-space:nowrap}
+.ghost:hover{border-color:var(--ink)}
+.ghost.warn{border-color:var(--warn);color:var(--warn)}
+.opt{margin-top:10px}
+.meta{font-size:12.5px;color:var(--ink-soft);margin:6px 2px 0;font-variant-numeric:tabular-nums}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"音声文字起こし","url":"https://komarigoto-lab.pages.dev/tools/mojiokoshi/","applicationCategory":"UtilitiesApplication","operatingSystem":"All","inLanguage":"ja","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"publisher":{"@type":"Organization","name":"こまりごとラボ","url":"https://komarigoto-lab.pages.dev/"}}
+</script>
+<script src="../../assets/analytics.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="site-head">
+    <a class="logo" href="../../" aria-label="こまりごとラボ トップへ"><span>こまりごと</span>ラボ</a>
+    <nav><a href="../../#tools">ツール一覧</a></nav>
+  </header>
+  <p class="crumb"><a href="../../">トップ</a> ／ <a href="../../#tools">ツール</a> ／ 音声文字起こし</p>
+
+  <main class="layout">
+    <div class="tool-col">
+      <p class="worry">「<mark>打つより、しゃべった方が早い</mark>」ときに</p>
+      <h1>音声文字起こし</h1>
+      <p class="lead">ボタンを押して話すと、その場で文字になります。直してコピーして、ほかのサイトに貼るだけ。</p>
+
+      <div class="card">
+        <button type="button" class="mic" id="mic"><span class="dot" aria-hidden="true"></span><span id="mic-label">話しはじめる</span></button>
+        <p class="status" id="status" role="status" aria-live="polite"></p>
+        <label class="legend" for="text" style="position:absolute;left:-9999px">文字起こしの結果（キーボードで直せます）</label>
+        <textarea id="text" placeholder="ここに文字が出てきます。キーボードで自由に直せます。"></textarea>
+        <div class="interim" id="interim" hidden></div>
+        <p class="meta" id="meta">0字</p>
+        <div class="row2">
+          <button type="button" class="copy" id="copy">全部コピー</button>
+          <button type="button" class="ghost" id="clear">消す</button>
+        </div>
+        <label class="check opt"><input type="checkbox" id="punct" checked>区切りに「。」を付ける</label>
+      </div>
+    </div>
+
+    <aside class="side">
+      <h2>使い方</h2>
+      <dl>
+        <dt>1. 「話しはじめる」を押す</dt>
+        <dd>はじめにマイクの使用を聞かれたら「許可」を選んでください。話している途中の言葉は黄色の欄に出て、区切りがつくと上の欄に入ります。</dd>
+        <dt>2. 直す</dt>
+        <dd>出てきた文字は、話している途中でもキーボードで直せます。新しい言葉はいつも最後に足されます。</dd>
+        <dt>3. コピーして貼る</dt>
+        <dd>「全部コピー」を押して、メール・LINE・SNS・お問い合わせフォームなどに貼り付けてください。</dd>
+        <dt>使えるブラウザ</dt>
+        <dd>パソコン・Androidは Google Chrome か Microsoft Edge、iPhone・iPadは Safari。Firefox や、LINEなどアプリの中で開いたページでは使えないことがあります。</dd>
+        <dt>うまく聞き取れないとき</dt>
+        <dd>マイクに近づいて、少しゆっくり話すと精度が上がります。句読点や漢字の間違いは、あとからキーボードで直してください。</dd>
+      </dl>
+      <p class="note-s">音声は、お使いのブラウザの音声認識機能で文字に変換されます（Chrome は Google、Edge は Microsoft、Safari は Apple のサーバーで処理されることがあります）。こまりごとラボには音声も文字も送られません。書いた文字は、ページを閉じても消えないよう、お使いの端末のブラウザの中にだけ一時保存します（「消す」で消えます）。</p>
+
+      <section class="related" aria-labelledby="rel-h">
+        <h2 id="rel-h">ほかのツール</h2>
+        <ul>
+          <li><a href="../moji/">文字数カウント <span>Xの140字に収まる？</span></a></li>
+          <li><a href="../days/">日数計算 <span>何日間？あと何日？</span></a></li>
+          <li><a href="../calculator/">かんたん電卓 <span>税込・税抜もボタンひとつ</span></a></li>
+        </ul>
+      </section>
+    </aside>
+  </main>
+</div>
+
+<footer><div class="wrap"><a href="../../">こまりごとラボ トップ</a><a href="../../#tools">ほかのツール</a>© 2026 こまりごとラボ</div></footer>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+  var ta = $("text"), mic = $("mic"), label = $("mic-label"), statusEl = $("status"), interimEl = $("interim");
+  var KEY = "mmc-mojiokoshi";
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var isAndroid = /Android/i.test(navigator.userAgent);
+  var rec = null, want = false, restartTimer = null;
+
+  function setStatus(msg, isErr){ statusEl.textContent = msg || ""; statusEl.classList.toggle("err", !!isErr); }
+  function save(){ try { localStorage.setItem(KEY, ta.value); } catch (e) {} }
+  function meta(){ $("meta").textContent = Array.from(ta.value).length.toLocaleString("ja-JP") + "字"; }
+  function showInterim(t){ interimEl.textContent = t; interimEl.hidden = !t; }
+  function ui(){
+    mic.classList.toggle("on", want);
+    label.textContent = want ? "止める" : "話しはじめる";
+    mic.setAttribute("aria-pressed", want ? "true" : "false");
+  }
+
+  function commit(text){
+    var t = text.replace(/^\s+|\s+$/g, "");
+    if (!t) return;
+    if ($("punct").checked && !/[。、！？!?.,…」』）)]$/.test(t)) t += "。";
+    var s = ta.selectionStart, e = ta.selectionEnd, focused = document.activeElement === ta;
+    ta.value = ta.value + t;
+    if (focused) { ta.setSelectionRange(s, e); } else { ta.scrollTop = ta.scrollHeight; }
+    save(); meta();
+  }
+
+  function create(){
+    var r = new SR();
+    r.lang = "ja-JP";
+    r.interimResults = true;
+    r.continuous = !isAndroid; // Android の Chrome は continuous で同じ文が重なるため、1文ごとに再開する
+    r.maxAlternatives = 1;
+    r.onresult = function(ev){
+      var interim = "";
+      for (var i = ev.resultIndex; i < ev.results.length; i++){
+        var res = ev.results[i];
+        if (res.isFinal) commit(res[0].transcript);
+        else interim += res[0].transcript;
+      }
+      showInterim(interim);
+    };
+    r.onstart = function(){ setStatus("聞き取り中… 話してください"); };
+    r.onerror = function(ev){
+      var e = ev.error;
+      if (e === "no-speech" || e === "aborted") return; // 無音などは自動で再開する
+      want = false; ui(); showInterim("");
+      if (e === "not-allowed" || e === "service-not-allowed") setStatus("マイクが許可されていません。アドレスバーの鍵マークなどから、このサイトのマイクを「許可」にしてください。", true);
+      else if (e === "audio-capture") setStatus("マイクが見つかりません。マイクがつながっているか確認してください。", true);
+      else if (e === "network") setStatus("音声認識につながりませんでした。インターネットの接続を確認して、もう一度押してください。", true);
+      else setStatus("止まりました（" + e + "）。もう一度押してください。", true);
+    };
+    r.onend = function(){
+      if (want){
+        clearTimeout(restartTimer);
+        restartTimer = setTimeout(function(){ if (want) { try { r.start(); } catch (err) {} } }, 200);
+      } else {
+        showInterim("");
+        if (!statusEl.classList.contains("err")) setStatus("止めました。");
+      }
+    };
+    return r;
+  }
+
+  if (!SR){
+    mic.disabled = true;
+    setStatus("このブラウザは音声入力に対応していません。パソコン・Androidは Chrome か Edge、iPhone・iPadは Safari で開いてください。", true);
+  }
+
+  mic.addEventListener("click", function(){
+    if (!SR) return;
+    if (want){
+      want = false; ui(); clearTimeout(restartTimer);
+      try { rec && rec.stop(); } catch (e) {}
+      return;
+    }
+    if (!rec) rec = create();
+    want = true; ui(); setStatus("準備中…");
+    try { rec.start(); } catch (e) { /* すでに動いているとき */ }
+  });
+
+  ta.addEventListener("input", function(){ save(); meta(); });
+
+  $("copy").addEventListener("click", function(){
+    var b = $("copy"), v = ta.value;
+    if (!v) return;
+    function done(){ b.textContent = "コピーしました"; setTimeout(function(){ b.textContent = "全部コピー"; }, 1400); }
+    function fallback(){ ta.focus(); ta.select(); try { document.execCommand("copy"); done(); } catch (e) {} }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(v).then(done, fallback);
+    else fallback();
+  });
+
+  var clearArmed = null;
+  $("clear").addEventListener("click", function(){
+    var b = $("clear");
+    if (!ta.value) return;
+    if (!clearArmed){
+      b.textContent = "本当に消す"; b.classList.add("warn");
+      clearArmed = setTimeout(function(){ clearArmed = null; b.textContent = "消す"; b.classList.remove("warn"); }, 3000);
+      return;
+    }
+    clearTimeout(clearArmed); clearArmed = null;
+    b.textContent = "消す"; b.classList.remove("warn");
+    ta.value = ""; save(); meta(); ta.focus();
+  });
+
+  try { var saved = localStorage.getItem(KEY); if (saved) ta.value = saved; } catch (e) {}
+  meta(); ui();
+})();
+</script>
+</body>
+</html>
