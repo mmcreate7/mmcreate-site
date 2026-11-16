@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>困りごとを教えてください｜無料のツールにして公開します｜こまりごとラボ</title>
+<meta name="description" content="暮らしや仕事の「ちょっと困った」を教えてください。いただいた困りごとは、基本的に無料のツールにして、こまりごとラボで公開します。登録不要・費用はかかりません。">
+<meta property="og:title" content="困りごとを教えてください｜こまりごとラボ">
+<meta property="og:description" content="いただいた困りごとは、基本的に無料のツールにして公開します。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="こまりごとラボ">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://komarigoto-lab.pages.dev/request/">
+<link rel="canonical" href="https://komarigoto-lab.pages.dev/request/">
+<meta name="theme-color" content="#F4F7F9">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/tool.css">
+<style>
+textarea{font:inherit;font-size:16px;line-height:1.7;color:var(--ink);background:#FBFCFD;border:1.5px solid var(--line);border-radius:10px;padding:12px;width:100%;min-height:150px;resize:vertical}
+textarea.short{min-height:90px}
+input[type=email]{font:inherit;color:var(--ink);background:#FBFCFD;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;min-height:48px;width:100%}
+textarea:focus,input[type=email]:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3px rgba(46,125,116,.25)}
+.req{display:inline-block;font-size:11.5px;font-weight:700;background:var(--marker);border:1.5px solid var(--ink);border-radius:999px;padding:0 8px;margin-left:6px;vertical-align:2px}
+.opt{font-size:12.5px;font-weight:500;color:var(--ink-soft);margin-left:6px}
+.scenes{display:flex;flex-wrap:wrap;gap:6px}
+.scenes label{cursor:pointer}
+.scenes input{position:absolute;opacity:0;pointer-events:none}
+.scenes span{display:inline-block;font-size:14px;font-weight:700;border:1.5px solid var(--line);background:var(--sheet);border-radius:999px;padding:6px 14px}
+.scenes input:checked + span{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.scenes input:focus-visible + span{outline:3px solid var(--check);outline-offset:2px}
+.consent{align-items:flex-start;font-size:14px;line-height:1.6}
+.consent input{flex:none;margin-top:2px}
+.send{margin-top:6px}
+.send:disabled{opacity:.45;cursor:not-allowed}
+.done{margin-top:16px;border:2px solid var(--check);border-radius:12px;padding:14px 16px;background:#F1F8F6;font-size:14.5px}
+.done p{margin:0 0 8px}
+.done code{font-family:inherit;font-weight:700}
+.sub-btn{font:inherit;font-size:13.5px;font-weight:700;border:1.5px solid var(--ink);background:var(--sheet);border-radius:999px;padding:5px 14px;cursor:pointer;margin:2px 6px 2px 0}
+.promise{list-style:none;margin:0;padding:0}
+.promise li{position:relative;padding:12px 0 12px 30px;border-top:1px solid var(--line);font-size:15px}
+.promise li:last-child{border-bottom:1px solid var(--line)}
+.promise li::before{content:"";position:absolute;left:4px;top:19px;width:14px;height:8px;border-left:3px solid var(--check);border-bottom:3px solid var(--check);transform:rotate(-45deg)}
+.promise strong{display:block}
+.promise span{color:var(--ink-soft);font-size:14px}
+.policy-head{font-family:"Klee One",cursive;font-weight:600;font-size:clamp(20px,2.6vw,24px);line-height:1.5;margin:0 0 14px}
+.policy-head mark{background:linear-gradient(transparent 55%,var(--marker) 55%);color:inherit}
+</style>
+<script src="../assets/analytics.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="site-head">
+    <a class="logo" href="../" aria-label="こまりごとラボ トップへ"><span>こまりごと</span>ラボ</a>
+    <nav><a href="../#tools">ツール一覧</a></nav>
+  </header>
+  <p class="crumb"><a href="../">トップ</a> ／ 困りごとを教えてください</p>
+
+  <main class="layout">
+    <div class="tool-col">
+      <p class="worry">「<mark>こんなことで、ちょっと困っている</mark>」を募集しています</p>
+      <h1>困りごとを教えてください</h1>
+      <p class="lead">暮らしや仕事のなかの、小さな「困った」を教えてください。いただいた困りごとは、<strong>基本的に無料のツールにして、このサイトで公開します。</strong></p>
+
+      <form class="card" id="f" novalidate>
+        <div class="field">
+          <label for="worry">どんなことで困っていますか？<span class="req">必須</span></label>
+          <textarea id="worry" name="worry" required maxlength="2000" placeholder="例）毎月の習い事の月謝、きょうだい3人分を合計していくらになるか、毎回スマホの電卓で計算しています。"></textarea>
+          <p class="hint">うまくまとまっていなくて大丈夫です。一言でも、愚痴のようなものでも歓迎です。</p>
+        </div>
+
+        <div class="field">
+          <span class="legend" id="scene-l">どんな場面のことですか？<span class="opt">任意</span></span>
+          <div class="scenes" role="radiogroup" aria-labelledby="scene-l">
+            <label><input type="radio" name="scene" value="暮らし・家事"><span>暮らし・家事</span></label>
+            <label><input type="radio" name="scene" value="子育て・学校"><span>子育て・学校</span></label>
+            <label><input type="radio" name="scene" value="お金・手続き"><span>お金・手続き</span></label>
+            <label><input type="radio" name="scene" value="仕事・お店の運営"><span>仕事・お店の運営</span></label>
+            <label><input type="radio" name="scene" value="趣味・推し活"><span>趣味・推し活</span></label>
+            <label><input type="radio" name="scene" value="その他"><span>その他</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="now">いまはどうしていますか？<span class="opt">任意</span></label>
+          <textarea id="now" name="now" class="short" maxlength="1000" placeholder="例）紙にメモして手で計算している／Excelでがんばっている など"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="mail">ツールができたらお知らせを受け取るメールアドレス<span class="opt">任意</span></label>
+          <input type="email" id="mail" name="mail" autocomplete="email" placeholder="例）name@example.com">
+          <p class="hint">空欄でも送れます。完成のお知らせと、内容の確認にだけ使います。</p>
+        </div>
+
+        <div class="field">
+          <label class="check consent"><input type="checkbox" id="agree" required> このページの「お約束」を読み、困りごとの内容を、個人がわからない形に書き直してサイトやSNSで紹介することに同意します。</label>
+        </div>
+
+        <button type="submit" class="copy send" id="send" disabled>メールで送る（無料）</button>
+        <p class="hint">ボタンを押すと、お使いのメールアプリが開き、入力した内容が入った状態になります。そのまま送信してください。</p>
+        <p class="err" id="err" role="alert" hidden></p>
+
+        <div class="done" id="done" hidden>
+          <p><strong>メールアプリが開かないときは</strong>、下のボタンで内容をコピーして、<code>mmcreate7@gmail.com</code> 宛てに送ってください。</p>
+          <button type="button" class="sub-btn" id="copy-body">内容をコピー</button><button type="button" class="sub-btn" id="copy-addr">宛先をコピー</button>
+          <p id="copied" class="hint" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+
+    <aside class="side">
+      <p class="policy-head">教えてもらった困りごとは、<br><mark>基本的に無料のツールにして公開します。</mark></p>
+      <h2>お約束</h2>
+      <ul class="promise">
+        <li><strong>できたツールは、無料で公開します</strong><span>登録不要で、あなたも、同じことで困っているほかの人も使えます。</span></li>
+        <li><strong>費用はかかりません。売り込みもしません</strong><span>困りごとを送ったことで、料金をいただいたり、商品をおすすめしたりすることはありません。</span></li>
+        <li><strong>個人がわからない形で紹介します</strong><span>ツールのページやSNSで「こんな声をいただきました」と紹介するときは、名前や細かい事情がわからないように書き直します。</span></li>
+        <li><strong>メールアドレスはお知らせにだけ使います</strong><span>完成のお知らせと内容の確認以外には使いません。第三者に渡すこともありません。</span></li>
+      </ul>
+
+      <dl>
+        <dt>すべてを必ず作れますか？</dt>
+        <dd>できるかぎり作りますが、お約束はできません。ツールで解決しにくいもの、法律・医療・税務など専門家の判断が必要なもの、似たツールがすでにあるものは、作らないことや、別の方法をご案内することがあります。</dd>
+        <dt>いつできますか？</dt>
+        <dd>同じ声が多いもの、すぐ役に立ちそうなものから順に作るため、完成の時期はお約束できません。できたら、メールアドレスをいただいた方にお知らせします。</dd>
+        <dt>返事はもらえますか？</dt>
+        <dd>すべての方への個別のお返事はお約束できませんが、いただいた内容にはすべて目を通します。</dd>
+        <dt>書いてはいけないことはありますか？</dt>
+        <dd>ご自身やほかの方の住所・電話番号・口座番号などの個人情報は書かないでください。</dd>
+      </dl>
+
+      <section class="related" aria-labelledby="rel-h">
+        <h2 id="rel-h">これまでに作ったツール</h2>
+        <ul>
+          <li><a href="../tools/calculator/">かんたん電卓 <span>税込・税抜もボタンひとつ</span></a></li>
+          <li><a href="../tools/warikan/">割り勘計算 <span>端数も傾斜もすぐわかる</span></a></li>
+          <li><a href="../tools/days/">日数計算 <span>何日間？あと何日？</span></a></li>
+          <li><a href="../#tools">すべてのツールを見る <span>一覧へ</span></a></li>
+        </ul>
+      </section>
+    </aside>
+  </main>
+</div>
+
+<footer><div class="wrap"><a href="../">こまりごとラボ トップ</a><a href="../#tools">ツール一覧</a>© 2026 こまりごとラボ</div></footer>
+
+<script>
+(function(){
+  "use strict";
+  var TO = "mmcreate7@gmail.com";
+  var $ = function(id){ return document.getElementById(id); };
+  var f = $("f"), send = $("send"), agree = $("agree"), err = $("err");
+
+  function sync(){ send.disabled = !agree.checked; }
+  agree.addEventListener("change", sync); sync();
+
+  function body(){
+    var scene = f.querySelector('input[name=scene]:checked');
+    return [
+      "【困りごと】", $("worry").value.trim(), "",
+      "【場面】", scene ? scene.value : "（未選択）", "",
+      "【いまのやり方】", $("now").value.trim() || "（未記入）", "",
+      "【お知らせ先】", $("mail").value.trim() || "（不要）", "",
+      "※ こまりごとラボ「困りごとを教えてください」フォームから送信"
+    ].join("\n");
+  }
+  function subject(){
+    var t = $("worry").value.trim().replace(/\s+/g, " ");
+    return "【困りごと】" + (t.length > 24 ? t.slice(0, 24) + "…" : t);
+  }
+
+  f.addEventListener("submit", function(e){
+    e.preventDefault();
+    err.hidden = true;
+    if (!$("worry").value.trim()){ err.textContent = "「どんなことで困っていますか？」を入力してください。"; err.hidden = false; $("worry").focus(); return; }
+    var m = $("mail").value.trim();
+    if (m && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m)){ err.textContent = "メールアドレスの形をご確認ください（空欄でも送れます）。"; err.hidden = false; $("mail").focus(); return; }
+    if (!agree.checked){ return; }
+    location.href = "mailto:" + TO + "?subject=" + encodeURIComponent(subject()) + "&body=" + encodeURIComponent(body());
+    $("done").hidden = false;
+  });
+
+  function copy(text){
+    var done = function(){ $("copied").textContent = "コピーしました。"; };
+    if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done, fallback); } else { fallback(); }
+    function fallback(){ var t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select(); try { document.execCommand("copy"); done(); } catch(_){} document.body.removeChild(t); }
+  }
+  $("copy-body").addEventListener("click", function(){ copy("件名：" + subject() + "\n\n" + body()); });
+  $("copy-addr").addEventListener("click", function(){ copy(TO); });
+})();
+</script>
+</body>
+</html>

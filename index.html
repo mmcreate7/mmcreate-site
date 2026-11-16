@@ -95,6 +95,10 @@ section{padding:88px 0}
 .tool .go{margin-top:8px;font-weight:700;font-size:14px}
 .tag{position:absolute;top:-11px;right:16px;background:var(--marker);font-size:12px;font-weight:700;padding:1px 10px;border-radius:999px;border:1.5px solid var(--ink)}
 .more{margin-top:24px;font-size:14px;color:var(--ink-soft)}
+.ask{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;margin-top:28px;background:var(--marker);border:2px solid var(--ink);border-radius:10px;padding:24px 26px}
+.ask h3{margin:0 0 4px;font-size:20px;font-weight:900}
+.ask p{margin:0;font-size:14.5px}
+@media (max-width:860px){.ask{grid-template-columns:1fr}}
 .web-mini{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;border-top:2px solid var(--ink);border-bottom:1px solid var(--line);padding:28px 0}
 .web-mini h2{margin:0 0 4px;font-size:20px;font-weight:900}
 .web-mini p{margin:0;color:var(--ink-soft);font-size:15px}
@@ -196,6 +200,7 @@ footer{padding:40px 0 56px;font-size:13px;color:var(--ink-soft)}
     <a class="logo" href="#top" aria-label="こまりごとラボ トップへ"><span>こまりごと</span>ラボ</a>
     <nav aria-label="ページ内">
       <a href="#tools">ツール</a>
+      <a href="request/">困りごとを教える</a>
       <a href="#products">テンプレート</a>
       <a href="#about">こまりごとラボについて</a>
       <a href="#contact">お問い合わせ</a>
@@ -294,7 +299,13 @@ footer{padding:40px 0 56px;font-size:13px;color:var(--ink-soft)}
         <span class="go">使ってみる →</span>
       </a>
     </div>
-    <p class="more">ツールは、よく聞く小さな悩みから順番に増やしていきます。「こんなことで困っている」があれば、<a href="#contact">お気軽に教えてください</a>。</p>
+    <div class="ask">
+      <div>
+        <h3>あなたの「困った」を、次のツールに。</h3>
+        <p>暮らしや仕事の小さな困りごとを教えてください。いただいた困りごとは、<strong>基本的に無料のツールにして、このサイトで公開します。</strong>費用はかかりません。</p>
+      </div>
+      <a class="btn primary" href="request/">困りごとを教える</a>
+    </div>
   </div>
 </section>
 
@@ -385,7 +396,7 @@ footer{padding:40px 0 56px;font-size:13px;color:var(--ink-soft)}
     <div class="contact-box">
       <div>
         <h2 id="contact-h">お問い合わせ</h2>
-        <p>「こんなツールがほしい」「こんなことで困っている」、商品やホームページのご相談など、お気軽にメールでどうぞ。</p>
+        <p>商品やホームページのご相談など、お気軽にメールでどうぞ。「こんなことで困っている」は、<a href="request/">困りごと募集のページ</a>から送れます（基本的に無料のツールにして公開します）。</p>
       </div>
       <div>
         <a class="mail" href="mailto:mmcreate7@gmail.com">mmcreate7@gmail.com</a>

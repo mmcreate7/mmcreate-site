@@ -11,6 +11,12 @@
 - 公開中のツール：電卓（calculator）、割り勘計算（warikan）、日数計算（days）、年齢・和暦早見表（age）、育休給付金の計算（ikukyu）、時給・月給・年収の換算（salary）、文字数カウント（moji）
 - 育休給付金の上限額・下限額は毎年8月1日に変わる。厚労省「基本手当日額等の適用について」を確認し、`tools/ikukyu/index.html` の DAILY_MAX・DAILY_MIN と本文・出典の日付を更新する（次回 2027年8月）
 
+## 困りごと募集フォーム（2026-11-16 追加）
+- ページ：`request/index.html`（https://komarigoto-lab.pages.dev/request/）。トップのナビ・ツール一覧の下・お問い合わせ欄からリンク
+- 方針：いただいた困りごとは **基本的に無料のツールにして本サイトで公開する**。費用なし・売り込みなし、紹介は個人がわからない形で
+- 仕組み：サーバーなし。送信ボタンでメールアプリが開き、mmcreate7@gmail.com 宛てに件名「【困りごと】…」で届く。届いた声は voice-research の悩み台帳に入れる
+- 受信数を増やしたくなったら、Googleフォーム等の受付サービスに切り替える（オーナー承認が必要）
+
 ## アクセス解析（2026-11-13 Cloudflare Web Analytics に移行）
 - 無料。見る場所：Cloudflare ダッシュボード → Analytics → Web analytics → komarigoto-lab.pages.dev（日別の訪問・ページビュー、ページ別、流入元、国、端末）
 - 計測コードは各ページの `</head>` 直前。新しいページを作ったら同じコードを入れる
