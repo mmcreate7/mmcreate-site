@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ポイント還元込みの実質価格を比較｜どっちが安い？送料・クーポンも計算｜こまりごとラボ</title>
+<meta name="description" content="ポイント還元込みだと、どっちが実質安い？ 2〜3店の価格・送料・クーポン・ポイント還元率（%またはpt）を入れると、実質価格といちばん安い店、差額がすぐわかる無料ツール。「値引きとみなす」と「次の買い物で使う（価格÷(1+還元率)）」の2つの計算方式に対応。登録不要。">
+<meta property="og:title" content="ポイント還元込みの実質価格を比較｜どっちが安い？">
+<meta property="og:description" content="価格・送料・クーポン・ポイント還元を入れて、2〜3店の実質価格を比較できる無料ツール。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="こまりごとラボ">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://komarigoto-lab.pages.dev/tools/point/">
+<link rel="canonical" href="https://komarigoto-lab.pages.dev/tools/point/">
+<meta name="theme-color" content="#F4F7F9">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/tool.css">
+<style>
+.shop{position:relative;border:1.5px solid var(--line);border-radius:14px;padding:12px;background:#FBFCFD;margin-bottom:12px}
+.shop-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.shop-head .badge{flex:none;display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--paper);font-weight:900;font-size:14px}
+.shop-head input{min-height:40px;padding:6px 10px;font-weight:700}
+.rm{flex:none;font:inherit;border:0;background:none;color:var(--ink-soft);font-size:22px;line-height:1;cursor:pointer;padding:6px 10px;border-radius:8px;min-height:40px}
+.rm:hover{background:#EEF2F6;color:var(--warn)}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.g2 .full{grid-column:1 / -1}
+.shop label,.set label.k{font-size:12.5px;font-weight:700;color:var(--ink-soft);display:block;margin-bottom:2px;line-height:1.4}
+.shop input[type=number]{min-height:44px;padding:8px 10px}
+.pt-row{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px;align-items:center}
+.sw{display:inline-grid;grid-template-columns:1fr 1fr;border:1.5px solid var(--line);border-radius:10px;overflow:hidden;background:var(--sheet)}
+.sw button{font:inherit;font-size:14px;font-weight:700;border:0;background:none;min-height:42px;min-width:44px;padding:0 10px;cursor:pointer;color:var(--ink-soft)}
+.sw button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+.add{font:inherit;font-weight:700;font-size:14px;border:1.5px dashed var(--ink);background:none;border-radius:10px;padding:10px;cursor:pointer;width:100%;min-height:46px;color:var(--ink)}
+.add:hover{background:#EEF2F6}
+.set{border-top:1px dashed var(--line);margin-top:14px;padding-top:12px}
+.method{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.method input{position:absolute;opacity:0;pointer-events:none}
+.method label{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:52px;border:1.5px solid var(--line);border-radius:10px;font-weight:700;font-size:14px;line-height:1.3;cursor:pointer;background:var(--sheet);padding:4px}
+.method label small{font-size:11px;font-weight:500;opacity:.85}
+.method input:checked + label{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.method input:focus-visible + label{outline:3px solid var(--check);outline-offset:2px}
+.win{background:#FFF6C8;border:2px solid var(--ink);border-radius:12px;padding:12px 14px}
+.win .name{font-size:clamp(22px,6vw,28px);font-weight:900;line-height:1.3;word-break:break-all}
+.win .diff{font-weight:700;margin-top:2px}
+.win .diff b{font-size:1.25em;font-variant-numeric:tabular-nums}
+.rows{display:grid;gap:8px;margin-top:10px}
+.row{background:var(--sheet);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.row.best{border:2px solid var(--check)}
+.row .t{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.row .n{font-weight:700;word-break:break-all}
+.row .v{font-size:clamp(22px,6vw,26px);font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.row .v small{font-size:.55em;margin-left:2px}
+.row ul{list-style:none;margin:4px 0 0;padding:0;font-size:13px;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.row li{display:flex;justify-content:space-between;gap:8px}
+.row li span:last-child{white-space:nowrap}
+.tie{font-size:12px;font-weight:700;color:var(--check)}
+.warn-box{margin-top:10px;font-size:13.5px;border-left:4px solid var(--warn);padding:6px 10px;background:#FFF;border-radius:0 8px 8px 0}
+.formula{font-size:14px;background:var(--sheet);border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0 0;font-variant-numeric:tabular-nums}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"ポイント還元込みの実質価格を比較","url":"https://komarigoto-lab.pages.dev/tools/point/","applicationCategory":"FinanceApplication","operatingSystem":"All","inLanguage":"ja","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"publisher":{"@type":"Organization","name":"こまりごとラボ","url":"https://komarigoto-lab.pages.dev/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"10%ポイント還元と10%値引きは、どっちがお得ですか？","acceptedAnswer":{"@type":"Answer","text":"現金の10%値引きのほうがお得です。10,000円の買い物で1,000ポイントもらい、次の買い物で使うと、11,000円分の品物を10,000円で買ったことになり、割引率は1,000÷11,000＝約9.1%です。"}},
+{"@type":"Question","name":"ポイント還元込みの実質価格はどう計算しますか？","acceptedAnswer":{"@type":"Answer","text":"よく使われるのは「支払額−ポイントの価値」です。もらったポイントを次の買い物で使う前提なら「支払額÷(1＋還元率)」で計算すると、現金値引きと同じ基準で比べられます。"}}
+]}
+</script>
+<script src="../../assets/analytics.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="site-head">
+    <a class="logo" href="../../" aria-label="こまりごとラボ トップへ"><span>こまりごと</span>ラボ</a>
+    <nav><a href="../../#tools">ツール一覧</a></nav>
+  </header>
+  <p class="crumb"><a href="../../">トップ</a> ／ <a href="../../#tools">ツール</a> ／ ポイント還元込みの比較</p>
+
+  <main class="layout">
+    <div class="tool-col">
+      <p class="worry">「<mark>ポイント込みだと、どっちが安いの？</mark>」</p>
+      <h1>ポイント還元込みの比較</h1>
+      <p class="lead">お店ごとに価格・送料・クーポン・ポイントを入れると、実質価格と「いちばん安いのはどこ・差はいくら」がすぐわかります。</p>
+
+      <form class="card" id="form" autocomplete="off" onsubmit="return false">
+        <div id="shops"></div>
+        <button type="button" class="add" id="addShop">＋ 3つ目のお店を追加</button>
+
+        <div class="set">
+          <span class="legend" id="mLegend">計算のしかた</span>
+          <div class="method" role="radiogroup" aria-labelledby="mLegend">
+            <input type="radio" name="method" id="mA" value="A" checked><label for="mA">値引きとみなす<small>支払額 − ポイント</small></label>
+            <input type="radio" name="method" id="mB" value="B"><label for="mB">次の買い物で使う<small>支払額 ÷（1＋還元率）</small></label>
+          </div>
+          <p class="hint">どちらを選んでも、もう一方の方式の金額も小さく表示します。違いは右（スマホでは下）の説明をご覧ください。</p>
+          <div class="g2" style="margin-top:10px">
+            <div><label class="k" for="ptv">1ポイントの価値</label><div class="inline"><input type="number" id="ptv" inputmode="decimal" min="0" step="0.1" value="1"><span class="unit">円</span></div></div>
+            <div style="align-self:end"><label class="check"><input type="checkbox" id="shipPt">送料もポイントの対象</label></div>
+          </div>
+          <p class="hint">期間限定ポイントなど使い切れるか不安なときは、価値を0.8円などに下げると安全側で比べられます。</p>
+        </div>
+
+        <div class="result" id="result" aria-live="polite"></div>
+      </form>
+    </div>
+
+    <aside class="side">
+      <h2>使い方</h2>
+      <dl>
+        <dt>お店ごとに入れる</dt>
+        <dd>商品価格（税込）、送料、クーポンなどの値引き額、ポイントを入れます。ポイントは「%」（還元率）か「pt」（もらえるポイント数）を切り替えて入れられます。</dd>
+        <dt>ポイントの計算</dt>
+        <dd>%で入れたときは、クーポンを引いたあとの商品代（チェックすると送料も含む）に還元率をかけ、1ポイント未満は切り捨てます。お店によって付き方が違うので、正確な数は各お店の表示（「○ポイント獲得」など）を「pt」で入れてください。</dd>
+        <dt>結果の見かた</dt>
+        <dd>支払額＝商品価格＋送料−クーポン。実質の割引率は「商品価格＋送料」に対して何%安くなったかです。</dd>
+      </dl>
+
+      <h2 style="margin-top:28px">2つの計算のしかた</h2>
+      <dl>
+        <dt>値引きとみなす（支払額 − ポイント）</dt>
+        <dd>もらうポイントを、その場の値引きと同じとみなす計算です。比較記事などでよく使われ、わかりやすい方法です。</dd>
+        <dd class="formula">10,000円で1,000pt → 実質 9,000円（10%引き相当）</dd>
+        <dt>次の買い物で使う（支払額 ÷（1＋還元率））</dt>
+        <dd>ポイントは次の買い物でしか使えません。10,000円払って1,000ptもらい、次に1,000円分の買い物に使うと、合計11,000円分の品物を10,000円で買ったことになります。この考え方で、今回の商品の分だけを出す計算です。</dd>
+        <dd class="formula">10,000円 ÷ 1.1 ＝ 実質 約9,091円（約9.1%引き相当）</dd>
+        <dd>つまり「10%ポイント還元」は「10%値引き」より少しだけ損です。ポイント還元率が高いほど、2つの方式の差は大きくなり、どちらが安いかの順番が入れ替わることもあります。</dd>
+      </dl>
+      <p class="note-s">結果は入力した金額にもとづく目安です。ポイントの付与条件（税抜・税込、上限、付与時期、有効期限）はお店やキャンペーンによって違います。入力した内容は、お使いの端末の中だけで計算し、どこにも送信しません。</p>
+
+      <section class="related" aria-labelledby="rel-h">
+        <h2 id="rel-h">ほかのツール</h2>
+        <ul>
+          <li><a href="../calculator/">かんたん電卓 <span>税込・税抜、%引きもボタンひとつ</span></a></li>
+          <li><a href="../warikan/">割り勘計算 <span>端数・傾斜つき</span></a></li>
+          <li><a href="../salary/">時給・月給・年収の換算 <span>求人の比較に</span></a></li>
+        </ul>
+      </section>
+    </aside>
+  </main>
+</div>
+
+<footer><div class="wrap"><a href="../../">こまりごとラボ トップ</a><a href="../../#tools">ほかのツール</a>© 2026 こまりごとラボ</div></footer>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+  function num(v){ v = String(v == null ? "" : v).replace(/[,，円%％pt\s]/gi, "").replace(/[０-９．]/g, function(c){ return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); }); return v === "" ? NaN : Number(v); }
+  function yen(n){ return Math.round(n).toLocaleString("ja-JP"); }
+  function pct(x){ return (Math.round(x * 1000) / 10).toFixed(1) + "%"; }
+  var LETTERS = ["A", "B", "C"];
+
+  // ---- core calculation (exposed for tests) ----
+  // shop: {name, price, ship, coupon, ptKind:"rate"|"pt", ptValue}
+  // opt: {ptYen, shipPt}
+  function calcShop(s, opt){
+    var price = s.price, ship = s.ship || 0, coupon = s.coupon || 0;
+    if (!(price > 0)) return {error: "価格を入れてください。"};
+    if (ship < 0 || coupon < 0) return {error: "送料・クーポンは0以上で入れてください。"};
+    var pay = price + ship - coupon;
+    if (pay <= 0) return {error: "クーポンが支払額を超えています。"};
+    var base = price - coupon + (opt.shipPt ? ship : 0);
+    if (base < 0) base = 0;
+    var pts = 0, pv = s.ptValue || 0;
+    if (pv < 0) return {error: "ポイントは0以上で入れてください。"};
+    if (s.ptKind === "rate"){
+      if (pv > 100) return {error: "還元率は100%以下で入れてください。"};
+      pts = Math.floor(Math.round(base * pv * 1e6) / 1e8 + 1e-9);
+    } else pts = Math.floor(pv);
+    var v = pts * opt.ptYen;
+    var a = pay - v;
+    var b = pay * pay / (pay + v);  // = pay ÷ (1 + v/pay)
+    var list = price + ship;
+    return {pay: pay, pts: pts, value: v, A: a, B: b, rate: pay ? v / pay : 0, list: list, discA: 1 - a / list, discB: 1 - b / list};
+  }
+  function compare(shops, opt, method){
+    if (!(opt.ptYen >= 0)) return {error: "1ポイントの価値を0以上で入れてください。"};
+    var rows = [];
+    for (var i = 0; i < shops.length; i++){
+      var s = shops[i];
+      if (s.price === undefined || isNaN(s.price)) { rows.push({name: s.name, empty: true}); continue; }
+      var r = calcShop(s, opt);
+      r.name = s.name; r.idx = i;
+      rows.push(r);
+    }
+    var ok = rows.filter(function(r){ return !r.empty && !r.error; });
+    function rank(m){
+      var sorted = ok.slice().sort(function(x, y){ return Math.round(x[m]) - Math.round(y[m]); });
+      return sorted;
+    }
+    var res = {rows: rows, ok: ok.length};
+    if (ok.length >= 1){
+      var sa = rank("A"), sb = rank("B"), s = method === "A" ? sa : sb;
+      res.best = s[0];
+      res.second = s[1] || null;
+      res.diff = s[1] ? Math.round(s[1][method]) - Math.round(s[0][method]) : null;
+      res.tie = s[1] ? res.diff === 0 : false;
+      // 方式ごとの「いちばん安い」お店（同額なら複数）。顔ぶれが違えば注意を出す
+      function winners(m){ var min = Math.round(ok.length ? (m === "A" ? sa : sb)[0][m] : 0); return ok.filter(function(x){ return Math.round(x[m]) === min; }).map(function(x){ return x.name; }); }
+      res.winA = winners("A"); res.winB = winners("B");
+      res.flip = ok.length >= 2 && res.winA.join("\n") !== res.winB.join("\n");
+    }
+    return res;
+  }
+
+  // ---- shops UI ----
+  var $shops = $("shops"), sid = 0;
+  var PH = [["例）9800", "例）0", "例）0", "例）10"], ["例）9500", "例）550", "例）300", "例）1"], ["例）10200", "例）0", "例）0", "例）500"]];
+  function addShop(){
+    var n = $shops.children.length; if (n >= 3) return;
+    sid++;
+    var d = document.createElement("div");
+    d.className = "shop"; d.dataset.kind = n === 2 ? "pt" : "rate";
+    var id = "s" + sid, ph = PH[n];
+    d.innerHTML =
+      '<div class="shop-head"><span class="badge" aria-hidden="true"></span><input type="text" class="s-name" maxlength="20" aria-label="お店の名前" id="' + id + 'n"><button type="button" class="rm" aria-label="このお店を削除">×</button></div>' +
+      '<div class="g2">' +
+        '<div class="full"><label for="' + id + 'p">商品価格（税込）</label><div class="inline"><input type="number" class="s-price big" inputmode="numeric" min="0" step="1" id="' + id + 'p" placeholder="' + ph[0] + '"><span class="unit">円</span></div></div>' +
+        '<div><label for="' + id + 's">送料</label><div class="inline"><input type="number" class="s-ship" inputmode="numeric" min="0" step="1" id="' + id + 's" placeholder="' + ph[1] + '"><span class="unit">円</span></div></div>' +
+        '<div><label for="' + id + 'c">クーポン・値引き</label><div class="inline"><input type="number" class="s-coupon" inputmode="numeric" min="0" step="1" id="' + id + 'c" placeholder="' + ph[2] + '"><span class="unit">円</span></div></div>' +
+        '<div class="full"><label for="' + id + 'v">ポイント</label><div class="pt-row"><span class="sw" role="group" aria-label="ポイントの入れ方"><button type="button" data-k="rate">%</button><button type="button" data-k="pt">pt</button></span>' +
+          '<div class="inline"><input type="number" class="s-pt" inputmode="decimal" min="0" step="0.1" id="' + id + 'v" placeholder="' + ph[3] + '"><span class="unit s-unit"></span></div></div></div>' +
+      '</div>';
+    $shops.appendChild(d);
+    relabel(); syncKind(d); update();
+    return d;
+  }
+  function syncKind(d){
+    var k = d.dataset.kind;
+    d.querySelectorAll(".sw button").forEach(function(b){ b.setAttribute("aria-pressed", b.dataset.k === k ? "true" : "false"); });
+    d.querySelector(".s-unit").textContent = k === "rate" ? "%" : "pt";
+    var inp = d.querySelector(".s-pt");
+    inp.step = k === "rate" ? "0.1" : "1";
+    inp.inputMode = k === "rate" ? "decimal" : "numeric";
+    inp.placeholder = k === "rate" ? "例）10" : "例）500";
+  }
+  function relabel(){
+    var list = $shops.querySelectorAll(".shop");
+    list.forEach(function(d, i){
+      d.querySelector(".badge").textContent = LETTERS[i];
+      d.querySelector(".s-name").placeholder = "お店" + LETTERS[i] + "（名前は任意）";
+      d.querySelector(".rm").hidden = list.length <= 2;
+    });
+    $("addShop").hidden = list.length >= 3;
+  }
+  function readShops(){
+    return Array.prototype.map.call($shops.querySelectorAll(".shop"), function(d, i){
+      return {
+        name: d.querySelector(".s-name").value.trim() || ("お店" + LETTERS[i]),
+        price: num(d.querySelector(".s-price").value),
+        ship: num(d.querySelector(".s-ship").value) || 0,
+        coupon: num(d.querySelector(".s-coupon").value) || 0,
+        ptKind: d.dataset.kind,
+        ptValue: num(d.querySelector(".s-pt").value) || 0
+      };
+    });
+  }
+  $shops.addEventListener("click", function(e){
+    var b = e.target.closest(".sw button");
+    if (b){ var d = b.closest(".shop"); d.dataset.kind = b.dataset.k; syncKind(d); update(); return; }
+    if (e.target.classList.contains("rm")){ e.target.closest(".shop").remove(); relabel(); update(); }
+  });
+  $("addShop").addEventListener("click", function(){ var d = addShop(); if (d) d.querySelector(".s-price").focus(); });
+
+  // ---- render ----
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  function method(){ return document.querySelector('input[name=method]:checked').value; }
+  function update(){
+    var el = $("result"), m = method(), o = m === "A" ? "B" : "A";
+    var opt = {ptYen: num($("ptv").value), shipPt: $("shipPt").checked};
+    if (isNaN(opt.ptYen)) opt.ptYen = 1;
+    var r = compare(readShops(), opt, m);
+    if (r.error){ el.innerHTML = '<p class="err"></p>'; el.firstChild.textContent = r.error; return; }
+    if (!r.ok){
+      var errs = r.rows.filter(function(x){ return x.error; });
+      el.innerHTML = errs.length ? '<p class="err">' + esc(errs[0].name + "：" + errs[0].error) + '</p>' : '<p class="r-label" style="margin:0">お店ごとに価格を入れると、ここに実質価格と、いちばん安いお店が出ます。</p>';
+      return;
+    }
+    var mLabel = {A: "値引きとみなす", B: "次の買い物で使う"};
+    var html = "";
+    if (r.ok >= 2){
+      html += '<div class="win"><div class="r-label">実質いちばん安いのは（' + mLabel[m] + '）</div>';
+      if (r.tie) html += '<div class="name">' + esc(r.best.name) + ' と ' + esc(r.second.name) + '</div><div class="diff">実質価格は同じ（' + yen(r.best[m]) + '円）です</div>';
+      else html += '<div class="name">' + esc(r.best.name) + '</div><div class="diff">2番目の' + esc(r.second.name) + 'より <b>' + yen(r.diff) + '円</b> 安い</div>';
+      html += '</div>';
+    } else {
+      html += '<p class="r-label" style="margin:0 0 4px">もう1つのお店の価格を入れると、どちらが安いか比べられます。</p>';
+    }
+    html += '<div class="rows">';
+    r.rows.forEach(function(x){
+      if (x.empty) return;
+      if (x.error){ html += '<div class="row"><div class="n">' + esc(x.name) + '</div><p class="err">' + esc(x.error) + '</p></div>'; return; }
+      var best = r.ok >= 2 && Math.round(x[m]) === Math.round(r.best[m]);
+      html += '<div class="row' + (best ? " best" : "") + '"><div class="t"><span class="n">' + esc(x.name) + (best ? ' <span class="tie">いちばん安い</span>' : '') + '</span>' +
+        '<span class="v">' + yen(x[m]) + '<small>円</small></span></div><ul>' +
+        '<li><span>支払額</span><span>' + yen(x.pay) + '円</span></li>' +
+        '<li><span>もらえるポイント</span><span>' + x.pts.toLocaleString("ja-JP") + 'pt（' + yen(x.value) + '円分）</span></li>' +
+        '<li><span>実質の割引率</span><span>' + pct(m === "A" ? x.discA : x.discB) + '</span></li>' +
+        '<li><span>' + mLabel[o] + 'なら</span><span>' + yen(x[o]) + '円</span></li>' +
+        '</ul></div>';
+    });
+    html += '</div>';
+    if (r.flip){
+      var w = function(a){ return esc(a.join("・")) + (a.length > 1 ? "（同額）" : ""); };
+      html += '<p class="warn-box">計算のしかたによって、いちばん安いお店が変わります（値引きとみなす：' + w(r.winA) + '／次の買い物で使う：' + w(r.winB) + '）。もらったポイントを次の買い物で使い切れるかで考えてみてください。</p>';
+    }
+    el.innerHTML = html;
+  }
+  var form = $("form");
+  form.addEventListener("input", update);
+  form.addEventListener("change", update);
+
+  addShop(); addShop();
+  window.__point = {calcShop: calcShop, compare: compare, addShop: addShop, update: update};
+})();
+</script>
+</body>
+</html>
