@@ -21,8 +21,8 @@
 <style>
 textarea{font:inherit;font-size:16px;line-height:1.7;color:var(--ink);background:#FBFCFD;border:1.5px solid var(--line);border-radius:10px;padding:12px;width:100%;min-height:150px;resize:vertical}
 textarea.short{min-height:90px}
-input[type=email]{font:inherit;color:var(--ink);background:#FBFCFD;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;min-height:48px;width:100%}
-textarea:focus,input[type=email]:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3px rgba(46,125,116,.25)}
+input[type=text]{font:inherit;color:var(--ink);background:#FBFCFD;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;min-height:48px;width:100%}
+textarea:focus,input[type=text]:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3px rgba(46,125,116,.25)}
 .req{display:inline-block;font-size:11.5px;font-weight:700;background:var(--marker);border:1.5px solid var(--ink);border-radius:999px;padding:0 8px;margin-left:6px;vertical-align:2px}
 .opt{font-size:12.5px;font-weight:500;color:var(--ink-soft);margin-left:6px}
 .scenes{display:flex;flex-wrap:wrap;gap:6px}
@@ -31,10 +31,13 @@ textarea:focus,input[type=email]:focus{border-color:var(--ink);outline:none;box-
 .scenes span{display:inline-block;font-size:14px;font-weight:700;border:1.5px solid var(--line);background:var(--sheet);border-radius:999px;padding:6px 14px}
 .scenes input:checked + span{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .scenes input:focus-visible + span{outline:3px solid var(--check);outline-offset:2px}
-.consent{align-items:flex-start;font-size:14px;line-height:1.6}
-.consent input{flex:none;margin-top:2px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.privacy{font-size:13.5px;line-height:1.7;color:var(--ink-soft);margin:4px 0 0}
+.privacy span{display:block;margin-top:4px}
+.alt{font-size:13.5px;color:var(--ink-soft);margin:14px 2px 0}
+#thanks{margin-top:0}
+.send[aria-busy=true]{opacity:.6;cursor:progress}
 .send{margin-top:6px}
-.send:disabled{opacity:.45;cursor:not-allowed}
 .done{margin-top:16px;border:2px solid var(--check);border-radius:12px;padding:14px 16px;background:#F1F8F6;font-size:14.5px}
 .done p{margin:0 0 8px}
 .done code{font-family:inherit;font-weight:700}
@@ -64,67 +67,75 @@ textarea:focus,input[type=email]:focus{border-color:var(--ink);outline:none;box-
       <h1>困りごとを教えてください</h1>
       <p class="lead">暮らしや仕事のなかの、小さな「困った」を教えてください。いただいた困りごとは、<strong>基本的に無料のツールにして、このサイトで公開します。</strong></p>
 
-      <form class="card" id="f" novalidate>
+      <!--
+        送信先の設定：FORM_ENDPOINT に Formspree のフォームURL（例 https://formspree.io/f/xxxxxxxx）を入れると、
+        このページの中で送信が完了する方式になる。FORM_ENDPOINT_HERE のままなら、従来どおりメールアプリで送る。
+      -->
+      <form class="card" id="f" action="FORM_ENDPOINT_HERE" method="POST" novalidate>
         <div class="field">
           <label for="worry">どんなことで困っていますか？<span class="req">必須</span></label>
-          <textarea id="worry" name="worry" required maxlength="2000" placeholder="例）毎月の習い事の月謝、きょうだい3人分を合計していくらになるか、毎回スマホの電卓で計算しています。"></textarea>
-          <p class="hint">うまくまとまっていなくて大丈夫です。一言でも、愚痴のようなものでも歓迎です。</p>
+          <textarea id="worry" name="困りごと" required maxlength="2000" placeholder="例）きょうだい3人分の習い事の月謝、毎月スマホの電卓で合計している。"></textarea>
+          <p class="hint">一言で大丈夫です。うまくまとまっていなくても、愚痴のようなものでも歓迎です。</p>
         </div>
 
         <div class="field">
           <span class="legend" id="scene-l">どんな場面のことですか？<span class="opt">任意</span></span>
           <div class="scenes" role="radiogroup" aria-labelledby="scene-l">
-            <label><input type="radio" name="scene" value="暮らし・家事"><span>暮らし・家事</span></label>
-            <label><input type="radio" name="scene" value="子育て・学校"><span>子育て・学校</span></label>
-            <label><input type="radio" name="scene" value="お金・手続き"><span>お金・手続き</span></label>
-            <label><input type="radio" name="scene" value="仕事・お店の運営"><span>仕事・お店の運営</span></label>
-            <label><input type="radio" name="scene" value="趣味・推し活"><span>趣味・推し活</span></label>
-            <label><input type="radio" name="scene" value="その他"><span>その他</span></label>
+            <label><input type="radio" name="場面" value="暮らし・家事"><span>暮らし・家事</span></label>
+            <label><input type="radio" name="場面" value="子育て・学校"><span>子育て・学校</span></label>
+            <label><input type="radio" name="場面" value="お金・手続き"><span>お金・手続き</span></label>
+            <label><input type="radio" name="場面" value="仕事・お店の運営"><span>仕事・お店の運営</span></label>
+            <label><input type="radio" name="場面" value="趣味・推し活"><span>趣味・推し活</span></label>
+            <label><input type="radio" name="場面" value="その他"><span>その他</span></label>
           </div>
         </div>
 
         <div class="field">
-          <label for="now">いまはどうしていますか？<span class="opt">任意</span></label>
-          <textarea id="now" name="now" class="short" maxlength="1000" placeholder="例）紙にメモして手で計算している／Excelでがんばっている など"></textarea>
+          <label for="contact">返事がほしい場合の連絡先<span class="opt">任意</span></label>
+          <input type="text" id="contact" name="連絡先" maxlength="200" autocomplete="email" inputmode="email" placeholder="例）メールアドレス">
+          <p class="hint">空欄のままで送れます。書いた場合は、お返事とツール完成のお知らせにだけ使います。</p>
         </div>
 
-        <div class="field">
-          <label for="mail">ツールができたらお知らせを受け取るメールアドレス<span class="opt">任意</span></label>
-          <input type="email" id="mail" name="mail" autocomplete="email" placeholder="例）name@example.com">
-          <p class="hint">空欄でも送れます。完成のお知らせと、内容の確認にだけ使います。</p>
-        </div>
+        <!-- 迷惑送信よけ（人には見えない欄。入力があると受付側で無視される） -->
+        <p class="hp" aria-hidden="true"><label>この欄は空のままにしてください<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
 
-        <div class="field">
-          <label class="check consent"><input type="checkbox" id="agree" required> このページの「お約束」を読み、困りごとの内容を、個人がわからない形に書き直してサイトやSNSで紹介することに同意します。</label>
-        </div>
+        <p class="privacy">いただいた内容は、名前や細かい事情がわからない形に書き直して、このサイトやSNSで紹介することがあります。くわしくは<a href="#promise-h">お約束</a>をご覧ください。<span id="via" hidden>送信内容は、フォーム受付サービス（Formspree）を通じて届きます。</span></p>
 
-        <button type="submit" class="copy send" id="send" disabled>メールで送る（無料）</button>
-        <p class="hint">ボタンを押すと、お使いのメールアプリが開き、入力した内容が入った状態になります。そのまま送信してください。</p>
+        <button type="submit" class="copy send" id="send">送る（無料）</button>
+        <p class="hint" id="send-hint">ボタンを押すと、お使いのメールアプリが開き、入力した内容が入った状態になります。そのまま送信してください。</p>
         <p class="err" id="err" role="alert" hidden></p>
 
         <div class="done" id="done" hidden>
-          <p><strong>メールアプリが開かないときは</strong>、下のボタンで内容をコピーして、<code>mmcreate7@gmail.com</code> 宛てに送ってください。</p>
+          <p><strong id="done-lead">メールアプリが開かないときは</strong>、下のボタンで内容をコピーして、<code>mmcreate7@gmail.com</code> 宛てに送ってください。</p>
           <button type="button" class="sub-btn" id="copy-body">内容をコピー</button><button type="button" class="sub-btn" id="copy-addr">宛先をコピー</button>
           <p id="copied" class="hint" aria-live="polite"></p>
         </div>
+
+        <div class="done" id="thanks" tabindex="-1" hidden>
+          <p><strong>送信しました。ありがとうございます。</strong></p>
+          <p>いただいた内容にはすべて目を通します。連絡先を書いてくださった方には、ツールができたらお知らせします。</p>
+          <button type="button" class="sub-btn" id="again">もうひとつ送る</button>
+        </div>
+
+        <p class="alt" id="alt" hidden>メールで送りたい方は<a href="#" id="alt-mail">こちら</a>（メールアプリが開きます）。</p>
       </form>
     </div>
 
     <aside class="side">
       <p class="policy-head">教えてもらった困りごとは、<br><mark>基本的に無料のツールにして公開します。</mark></p>
-      <h2>お約束</h2>
+      <h2 id="promise-h">お約束</h2>
       <ul class="promise">
         <li><strong>できたツールは、無料で公開します</strong><span>登録不要で、あなたも、同じことで困っているほかの人も使えます。</span></li>
         <li><strong>費用はかかりません。売り込みもしません</strong><span>困りごとを送ったことで、料金をいただいたり、商品をおすすめしたりすることはありません。</span></li>
         <li><strong>個人がわからない形で紹介します</strong><span>ツールのページやSNSで「こんな声をいただきました」と紹介するときは、名前や細かい事情がわからないように書き直します。</span></li>
-        <li><strong>メールアドレスはお知らせにだけ使います</strong><span>完成のお知らせと内容の確認以外には使いません。第三者に渡すこともありません。</span></li>
+        <li><strong>連絡先は、お返事とお知らせにだけ使います</strong><span>連絡先は書かなくても送れます。書いていただいた場合も、お返事・完成のお知らせ・内容の確認以外には使わず、第三者に渡すこともありません。</span></li>
       </ul>
 
       <dl>
         <dt>すべてを必ず作れますか？</dt>
         <dd>できるかぎり作りますが、お約束はできません。ツールで解決しにくいもの、法律・医療・税務など専門家の判断が必要なもの、似たツールがすでにあるものは、作らないことや、別の方法をご案内することがあります。</dd>
         <dt>いつできますか？</dt>
-        <dd>同じ声が多いもの、すぐ役に立ちそうなものから順に作るため、完成の時期はお約束できません。できたら、メールアドレスをいただいた方にお知らせします。</dd>
+        <dd>同じ声が多いもの、すぐ役に立ちそうなものから順に作るため、完成の時期はお約束できません。できたら、連絡先をいただいた方にお知らせします。</dd>
         <dt>返事はもらえますか？</dt>
         <dd>すべての方への個別のお返事はお約束できませんが、いただいた内容にはすべて目を通します。</dd>
         <dt>書いてはいけないことはありますか？</dt>
@@ -151,35 +162,71 @@ textarea:focus,input[type=email]:focus{border-color:var(--ink);outline:none;box-
   "use strict";
   var TO = "mmcreate7@gmail.com";
   var $ = function(id){ return document.getElementById(id); };
-  var f = $("f"), send = $("send"), agree = $("agree"), err = $("err");
+  var f = $("f"), send = $("send"), err = $("err");
+  var ENDPOINT = f.getAttribute("action") || "";
+  var useService = /^https:\/\//.test(ENDPOINT) && ENDPOINT.indexOf("FORM_ENDPOINT_HERE") < 0;
 
-  function sync(){ send.disabled = !agree.checked; }
-  agree.addEventListener("change", sync); sync();
+  if (useService){
+    $("send-hint").textContent = "このページの中で送信が終わります。メールアプリは開きません。";
+    $("via").hidden = false;
+    $("alt").hidden = false;
+  } else {
+    send.textContent = "メールで送る（無料）";
+  }
 
+  function val(id){ return $(id).value.trim(); }
+  function scene(){ var s = f.querySelector("input[name='場面']:checked"); return s ? s.value : ""; }
   function body(){
-    var scene = f.querySelector('input[name=scene]:checked');
     return [
-      "【困りごと】", $("worry").value.trim(), "",
-      "【場面】", scene ? scene.value : "（未選択）", "",
-      "【いまのやり方】", $("now").value.trim() || "（未記入）", "",
-      "【お知らせ先】", $("mail").value.trim() || "（不要）", "",
+      "【困りごと】", val("worry"), "",
+      "【場面】", scene() || "（未選択）", "",
+      "【連絡先】", val("contact") || "（なし）", "",
       "※ こまりごとラボ「困りごとを教えてください」フォームから送信"
     ].join("\n");
   }
   function subject(){
-    var t = $("worry").value.trim().replace(/\s+/g, " ");
+    var t = val("worry").replace(/\s+/g, " ");
     return "【困りごと】" + (t.length > 24 ? t.slice(0, 24) + "…" : t);
+  }
+  function showErr(msg){ err.textContent = msg; err.hidden = false; }
+  function openMail(){
+    location.href = "mailto:" + TO + "?subject=" + encodeURIComponent(subject()) + "&body=" + encodeURIComponent(body());
+    $("done").hidden = false;
   }
 
   f.addEventListener("submit", function(e){
     e.preventDefault();
     err.hidden = true;
-    if (!$("worry").value.trim()){ err.textContent = "「どんなことで困っていますか？」を入力してください。"; err.hidden = false; $("worry").focus(); return; }
-    var m = $("mail").value.trim();
-    if (m && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m)){ err.textContent = "メールアドレスの形をご確認ください（空欄でも送れます）。"; err.hidden = false; $("mail").focus(); return; }
-    if (!agree.checked){ return; }
-    location.href = "mailto:" + TO + "?subject=" + encodeURIComponent(subject()) + "&body=" + encodeURIComponent(body());
-    $("done").hidden = false;
+    if (!val("worry")){ showErr("「どんなことで困っていますか？」を入力してください。一言で大丈夫です。"); $("worry").focus(); return; }
+    if (!useService){ openMail(); return; }
+    if (send.getAttribute("aria-busy") === "true") return;
+
+    var data = new FormData(f);
+    data.append("_subject", subject());
+    send.setAttribute("aria-busy", "true"); send.textContent = "送信しています…";
+    fetch(ENDPOINT, { method: "POST", body: data, headers: { "Accept": "application/json" } })
+      .then(function(r){ if (!r.ok) throw new Error("status " + r.status); })
+      .then(function(){
+        f.querySelectorAll(".field, .privacy, #send, #send-hint, #alt").forEach(function(el){ el.hidden = true; });
+        $("thanks").hidden = false; $("thanks").focus();
+      })
+      .catch(function(){
+        showErr("うまく送信できませんでした。時間をおいてもう一度お試しいただくか、下の方法でメールで送ってください。");
+        $("done-lead").textContent = "メールで送る場合は";
+        $("done").hidden = false;
+      })
+      .then(function(){ send.removeAttribute("aria-busy"); send.textContent = "送る（無料）"; });
+  });
+
+  $("alt-mail").addEventListener("click", function(e){
+    e.preventDefault(); err.hidden = true;
+    if (!val("worry")){ showErr("先に「どんなことで困っていますか？」を入力してください。"); $("worry").focus(); return; }
+    openMail();
+  });
+  $("again").addEventListener("click", function(){
+    f.reset();
+    f.querySelectorAll(".field, .privacy, #send, #send-hint, #alt").forEach(function(el){ el.hidden = false; });
+    $("thanks").hidden = true; $("done").hidden = true; $("worry").focus();
   });
 
   function copy(text){
