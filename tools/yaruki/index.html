@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>やる気スイッチ診断｜やる気が出ない原因と、いますぐできる一歩がわかる｜こまりごとラボ</title>
+<meta name="description" content="やる気が出ない・続かないときに。6〜7個の質問に答えると、心理学・行動経済学の知見から今の状態に合う方法を3つ選び、いますぐできる最初の一歩を出す無料の診断ツール。自分用と、チーム・部下のやる気を引き出したいリーダー用の2種類。5分タイマーつき。登録不要。">
+<meta property="og:title" content="やる気スイッチ診断｜やる気が出ない原因と、いますぐできる一歩">
+<meta property="og:description" content="質問に答えるだけで、今の状態に合う方法を3つと、最初の一歩がわかる無料ツール。自分用・チーム用。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="こまりごとラボ">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://komarigoto-lab.pages.dev/tools/yaruki/">
+<link rel="canonical" href="https://komarigoto-lab.pages.dev/tools/yaruki/">
+<meta name="theme-color" content="#F4F7F9">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/tool.css">
+<style>
+.tabs.two{grid-template-columns:repeat(2,1fr)}
+.tabs.two button{min-height:58px}
+.tabs.two button small{display:block;font-size:11.5px;font-weight:500;opacity:.85}
+.prog{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-soft);font-variant-numeric:tabular-nums;margin-bottom:10px}
+.prog .bar{flex:1;height:8px;background:#E6ECF1;border-radius:4px;overflow:hidden}
+.prog .bar span{display:block;height:100%;background:var(--check);transition:width .25s ease}
+.qtext{font-size:19px;font-weight:900;line-height:1.5;margin:0 0 12px}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;font:inherit;color:var(--ink);background:#FBFCFD;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;min-height:48px;cursor:pointer}
+.opt:hover{border-color:var(--ink);background:#F0F4F8}
+.opt .k{flex:none;display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--paper);font-weight:900;font-size:13px;margin-top:1px}
+.opt .t{display:flex;flex-direction:column;font-weight:700;line-height:1.5}
+.opt .t small{font-weight:500;font-size:12.5px;color:var(--ink-soft)}
+.back{font:inherit;font-size:14px;font-weight:700;background:none;border:0;color:var(--ink-soft);cursor:pointer;padding:8px 0;margin-top:6px}
+.back:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+.type-name{font-size:clamp(26px,7vw,32px);font-weight:900;line-height:1.3;margin:2px 0 6px}
+.type-desc{margin:0;font-size:15px}
+.tech{padding:16px 0;border-top:1px dashed var(--line)}
+.tech:first-of-type{border-top:0;padding-top:4px}
+.tech h3{margin:0;font-size:18px;font-weight:900;line-height:1.45;display:flex;gap:10px;align-items:flex-start}
+.tech h3 .no{flex:none;display:inline-grid;place-items:center;width:30px;height:30px;border-radius:8px;background:var(--marker);font-size:16px}
+.tech .term{display:block;font-size:12.5px;font-weight:500;color:var(--ink-soft)}
+.tech .why{margin:8px 0;font-size:14.5px;color:var(--ink-soft)}
+.tech .step{background:#FBFCFD;border-left:4px solid var(--check);border-radius:0 10px 10px 0;padding:8px 12px;font-size:15px}
+.tech .step b{display:block;font-size:12px;color:var(--check);letter-spacing:.04em}
+.tech .because{margin:6px 0 0;font-size:12.5px;color:var(--ink-soft)}
+.clock{font-size:44px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.row .copy{margin-top:8px}
+.ghost{background:var(--sheet)!important;color:var(--ink)!important;border:1.5px solid var(--ink)!important}
+.ghost:hover{background:#F0F4F8!important}
+.more{list-style:none;margin:0;padding:0}
+.more li{padding:8px 0;border-top:1px dashed var(--line);font-size:14.5px}
+.more li b{display:block}
+details.more-wrap summary{cursor:pointer;font-weight:700}
+@media (prefers-reduced-motion:reduce){.prog .bar span{transition:none}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"やる気スイッチ診断","url":"https://komarigoto-lab.pages.dev/tools/yaruki/","applicationCategory":"LifestyleApplication","operatingSystem":"All","inLanguage":"ja","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"publisher":{"@type":"Organization","name":"こまりごとラボ","url":"https://komarigoto-lab.pages.dev/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"やる気が出ないときは、どうすればいいですか？","acceptedAnswer":{"@type":"Answer","text":"やる気は動き始めてから出てくることが多いので、最初の一歩を「2分で終わる動作」まで小さくして、考える前に手を動かすのが効果的です。止まっている理由（始められない・続かない・飽きた・意味が見えない）によって合う方法が変わるので、診断で今の状態を確かめてみてください。"}},
+{"@type":"Question","name":"部下やチームのやる気を引き出すには？","acceptedAnswer":{"@type":"Answer","text":"細かい指示や報酬を増やすより、本人が選べる余地や名前のついた役割を渡す、担当をはっきりさせる、行動は正しても人柄は認める、といった関わり方が効果的です。チームの様子によって合う方法が変わります。"}}
+]}
+</script>
+<script src="../../assets/analytics.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="site-head">
+    <a class="logo" href="../../" aria-label="こまりごとラボ トップへ"><span>こまりごと</span>ラボ</a>
+    <nav><a href="../../#tools">ツール一覧</a></nav>
+  </header>
+  <p class="crumb"><a href="../../">トップ</a> ／ <a href="../../#tools">ツール</a> ／ やる気スイッチ診断</p>
+
+  <main class="layout">
+    <div class="tool-col">
+      <p class="worry">「<mark>やらなきゃいけないのに、やる気が出ない…</mark>」</p>
+      <h1>やる気スイッチ診断</h1>
+      <p class="lead">6〜7個の質問に答えると、心理学・行動経済学の知見から、今の状態に合う方法を3つ選んで、いますぐできる最初の一歩を出します。1〜2分で終わります。</p>
+
+      <div class="card" id="start">
+        <span class="legend" id="modeLegend">誰のやる気を上げたいですか？</span>
+        <div class="tabs two" role="group" aria-labelledby="modeLegend">
+          <button type="button" id="mode-s">自分のやる気<small>勉強・仕事・家事など</small></button>
+          <button type="button" id="mode-t">チーム・部下<small>リーダー・先輩として</small></button>
+        </div>
+        <p class="hint" style="margin:0">選ぶと、すぐ最初の質問が始まります。</p>
+      </div>
+
+      <div class="card" id="quiz" hidden aria-live="polite">
+        <div class="prog"><div class="bar"><span id="bar" style="width:0%"></span></div><span id="count">1 / 7</span></div>
+        <p class="qtext" id="q"></p>
+        <div class="opts" id="opts"></div>
+        <button type="button" class="back" id="back">← 前の質問にもどる</button>
+      </div>
+
+      <div id="result" hidden>
+        <div class="card">
+          <div class="result" style="margin-top:0">
+            <span class="r-label">いまの状態</span>
+            <p class="type-name" id="type-name"></p>
+            <p class="type-desc" id="type-desc"></p>
+          </div>
+        </div>
+        <div class="card">
+          <h2>合いそうな方法 ベスト3</h2>
+          <div id="top"></div>
+        </div>
+        <div class="card">
+          <h2>1つ目の一歩を、5分だけやってみる</h2>
+          <div class="clock" id="clock" aria-live="off">05:00</div>
+          <p class="hint" id="t-msg" style="margin:4px 0 0">始めてしまえば、続けるのは始めるより楽です。5分で止めても大丈夫。</p>
+          <div class="row">
+            <button type="button" class="copy" id="t-start">5分スタート</button>
+            <button type="button" class="copy ghost" id="t-reset">リセット</button>
+          </div>
+        </div>
+        <div class="card">
+          <details class="more-wrap">
+            <summary>ほかに合いそうな方法</summary>
+            <ul class="more" id="more"></ul>
+          </details>
+        </div>
+        <div class="row">
+          <button type="button" class="copy" id="copy">結果をコピー</button>
+          <button type="button" class="copy ghost" id="again">最初からやり直す</button>
+        </div>
+      </div>
+    </div>
+
+    <aside class="side">
+      <h2>使い方</h2>
+      <dl>
+        <dt>自分用か、チーム用かを選ぶ</dt>
+        <dd>自分用は7問、チーム・部下用は6問です。いちばん近いものを1つずつ選んでください。キーボードのA〜Eでも答えられます。</dd>
+        <dt>結果は「状態」と「方法3つ」</dt>
+        <dd>やる気が止まっている理由のタイプと、合いそうな方法を3つ出します。それぞれに「なぜ効くか」と「いますぐやること」がついています。</dd>
+        <dt>まずは1つ目を5分だけ</dt>
+        <dd>全部やる必要はありません。1つ目の「いますぐやること」を、タイマーで5分だけ試してみてください。</dd>
+      </dl>
+
+      <h2 style="margin-top:28px">やる気が出ないのは、意志が弱いからではありません</h2>
+      <dl>
+        <dt>止まっている場所は人によって違う</dt>
+        <dd>「始められない」「続かない」「飽きた」「意味が見えない」では、効く方法がまったく違います。根性で押し切るより、止まっている場所に合った方法を選ぶほうが近道です。</dd>
+        <dt>やる気は、動いたあとについてくる</dt>
+        <dd>気分が乗るのを待つより、とても小さな行動を先に始めたほうが、あとから気持ちがついてくることがよくあります。</dd>
+      </dl>
+      <p class="note-s">紹介している方法は、心理学・行動経済学で知られている考え方をもとに、こまりごとラボがわかりやすくまとめたものです。効果には個人差があり、研究上の議論が続いているものもあります。気分の落ち込みが長く続くときは、無理をせず医療機関や身近な人に相談してください。回答は端末の中だけで処理し、どこにも送信しません。</p>
+
+      <section class="related" aria-labelledby="rel-h">
+        <h2 id="rel-h">ほかのツール</h2>
+        <ul>
+          <li><a href="../days/">日数計算 <span>締め切りまであと何日？</span></a></li>
+          <li><a href="../mojiokoshi/">音声文字起こし <span>打つよりしゃべる方が早いときに</span></a></li>
+          <li><a href="../moji/">文字数カウント <span>投稿の前に</span></a></li>
+        </ul>
+      </section>
+    </aside>
+  </main>
+</div>
+
+<footer><div class="wrap"><a href="../../">こまりごとラボ トップ</a><a href="../../#tools">ほかのツール</a>© 2026 こまりごとラボ</div></footer>
+
+<script>
+(function(){
+  "use strict";
+  // n=方法の名前 / term=知られている用語（あれば） / why=なぜ効くか / step=いますぐやること（文字列 or {s:自分用, t:チーム用}）
+  var T = {
+    goalGrad:{n:"進み具合を見える化する",term:"目標勾配効果",why:"ゴールが近いと感じるほど、人はペースを上げます。進み具合が見えないと、遠くに感じて手が止まります。",step:{s:"作業を10個に分けて書き出し、もう済んでいる準備を1〜2個チェックして「すでに20%」の状態をつくる。",t:"チームの進み具合を「あと何%」で見える場所に貼り、すでに終わっている部分も塗っておく。"}},
+    candy:{n:"小さなごほうびを先に渡す",why:"小さな贈り物でも気分が上がり、そのあとの行動が前向きになります。",step:{s:"作業の前に、好きな飲み物やおやつを先に自分に用意する。",t:"差し入れや「いつも助かってる」の一言など、小さな好意を先に渡す。"}},
+    consume:{n:"ごほうびの予定を先に決める",why:"ごほうびを「いつ・何に使うか」まで決めると、それ自体がゴールになって行動を引っ張ります。",step:{s:"作業が終わったあとの楽しみを1つ決めて、カレンダーに時間ごと書き込む。",t:"達成したらチームで何をするか（ランチ、早帰りなど）を先に決めて共有する。"}},
+    selfTalk:{n:"「やる？」と自分に聞く",term:"問いかけ型のセルフトーク",why:"「やるぞ」と命令するより「やる？」と自分に問いかけるほうが、自分で選んだ感覚が生まれて続きやすくなります。",step:"「この5分で、最初の1行だけ書く？」と声に出して自分に聞いてみる。"},
+    mindset:{n:"大事にしていることとつなげる",why:"大事にしている価値観と目の前の作業がつながると、やる理由が自分のものになります。",step:{s:"「この作業は、自分が大切にしている〇〇につながる」を1文で書く。",t:"メンバーが大切にしていることを聞き、仕事とのつながりを一緒に言葉にする。"}},
+    intrinsic:{n:"ごほうびを盛りすぎない",term:"内発的動機づけ",why:"外からのごほうびを重ねすぎると、もともとの「面白い」が薄れます。報酬は1つに絞り、作業そのものの楽しさを残します。",step:{s:"作業の中で「ここは面白い」と思える部分を1つ挙げて、そこから始める。",t:"報酬や評価の話を減らし、「どこが面白かった？」と仕事そのものについて聞く。"}},
+    chunk:{n:"最初の一歩を極小にする",term:"スモールステップ",why:"一歩が小さいほど、始めるときの抵抗は小さくなります。乗らない時は細かく、乗ってきたら大きくまとめて進めます。",step:{s:"最初の一歩を「2分で終わる動作」まで細かくする（例：ファイルを開いてタイトルだけ書く）。",t:"大きな仕事を半日で終わるサイズに分けて、最初の1つだけを渡す。"}},
+    sync:{n:"「始めの儀式」で体を作業モードに",why:"体や周りのリズムがそろうと、気持ちも作業モードに入りやすくなります。いきなり本題に入らず、準備運動をはさみます。",step:{s:"作業用の音楽をかける、机を拭くなど、毎回同じ「始めの儀式」を1分だけやる。",t:"朝会や同じ時間に作業を始めるなど、まず動きをそろえてから本題に入る。"}},
+    prove:{n:"昨日の自分と比べる",term:"習得目標",why:"人より上だと示したい気持ちは失敗に弱く、昨日の自分より上達したかを見る気持ちは粘り強さにつながります。",step:{s:"1か月前の自分と比べて、できるようになったことを3つ書く。",t:"他の人と比べず、本人の前回と比べた伸びを具体的に伝える。"}},
+    penalty:{n:"「失う」仕組みにする",term:"損失回避",why:"人は得る喜びより、失う痛みを強く感じます。先に手元に置いたものを失う形にすると、行動しやすくなります。",step:{s:"1,000円を封筒に入れ「今週やらなかったら寄付する」と決めて、誰かに宣言する。",t:"特典は「あとであげる」より「先に渡して、未達なら戻す」形にできないか考える。"}},
+    learnMot:{n:"「やってみたい」入り口をつくる",why:"押しつけられた学びは続きません。相手が「やってみたい」と思える入り口があると、自分から動きます。",step:"「この中でやってみたいのはどれ？」と選択肢を見せて、本人に選んでもらう。"},
+    reactance:{n:"自分で選べる余地を残す",term:"心理的リアクタンス",why:"「やれ」と言われると、人は自由を守ろうとして逆に反発します。自分で選べる余地があると素直に動けます。",step:{s:"「やらなきゃ」を「やるかどうかは自分で決める」と言い換え、やらない選択肢もあると認めてから決める。",t:"進め方を2〜3案出して、本人に選んでもらう。"}},
+    focusShift:{n:"「やる気がない人」という見方を外す",why:"「あの人はやる気がない」という見方を一度外すと、別の原因が見えてきます。",step:"そのメンバーが最近うまくやった場面を3つ思い出して書く。"},
+    priming:{n:"先に良いイメージを伝える",term:"プライミング効果",why:"先に触れた言葉やイメージが、その後の行動を方向づけます。「できない人」扱いすると、本当にそう振る舞いやすくなります。",step:"お願いする前に「〇〇さんは丁寧だから」と、相手の良いところを先に伝える。"},
+    idiosyn:{n:"意見の前に、まず協力する",term:"特異性信用",why:"先に協力して信頼を積んだ人の意見ほど、受け入れられやすくなります。",step:"意見や改善を言う前に、相手の仕事で手伝えることを1つ引き受ける。"},
+    collective:{n:"リーダーから「厳しい」と言う",term:"集合的無知",why:"全員が「誰も困っていないようだ」と思い込み、問題が放置されがちです。リーダーが先に「ピンチだ」と言うと声が出やすくなります。",step:"次のミーティングの冒頭で「正直、いま厳しい状況です」と自分から共有する。"},
+    role:{n:"名前のついた役割を渡す",why:"人は与えられた役割にふさわしく振る舞おうとします。",step:"小さくても名前のついた役割（〇〇担当）を、1人に1つ割り当てる。"},
+    moral:{n:"行動は正し、人柄は認める",why:"行動は正しても、人柄は否定しない。「あなたには期待している」が伝わると、改善に向かいやすくなります。",step:"注意するときは「この行動は直してほしい。でも〇〇さんには期待している」の形で伝える。"},
+    social:{n:"喜ぶ人の顔を思い浮かべる",why:"仕事の先にいる人の顔が浮かぶと、作業に意味が生まれます。",step:{s:"この作業が完成したら喜ぶ人を1人思い浮かべ、その人が言いそうな一言を書く。",t:"お客さんや利用者の声を1つ、チームに共有する。"}},
+    helpless:{n:"やり方を1つ変えて再挑戦",term:"学習性無力感",why:"失敗が続くと「何をしても無駄」と覚えてしまいます。条件を変えてもう一度試すと、そこから抜け出せます。",step:{s:"前回ダメだったやり方を1つだけ変えて、いちばん小さいサイズでもう一度試す。",t:"一度うまくいかなかった仕事を、確実に成功できるサイズにして再挑戦してもらう。"}},
+    adapt:{n:"「できる人」の扱い・環境から入る",why:"人は周りからの扱われ方や環境に、無意識に合わせます。できる人として扱われると、できる人らしく振る舞いやすくなります。",step:{s:"「できる人」がやっていそうな環境（机、服装、道具）を先に1つそろえる。",t:"「頼りにしている」と伝えて、できる人として仕事を任せる。"}},
+    genes:{n:"憧れの人たちの中に入る",why:"才能より環境の影響は大きいものです。目指す人たちの中に入ると、自分の基準が上がります。",step:"憧れる人が集まるコミュニティやイベントを1つ探して、参加を申し込む。"},
+    protect:{n:"失敗を話せる安心をつくる",why:"自分の価値が否定されないとわかっていると、人は安心して挑戦できます。",step:"失敗の報告を受けたら、最初に「話してくれてありがとう」と言う。"},
+    goalSet:{n:"目標を具体的にする",term:"目標設定理論",why:"「がんばる」より「金曜までに3ページ」のように、具体的で少し難しい目標のほうが成果が出やすくなります。",step:{s:"目標を「いつまでに・何を・どれだけ」の1文に書き直す。",t:"チームの目標を「いつまでに・何を・どれだけ」に書き直して共有する。"}},
+    noncomp:{n:"比べる相手を過去の自分にする",why:"他人との競争は、負けた側のやる気を奪います。比べる相手を過去の自分にすると続きます。",step:{s:"先週の自分の記録を書き出し、今週はそれを「+1」だけ上回る目標を立てる。",t:"順位づけをやめて、各自の前回比で伸びたところを評価する。"}},
+    robbers:{n:"みんなの共通目標をつくる",term:"上位目標",why:"対立していた集団も、一緒に取り組む共通の目標があると協力し合うようになります。",step:"チーム全員で達成したい目標を1つ、全員で決める場をつくる。"},
+    loafing:{n:"担当をはっきりさせる",term:"社会的手抜き",why:"大勢で取り組むと「誰かがやる」と思い、一人あたりの力が落ちます。一人ひとりの担当を明確にすると防げます。",step:"タスクごとに担当者の名前を書いた一覧をつくって共有する。"},
+    period:{n:"締め切りを細かく区切る",why:"遠い締め切りは力が入りません。細かく区切ると、毎回小さな締め切りの力が働きます。",step:{s:"大きな締め切りまでを週ごとの小さなゴールに分け、今週の分だけ決める。",t:"大きな締め切りの手前に、週ごとの中間チェック日を入れる。"}},
+    action:{n:"先に手続きを済ませる",why:"迷っている間は、やる気は出ません。申し込みや予約など、後戻りしにくい手続きを先に済ませると、行動が引っ張られます。",step:"関連する申し込み・予約・日程の確保のうち、今できる1つを済ませる。"},
+    pessim:{n:"失敗のシナリオに先に備える",term:"防衛的悲観主義",why:"不安が強い人は、うまくいかない場面を先に想像して対策を用意すると、かえって力を出せます。",step:"「失敗するとしたら原因は？」を3つ書き、それぞれの対策を1行ずつ添える。"},
+    validLogic:{n:"「誰が助かるか」を伝える",why:"「なぜやるのか」が、ほかの人への影響として見えると、納得して動けます。",step:{s:"「これをやると〇〇さんが助かる」を1文で書く。",t:"お願いするときに「これがあると〇〇さんが助かる」と、影響を添えて伝える。"}},
+    planFall:{n:"2分でできることは今やる",term:"計画錯誤",why:"人は作業時間を楽観的に見積もりがちです。あとでやるつもりのことは、今やるのがいちばん確実です。",step:"2分以内に終わることを、今すぐ1つ片づける。"},
+    selfOther:{n:"友だちにアドバイスするつもりで考える",why:"自分のことだと感情が邪魔をしますが、他人へのアドバイスなら冷静で的確になります。",step:"「友だちが同じ状況なら何と言う？」と考えて、そのアドバイスを紙に書く。"},
+    pointArea:{n:"目標に幅を持たせる",why:"目標を一点で決めると、達成か失敗かの二択になります。最小と最大の幅で決めると始めやすく、伸びしろも残ります。",step:"今日の目標を「最低〇〇、できれば〇〇」の2段階で決める。"},
+    endurance:{n:"ゴールを少し多めに置く",why:"ゴールを少し多めに設定すると、途中で息切れしにくく、結果的に多くこなせます。",step:"予定していた量に「+1」を足した数を、今日のゴールにする。"},
+    delay:{n:"予定に余白をつくる",why:"予定を詰め込みすぎると、少しの遅れで全部が崩れ、やる気も一緒に崩れます。",step:{s:"今日の予定から1つ削るか、30分の空白を入れる。",t:"メンバーの担当を見直し、詰まりすぎている人の仕事を1つ外す。"}},
+    emoConv:{n:"緊張を「ワクワク」と言い換える",term:"感情の再評価",why:"緊張や不安のドキドキは、体の反応としては興奮とよく似ています。「ワクワクしてきた」と言い換えると力に変わりやすくなります。",step:"胸がドキドキしたら「楽しみになってきた」と声に出して言う。"},
+    willpower:{n:"我慢に頼らない仕組みにする",why:"我慢や判断を続けると疲れて、やる気も続きません。我慢に頼らず、環境と休憩で回します。",step:"スマホを別の部屋に置くなど、我慢しなくて済む環境を1つつくる。"},
+    power:{n:"姿勢と呼吸を整える",why:"背筋を伸ばして深く呼吸すると、気持ちが前向きになりやすくなります（効果の大きさには研究上の議論もあります）。",step:"立ち上がって胸を張り、ゆっくり深呼吸を5回する。"},
+    analysis:{n:"調べすぎをやめて決める",why:"情報や選択肢を集めすぎると、決められずに動けなくなります。迷うときは選択肢の量を減らします。",step:"候補を2つまで絞り、「5分で決める」と決める。"},
+    alternate:{n:"2つの作業を交互に進める",term:"交互練習",why:"同じことを続けるより、複数を交互に進めるほうが飽きにくく、学習の効果も高くなります。",step:"25分ごとに作業Aと作業Bを入れ替えるスケジュールを組む。"},
+    idealAct:{n:"理想に向けた足あとを残す",why:"大きな夢も、今日の小さな行動の記録が積み重なると現実味が出てきます。",step:"理想の姿に向けて今日やったことを、1行だけ記録する。"},
+    jam:{n:"選択肢を5つまでに絞る",term:"選択肢過多",why:"選択肢が多すぎると、人は選べなくなります。5〜6個に絞ると選んで動けます。",step:{s:"やりたいことリストから、今週やるものを5つまでに絞る。",t:"メンバーに渡すタスクや選択肢を5つまでに絞る。"}},
+    creative:{n:"やり方を少し変える",why:"同じやり方の繰り返しは飽きます。やり方を少し変えると、新鮮さと上達が戻ってきます。",step:{s:"いつもと場所・時間・道具のどれか1つを変えて作業する。",t:"いつもの業務に「今回は〇〇を変えてみよう」という小さな工夫を1つ入れる。"}},
+    assoc:{n:"笑顔から始める",why:"表情と気分はつながっています。笑顔をつくると、前向きな記憶や気分が呼び起こされやすくなります。",step:{s:"鏡の前で10秒笑顔をつくってから始める。",t:"会議や声かけを、笑顔と明るい話題から始める。"}},
+    must:{n:"「しなきゃ」を「したい」に言い換える",why:"「〜しなければ」は義務になって重くなります。「〜したい」に変えると軽くなります。",step:{s:"「〇〇しなきゃ」を「〇〇したい、なぜなら〜」に書き換える。",t:"指示を「〇〇してください」から「〇〇できたらいいなと思っていて」に言い換える。"}},
+    objectify:{n:"頭の中を紙に書き出す",why:"頭の中の問題は実際より大きく見えます。紙に全部書き出すと、距離をとって扱えます。",step:"気になっていることを3分間、全部紙に書き出す。"},
+    focusUpd:{n:"できたことだけ記録する",why:"できなかったことより、できたことに目を向けると、次の行動が続きます。",step:{s:"今日できたことを3つ、小さくても書く。",t:"週1回、チームの「できたこと」だけを共有する時間をつくる。"}},
+    growth:{n:"「今からでも遅くない」と考える",term:"成長マインドセット",why:"能力は伸ばせると考える人ほど、挑戦を続けやすくなります。",step:"「今からでも遅くない」と書いて、目に入る場所に貼る。"},
+    observe:{n:"具体的に見て、具体的にほめる",why:"「すごいね」より、具体的な行動を言葉にして伝えるほうが「ちゃんと見てもらえている」と感じます。",step:"「〇〇の資料、最初の図がわかりやすかった」のように、具体的に1つ伝える。"},
+    pattern:{n:"ベテランに判断を任せる",why:"経験豊富な人の直感には、たくさんの経験が詰まっています。判断を任されると力を発揮します。",step:"ベテランに「どう思う？」と判断を任せる場面を1つつくる。"}
+  };
+
+  var Q = {
+    s:[
+      {q:"いまの状態にいちばん近いのは？",main:true,o:[
+        {l:"手をつける気にならない",d:"始める前で止まっている",w:{chunk:3,action:3,planFall:2,sync:2,selfTalk:2,assoc:1},type:"start"},
+        {l:"始めたけど続かない",d:"途中で止まった・ペースが落ちた",w:{goalGrad:3,period:3,consume:2,focusUpd:2,pointArea:1},type:"keep"},
+        {l:"飽きた・マンネリ",d:"同じことの繰り返しでつまらない",w:{creative:3,alternate:3,intrinsic:2,idealAct:1,genes:1},type:"bored"},
+        {l:"やる意味がわからない",d:"なぜやるのかがピンとこない",w:{social:3,mindset:3,validLogic:2,idealAct:2,must:1},type:"meaning"}
+      ]},
+      {q:"その作業について、近いものは？",o:[
+        {l:"大きすぎて、どこから手をつけるかわからない",w:{chunk:3,period:2,goalSet:2,objectify:1}},
+        {l:"量は少ないけど、とにかく面倒",w:{action:2,planFall:3,candy:2,consume:1}},
+        {l:"ゴールがぼんやりしている",w:{goalSet:3,pointArea:2,idealAct:2}},
+        {l:"やることが多すぎて選べない",w:{jam:3,analysis:3,delay:2}}
+      ]},
+      {q:"いまの気持ちに近いのは？",o:[
+        {l:"不安・失敗するのが怖い",w:{pessim:3,emoConv:3,prove:2,objectify:2}},
+        {l:"疲れていて気力がない",w:{willpower:3,delay:3,power:2,assoc:1}},
+        {l:"やらされている感じがしてイライラ",w:{must:3,reactance:3,selfTalk:2}},
+        {l:"どうせ無理だと思う",w:{helpless:3,growth:3,prove:2,focusUpd:2}},
+        {l:"特にない。ただ気が乗らない",w:{sync:2,action:2,selfTalk:2,assoc:1}}
+      ]},
+      {q:"締め切りはありますか？",o:[
+        {l:"もうすぐ迫っている",w:{planFall:2,chunk:2,emoConv:2,pessim:1}},
+        {l:"先だけど決まっている",w:{period:3,planFall:2,goalGrad:1}},
+        {l:"ない。自分で決めるしかない",w:{goalSet:2,penalty:2,noncomp:1,endurance:2,action:1}}
+      ]},
+      {q:"どんなときに頑張れるタイプですか？",o:[
+        {l:"終わったあとのごほうびがあるとき",w:{consume:3,candy:2}},
+        {l:"進んでいるのが目に見えるとき",w:{goalGrad:3,focusUpd:2,noncomp:1}},
+        {l:"誰かの役に立てるとき",w:{social:3,validLogic:2,mindset:1}},
+        {l:"自分が成長していると感じるとき",w:{prove:3,creative:2,growth:2}},
+        {l:"損をしたくないとき",w:{penalty:3,action:1}}
+      ]},
+      {q:"これまで、同じようなことで…",o:[
+        {l:"挫折したことがある",w:{helpless:3,pessim:2,chunk:1}},
+        {l:"計画倒れになりがち",w:{planFall:2,action:2,selfOther:3,pointArea:1}},
+        {l:"人と比べて落ち込んだことがある",w:{noncomp:3,prove:3,focusUpd:1}},
+        {l:"特にない",w:{}}
+      ]},
+      {q:"いま使える時間は？",o:[
+        {l:"5分くらい",w:{chunk:2,planFall:2,power:1,sync:1,selfTalk:1}},
+        {l:"30分〜1時間",w:{goalGrad:1,pointArea:1,creative:1}},
+        {l:"半日以上ある",w:{alternate:2,period:1,delay:1,endurance:1}}
+      ]}
+    ],
+    t:[
+      {q:"メンバーの様子にいちばん近いのは？",main:true,o:[
+        {l:"指示待ち・受け身",d:"言われたことしかやらない",w:{reactance:3,learnMot:3,role:2},type:"passive"},
+        {l:"自信をなくしている",d:"失敗を引きずっている",w:{protect:3,helpless:3,adapt:2,observe:1},type:"confidence"},
+        {l:"手を抜いている・人任せ",d:"「誰かがやる」空気がある",w:{loafing:3,role:3,robbers:1},type:"loafing"},
+        {l:"やらされ感・反発がある",d:"指示に乗り気でない",w:{reactance:3,must:2,idiosyn:2,validLogic:1},type:"resist"},
+        {l:"忙しすぎて余裕がない",d:"疲れが見える",w:{delay:3,chunk:2,collective:2,jam:1},type:"busy"}
+      ]},
+      {q:"チーム全体の雰囲気は？",o:[
+        {l:"バラバラで一体感がない",w:{robbers:3,sync:2,role:1}},
+        {l:"問題があっても誰も言い出さない",w:{collective:3,protect:2,moral:1}},
+        {l:"競争でギスギスしている",w:{noncomp:3,prove:2,robbers:2}},
+        {l:"悪くない",w:{learnMot:1,intrinsic:1}}
+      ]},
+      {q:"チームの目標について近いのは？",o:[
+        {l:"目標があいまい",w:{goalSet:3,validLogic:1,period:1}},
+        {l:"目標が大きすぎて遠い",w:{chunk:3,goalGrad:2,period:2}},
+        {l:"目標はあるが、意味が伝わっていない",w:{social:3,validLogic:3,mindset:2}}
+      ]},
+      {q:"あなたの関わり方で多いのは？",o:[
+        {l:"細かく指示を出している",w:{reactance:3,learnMot:2,must:1}},
+        {l:"ミスを注意することが多い",w:{moral:3,protect:2,priming:2}},
+        {l:"ほめているが響いていない",w:{observe:3,intrinsic:2,prove:1}},
+        {l:"忙しくてあまり関われていない",w:{candy:2,idiosyn:2,observe:2,focusShift:1}}
+      ]},
+      {q:"どんな形でやる気を引き出したい？",o:[
+        {l:"評価や報酬で動いてほしい",w:{intrinsic:2,penalty:2,consume:2}},
+        {l:"成長を実感してほしい",w:{prove:3,goalGrad:2,adapt:2}},
+        {l:"チームとして一体になってほしい",w:{robbers:3,sync:2,focusUpd:1}},
+        {l:"自分から動いてほしい",w:{learnMot:3,reactance:2,role:2}}
+      ]},
+      {q:"相手の経験は？",o:[
+        {l:"新人・経験が浅い",w:{adapt:2,chunk:2,priming:2,role:1}},
+        {l:"中堅",w:{role:2,learnMot:2,creative:1}},
+        {l:"ベテラン",w:{pattern:3,idiosyn:2,reactance:1}},
+        {l:"いろいろ混ざっている",w:{robbers:1,loafing:1,focusShift:2}}
+      ]}
+    ]
+  };
+
+  var TYPES = {
+    start:{n:"着手ブレーキ型",d:"やる気がないというより、最初の一歩が重すぎる状態です。やる気は動き始めてから出てくるもの。一歩をとても小さくして、考える前に手を動かすのが近道です。"},
+    keep:{n:"燃料切れ型",d:"始める力はあるのに、続けるための手応えが足りない状態です。ゴールまでの距離を縮めて見せたり、小さな区切りとごほうびを用意したりすると、また進みはじめます。"},
+    bored:{n:"マンネリ型",d:"同じことの繰り返しで、刺激が足りなくなっている状態です。やり方・順番・場所を少し変えるだけで、新鮮さが戻ってきます。"},
+    meaning:{n:"意味迷子型",d:"「なぜやるのか」が見えなくなっている状態です。作業の先にいる人や、自分の大事にしていることとつなげ直すと、理由が自分のものになります。"},
+    passive:{n:"受け身型チーム",d:"指示が多いほど、自分で考える余地は減っていきます。選ぶ余地と役割を渡して、自分から動ける状況をつくりましょう。"},
+    confidence:{n:"自信低下型チーム",d:"失敗の記憶が「どうせ無理」という思い込みになりかけています。人柄を守りながら、小さな成功を積み直すのが先です。"},
+    loafing:{n:"人任せ型チーム",d:"誰の仕事かがあいまいなほど、一人ひとりの力は落ちます。担当と役割をはっきりさせ、共通の目標でつなぎましょう。"},
+    resist:{n:"反発型チーム",d:"押しつけられている感覚が、反発を生んでいます。納得できる理由と、自分で選べる余地を先に渡しましょう。"},
+    busy:{n:"余裕不足型チーム",d:"やる気の問題ではなく、余白がない状態です。仕事を減らす・区切る・「厳しい」と言える場をつくることが、いちばんのやる気対策になります。"}
+  };
+
+  var $ = function(id){ return document.getElementById(id); };
+  var mode = null, idx = 0, answers = [], timerId = null, remain = 300, last = null;
+
+  function stepOf(k){ var s = T[k].step; return typeof s === "string" ? s : s[mode]; }
+
+  function startMode(m){
+    mode = m; idx = 0; answers = [];
+    $("start").hidden = true; $("result").hidden = true; $("quiz").hidden = false;
+    render();
+    var f = $("opts").querySelector("button"); if (f) f.focus();
+  }
+
+  function render(){
+    var qs = Q[mode], cur = qs[idx];
+    $("count").textContent = (idx + 1) + " / " + qs.length;
+    $("bar").style.width = (idx / qs.length * 100) + "%";
+    $("q").textContent = "Q" + (idx + 1) + ". " + cur.q;
+    var box = $("opts"); box.innerHTML = "";
+    cur.o.forEach(function(o, i){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "opt"; b.id = "opt-" + i;
+      b.innerHTML = '<span class="k">' + "ABCDE"[i] + '</span><span class="t"><span></span>' + (o.d ? "<small></small>" : "") + "</span>";
+      b.querySelector(".t span").textContent = o.l;
+      if (o.d) b.querySelector("small").textContent = o.d;
+      b.addEventListener("click", function(){ pick(i); });
+      box.appendChild(b);
+    });
+  }
+
+  function pick(i){
+    answers[idx] = i;
+    if (idx < Q[mode].length - 1){ idx++; render(); var f = $("opts").querySelector("button"); if (f && document.activeElement && document.activeElement.classList.contains("opt")) f.focus(); }
+    else showResult();
+  }
+  function back(){
+    if (idx === 0){ $("quiz").hidden = true; $("start").hidden = false; return; }
+    idx--; render();
+  }
+
+  // 回答から各方法の点数を出す（いちばん最初の質問は1.5倍）
+  function score(m, ans){
+    var s = {}, why = {}, order = Object.keys(T);
+    Q[m].forEach(function(q, qi){
+      var o = q.o[ans[qi]], mult = q.main ? 1.5 : 1;
+      Object.keys(o.w).forEach(function(k){
+        s[k] = (s[k] || 0) + o.w[k] * mult;
+        (why[k] = why[k] || []).push({l: o.l, v: o.w[k] * mult});
+      });
+    });
+    var ranked = Object.keys(s).sort(function(a, b){ return s[b] - s[a] || order.indexOf(a) - order.indexOf(b); });
+    return {ranked: ranked, why: why, type: Q[m][0].o[ans[0]].type};
+  }
+
+  function showResult(){
+    var r = score(mode, answers), ty = TYPES[r.type];
+    $("type-name").textContent = ty.n;
+    $("type-desc").textContent = ty.d;
+    var top = $("top"); top.innerHTML = "";
+    r.ranked.slice(0, 3).forEach(function(k, i){
+      var t = T[k];
+      var reasons = r.why[k].slice().sort(function(a, b){ return b.v - a.v; }).slice(0, 2).map(function(x){ return "「" + x.l + "」"; }).join("・");
+      var el = document.createElement("article"); el.className = "tech";
+      el.innerHTML = '<h3><span class="no">' + (i + 1) + '</span><span><span class="nm"></span><span class="term"></span></span></h3><p class="why"></p><div class="step"><b>いますぐやること</b><span class="st"></span></div><p class="because"></p>';
+      el.querySelector(".nm").textContent = t.n;
+      if (t.term) el.querySelector(".term").textContent = "関連する考え方：" + t.term; else el.querySelector(".term").remove();
+      el.querySelector(".why").textContent = t.why;
+      el.querySelector(".st").textContent = stepOf(k);
+      el.querySelector(".because").textContent = "選んだ理由：回答 " + reasons + " から";
+      top.appendChild(el);
+    });
+    var more = $("more"); more.innerHTML = "";
+    r.ranked.slice(3, 9).forEach(function(k){
+      var li = document.createElement("li");
+      li.innerHTML = "<b></b><span></span>";
+      li.querySelector("b").textContent = T[k].n;
+      li.querySelector("span").textContent = stepOf(k);
+      more.appendChild(li);
+    });
+    if (!more.children.length) more.innerHTML = "<li>ほかの候補はありません。</li>";
+    last = {ty: ty, ranked: r.ranked};
+    $("quiz").hidden = true; $("result").hidden = false;
+    resetTimer();
+    $("type-name").scrollIntoView({block: "center", behavior: "smooth"});
+  }
+
+  function resultText(){
+    var s = "【やる気スイッチ診断】\nいまの状態：" + last.ty.n + "\n";
+    last.ranked.slice(0, 3).forEach(function(k, i){ s += "\n" + (i + 1) + ". " + T[k].n + "\n　いますぐやること：" + stepOf(k); });
+    return s + "\n\nhttps://komarigoto-lab.pages.dev/tools/yaruki/";
+  }
+
+  function fmt(n){ return ("0" + Math.floor(n / 60)).slice(-2) + ":" + ("0" + n % 60).slice(-2); }
+  function resetTimer(){
+    clearInterval(timerId); timerId = null; remain = 300;
+    $("clock").textContent = fmt(remain); $("t-start").textContent = "5分スタート";
+    $("t-msg").textContent = "始めてしまえば、続けるのは始めるより楽です。5分で止めても大丈夫。";
+  }
+  function toggleTimer(){
+    if (timerId){ clearInterval(timerId); timerId = null; $("t-start").textContent = "再開"; return; }
+    if (remain <= 0) resetTimer();
+    $("t-start").textContent = "一時停止";
+    timerId = setInterval(function(){
+      remain--; $("clock").textContent = fmt(remain);
+      if (remain <= 0){
+        clearInterval(timerId); timerId = null; $("t-start").textContent = "もう5分";
+        $("t-msg").textContent = "5分できました。このまま続けるか、ここで止めるかは自分で選んでOKです。";
+      }
+    }, 1000);
+  }
+
+  $("mode-s").addEventListener("click", function(){ startMode("s"); });
+  $("mode-t").addEventListener("click", function(){ startMode("t"); });
+  $("back").addEventListener("click", back);
+  $("again").addEventListener("click", function(){ resetTimer(); $("result").hidden = true; $("start").hidden = false; $("mode-s").focus(); });
+  $("t-start").addEventListener("click", toggleTimer);
+  $("t-reset").addEventListener("click", resetTimer);
+  $("copy").addEventListener("click", function(){
+    if (!last) return;
+    var text = resultText(), btn = $("copy");
+    function done(){ btn.textContent = "コピーしました"; setTimeout(function(){ btn.textContent = "結果をコピー"; }, 1500); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function(){});
+    else { var t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select(); try { document.execCommand("copy"); done(); } catch(e){} document.body.removeChild(t); }
+  });
+  document.addEventListener("keydown", function(e){
+    if ($("quiz").hidden || e.metaKey || e.ctrlKey || e.altKey) return;
+    var i = "abcde".indexOf(e.key.toLowerCase());
+    if (i >= 0 && i < Q[mode][idx].o.length) pick(i);
+  });
+
+  window.__yaruki = {score: score, Q: Q, T: T};
+})();
+</script>
+</body>
+</html>

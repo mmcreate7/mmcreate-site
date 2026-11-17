@@ -8,7 +8,7 @@
 - 旧URL https://mmcreate-site.vercel.app/ は `vercel.json` で新URLへ転送するだけにしている（Vercel Hobby は商用利用不可のため 2026-11-13 に移転）
 - 商品・価格を変えたら `index.html` の該当箇所を直して push する
 - ツールは `tools/<名前>/index.html`。新しいツールは `assets/tool.css`（共通デザイン）と `assets/analytics.js`（計測）を読み込み、トップの一覧・関連ツール・`sitemap.xml` にも追加する
-- 公開中のツール：電卓（calculator）、割り勘計算（warikan）、日数計算（days）、年齢・和暦早見表（age）、育休給付金の計算（ikukyu）、時給・月給・年収の換算（salary）、ポイント還元込みの比較（point）、文字数カウント（moji）、音声文字起こし（mojiokoshi）
+- 公開中のツール：電卓（calculator）、割り勘計算（warikan）、日数計算（days）、年齢・和暦早見表（age）、育休給付金の計算（ikukyu）、時給・月給・年収の換算（salary）、ポイント還元込みの比較（point）、文字数カウント（moji）、音声文字起こし（mojiokoshi）、やる気スイッチ診断（yaruki）
 - 育休給付金の上限額・下限額は毎年8月1日に変わる。厚労省「基本手当日額等の適用について」を確認し、`tools/ikukyu/index.html` の DAILY_MAX・DAILY_MIN と本文・出典の日付を更新する（次回 2027年8月）
 
 ## 困りごと募集フォーム（2026-11-16 追加）
