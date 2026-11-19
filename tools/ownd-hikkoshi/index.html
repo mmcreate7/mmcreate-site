@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ameba Owndの引っ越しツール｜1ページの文章とHTMLを作る・お知らせ文・手順｜こまりごとラボ</title>
+<meta name="description" content="Ameba Owndの終了（2027年3月31日11時）に向けた無料の引っ越しツール。店名・場所・営業時間・予約方法・メニューを入れると、新しいサイトに貼れる1ページ分の文章と最低限のHTMLができます。Owndの「訪問者へのお知らせ」（200文字）用の移転案内文と、書き出し〜取り込みの手順チェックリストつき。登録不要・入力はどこにも送信しません。">
+<meta property="og:title" content="Ameba Owndの引っ越しツール｜1ページの文章とHTMLを作る">
+<meta property="og:description" content="店名・場所・営業時間・予約方法・メニューを入れると、引っ越し先に貼れる文章とHTMLができる無料ツール。お知らせ文と手順チェックリストつき。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="こまりごとラボ">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://komarigoto-lab.pages.dev/tools/ownd-hikkoshi/">
+<link rel="canonical" href="https://komarigoto-lab.pages.dev/tools/ownd-hikkoshi/">
+<meta name="theme-color" content="#F4F7F9">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/tool.css">
+<style>
+.deadline{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;background:#FFF6C8;border:2px solid var(--ink);border-radius:12px;padding:10px 14px;margin:0 0 18px;font-weight:700}
+.deadline b{font-size:28px;font-variant-numeric:tabular-nums;line-height:1.2}
+.deadline small{font-weight:500;font-size:12.5px;color:var(--ink-soft);flex-basis:100%}
+textarea{font:inherit;color:var(--ink);background:#FBFCFD;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;min-height:84px;resize:vertical;line-height:1.6}
+textarea:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3px rgba(46,125,116,.25)}
+input[type=url],input[type=tel],input[type=email]{font:inherit;color:var(--ink);background:#FBFCFD;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;min-height:48px;width:100%}
+input[type=url]:focus,input[type=tel]:focus,input[type=email]:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3px rgba(46,125,116,.25)}
+.req{display:inline-block;font-size:11px;font-weight:700;background:var(--ink);color:var(--paper);border-radius:4px;padding:0 5px;margin-left:6px;vertical-align:2px}
+.opt{font-size:12px;font-weight:500;color:var(--ink-soft);margin-left:6px}
+fieldset{border:0;border-top:1px dashed var(--line);margin:18px 0 0;padding:14px 0 0}
+fieldset legend{font-weight:900;font-size:16px;padding:0 6px 0 0}
+.menu-row{display:grid;grid-template-columns:minmax(0,1fr) 108px 40px;gap:6px;margin-bottom:6px}
+.menu-row input{min-height:44px;padding:8px 10px}
+.link-row{display:grid;grid-template-columns:118px minmax(0,1fr);gap:6px;margin-bottom:6px}
+.link-row input{min-height:44px;padding:8px 10px}
+.rm{font:inherit;border:0;background:none;color:var(--ink-soft);font-size:22px;line-height:1;cursor:pointer;border-radius:8px;min-height:44px}
+.rm:hover{background:#EEF2F6;color:var(--warn)}
+.add{font:inherit;font-weight:700;font-size:14px;border:1.5px dashed var(--ink);background:none;border-radius:10px;padding:8px;cursor:pointer;width:100%;min-height:44px;color:var(--ink)}
+.add:hover{background:#EEF2F6}
+.missing{margin:0 0 12px;font-size:14px;border-left:4px solid var(--warn);padding:6px 10px;background:#FFF;border-radius:0 8px 8px 0}
+.missing.ok{border-left-color:var(--check)}
+.out-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:14px 0 4px}
+.out-h:first-child{margin-top:0}
+.out-h b{font-size:15px}
+.out-h span{font-size:12.5px;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.out{width:100%;min-height:180px;font-size:13.5px;background:var(--sheet);white-space:pre-wrap}
+.out.code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;min-height:150px}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
+.btns .copy{margin-top:0}
+.copy.sub{background:var(--sheet);color:var(--ink);border:1.5px solid var(--ink)}
+.copy.sub:hover{background:#EEF2F6}
+.copy:disabled{opacity:.4;cursor:default}
+.preview{width:100%;height:420px;border:1px solid var(--line);border-radius:10px;background:#fff;margin-top:6px}
+.count.over{color:var(--warn);font-weight:700}
+#nBtn{font:inherit;color:var(--ink);background:#FBFCFD;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;min-height:48px;width:100%}
+#nBtn:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3px rgba(46,125,116,.25)}
+.steps .d a{font-weight:700}
+.kind{display:grid;gap:6px}
+.kind input{position:absolute;opacity:0;pointer-events:none}
+.kind label{display:block;min-height:46px;border:1.5px solid var(--line);border-radius:10px;font-weight:700;font-size:14px;line-height:1.4;cursor:pointer;background:var(--sheet);padding:10px 12px}
+.kind input:checked + label{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.kind input:focus-visible + label{outline:3px solid var(--check);outline-offset:2px}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.steps li{border-bottom:1px solid var(--line);padding:10px 0}
+.steps li:last-child{border-bottom:0}
+.steps label{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;cursor:pointer}
+.steps input{width:20px;height:20px;margin-top:4px;accent-color:var(--check)}
+.steps label>span>b{display:block;line-height:1.5}
+.steps .d{display:block;font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin-top:2px}
+.steps .when{display:inline-block;font-size:11.5px;font-weight:700;color:var(--check);border:1px solid var(--check);border-radius:999px;padding:0 8px;margin-top:4px}
+.steps input:checked ~ span>b{text-decoration:line-through;color:var(--ink-soft)}
+.progress{font-weight:700;font-size:14px;margin:0 0 6px}
+.help-line{margin-top:18px;font-size:14px;background:var(--sheet);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.help-line a{font-weight:700}
+.src{font-size:12.5px;color:var(--ink-soft);word-break:break-all}
+.side h3{font-size:16px;font-weight:900;margin:22px 0 4px}
+.side ul.plain{margin:4px 0 0;padding-left:1.2em;color:var(--ink-soft);font-size:15px}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Ameba Owndの引っ越しツール","url":"https://komarigoto-lab.pages.dev/tools/ownd-hikkoshi/","applicationCategory":"UtilitiesApplication","operatingSystem":"All","inLanguage":"ja","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"publisher":{"@type":"Organization","name":"こまりごとラボ","url":"https://komarigoto-lab.pages.dev/"}}
+</script>
+<script src="../../assets/analytics.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="site-head">
+    <a class="logo" href="../../" aria-label="こまりごとラボ トップへ"><span>こまりごと</span>ラボ</a>
+    <nav><a href="../../#tools">ツール一覧</a></nav>
+  </header>
+  <p class="crumb"><a href="../../">トップ</a> ／ <a href="../../#tools">ツール</a> ／ Ameba Owndの引っ越し</p>
+
+  <main class="layout">
+    <div class="tool-col">
+      <p class="worry">「<mark>Owndが終わる。何をどこに移せばいいの？</mark>」</p>
+      <h1>Ameba Owndの引っ越しツール</h1>
+      <p class="lead">お店の情報を入れると、新しいサイトに貼れる<b>1ページ分の文章とHTML</b>ができます。Owndに出せる「移転のお知らせ」の文と、書き出し〜取り込みの手順もここで確認できます。</p>
+
+      <p class="deadline" id="deadline"><span>Owndの終了まで</span><b id="days">—</b><span>日</span><small>2027年3月31日（水）11:00頃に終了。終了後は閲覧も書き出しもできません。</small></p>
+
+      <div class="tabs" role="tablist" aria-label="ツールの切り替え">
+        <button type="button" role="tab" id="t-page" aria-controls="p-page" aria-selected="true">① ページを<br>作る</button>
+        <button type="button" role="tab" id="t-notice" aria-controls="p-notice" aria-selected="false" tabindex="-1">② お知らせ文</button>
+        <button type="button" role="tab" id="t-steps" aria-controls="p-steps" aria-selected="false" tabindex="-1">③ 手順<br>チェック</button>
+      </div>
+
+      <!-- ① ページを作る -->
+      <section role="tabpanel" id="p-page" aria-labelledby="t-page">
+        <form class="card" id="form" autocomplete="off" onsubmit="return false">
+          <div class="field"><label for="name">店名・屋号<span class="req">必須</span></label><input type="text" id="name" maxlength="60" placeholder="例）カフェ こまり"></div>
+          <div class="field"><label for="intro">ひとこと紹介<span class="opt">任意</span></label><textarea id="intro" maxlength="400" placeholder="例）駅から3分、自家焙煎のコーヒーと手づくりケーキのお店です。"></textarea></div>
+
+          <fieldset>
+            <legend>場所</legend>
+            <div class="field"><label for="addr">住所</label><input type="text" id="addr" maxlength="120" placeholder="例）東京都〇〇区〇〇1-2-3 〇〇ビル1階"></div>
+            <div class="field"><label for="access">行き方・最寄り駅<span class="opt">任意</span></label><input type="text" id="access" maxlength="120" placeholder="例）〇〇駅 東口から徒歩3分"></div>
+            <div class="field"><label for="map">地図のURL<span class="opt">任意</span></label><input type="url" id="map" inputmode="url" maxlength="500" placeholder="例）Googleマップの「共有」で出るURL"></div>
+          </fieldset>
+
+          <fieldset>
+            <legend>営業時間</legend>
+            <div class="field"><label for="hours">営業時間</label><textarea id="hours" maxlength="300" placeholder="例）&#10;平日 11:00〜18:00&#10;土日祝 10:00〜17:00（L.O. 16:30）"></textarea></div>
+            <div class="field"><label for="closed">定休日</label><input type="text" id="closed" maxlength="80" placeholder="例）毎週水曜・第3火曜"></div>
+          </fieldset>
+
+          <fieldset>
+            <legend>予約・問い合わせ</legend>
+            <div class="field"><label for="tel">電話番号<span class="opt">任意</span></label><input type="tel" id="tel" inputmode="tel" maxlength="20" placeholder="例）03-1234-5678"></div>
+            <div class="field"><label for="resUrl">予約ページのURL<span class="opt">任意</span></label><input type="url" id="resUrl" inputmode="url" maxlength="500" placeholder="例）LINE公式・予約サイトのURL"><p class="hint">入れると、ページの上に予約ボタンが出ます。</p></div>
+            <div class="field"><label for="resLabel">ボタンの文字</label><input type="text" id="resLabel" maxlength="20" value="予約する"></div>
+            <div class="field"><label for="resNote">予約・問い合わせの方法</label><textarea id="resNote" maxlength="400" placeholder="例）ご予約はお電話かLINEで承ります。当日のご予約はお電話でお願いします。"></textarea></div>
+          </fieldset>
+
+          <fieldset>
+            <legend>メニュー・料金</legend>
+            <div id="menus"></div>
+            <button type="button" class="add" id="addMenu">＋ メニューを追加</button>
+            <div class="field" style="margin-top:10px"><label for="menuNote">メニューの補足<span class="opt">任意</span></label><input type="text" id="menuNote" maxlength="120" placeholder="例）価格はすべて税込です。"></div>
+          </fieldset>
+
+          <fieldset>
+            <legend>SNS・ほかのページ<span class="opt">任意</span></legend>
+            <div id="links"></div>
+          </fieldset>
+
+          <div class="result" id="result" aria-live="polite">
+            <p class="missing" id="missing"></p>
+            <div class="out-h"><b>貼りつけ用の文章</b><span id="textCount"></span></div>
+            <textarea class="out" id="outText" readonly aria-label="貼りつけ用の文章"></textarea>
+            <div class="btns"><button type="button" class="copy" id="copyText" disabled>文章をコピー</button><button type="button" class="copy sub" id="copyHtml" disabled>HTMLをコピー</button></div>
+            <p class="hint">Amebaブログ・WordPress・Jimdo・ペライチなどの編集画面に、文章をそのまま貼れます。</p>
+
+            <div class="out-h"><b>HTMLの見た目（スマホ幅）</b><span></span></div>
+            <iframe class="preview" id="preview" title="作ったページの見本" sandbox=""></iframe>
+            <button type="button" class="copy sub" id="dlHtml" disabled>HTMLファイルを保存（index.html）</button>
+            <p class="hint">HTMLは、自分でサーバーに置く人・作る人に渡す用です。写真は入りません（あとから足してください）。</p>
+          </div>
+        </form>
+      </section>
+
+      <!-- ② お知らせ文 -->
+      <section role="tabpanel" id="p-notice" aria-labelledby="t-notice" hidden>
+        <form class="card" id="nform" autocomplete="off" onsubmit="return false">
+          <p style="margin:0 0 12px;font-size:14.5px">Owndでは11月18日から、サイトを見に来た人に<b>お知らせ（本文200文字まで）</b>を出せるようになりました。バナーは全ページの上に、ポップアップはトップ・記事・固定ページに出ます（ポップアップは閉じると24時間出ません）。リンクはボタンで付けます（文言は4つから選ぶ／ボタンなしも可）。設定場所は管理画面の左メニュー「設定」→「訪問者へのお知らせ」。そこに入れる文を作ります。</p>
+          <span class="legend" id="kLegend">いまの状況</span>
+          <div class="kind" role="radiogroup" aria-labelledby="kLegend">
+            <input type="radio" name="kind" id="k1" value="moved" checked><label for="k1">新しいサイトに引っ越しました</label>
+            <input type="radio" name="kind" id="k2" value="soon"><label for="k2">これから引っ越します（日にちが決まっている）</label>
+            <input type="radio" name="kind" id="k3" value="tbd"><label for="k3">引っ越し先は準備中（当面は電話・SNSで）</label>
+          </div>
+          <div class="field" style="margin-top:14px"><label for="nName">店名・屋号</label><input type="text" id="nName" maxlength="60" placeholder="①で入れた店名が入ります"></div>
+          <div class="field" id="fDate" hidden><label for="nDate">引っ越す日</label><input type="date" id="nDate"></div>
+          <div class="field" id="fUrl"><label for="nUrl"><span id="nUrlLabel">新しいサイトのURL</span><span class="opt">ボタンの行き先・任意</span></label><input type="url" id="nUrl" inputmode="url" maxlength="500" placeholder="例）https://〇〇.com/"></div>
+          <div class="field" id="fBtn"><label for="nBtn">ボタンの文字（Owndで選ぶもの）</label><select id="nBtn"><option value="auto">おすすめに合わせる</option><option>移設後のサイトはこちら</option><option>詳しくはこちら</option><option>SNSはこちら</option><option>お問い合わせ</option><option value="none">ボタンを出さない</option></select></div>
+          <div class="field" id="fContact" hidden><label for="nContact">当面の連絡先</label><input type="text" id="nContact" maxlength="80" placeholder="例）お電話（03-1234-5678）かInstagram"></div>
+          <div class="field"><label for="nExtra">ひとこと<span class="opt">任意</span></label><input type="text" id="nExtra" maxlength="100" placeholder="例）お気に入り登録の変更をお願いします。"></div>
+
+          <div class="result" aria-live="polite">
+            <div class="out-h"><b>お知らせの文章</b><span class="count" id="nCount"></span></div>
+            <textarea class="out" id="nOut" readonly aria-label="お知らせの文章" style="min-height:120px"></textarea>
+            <button type="button" class="copy" id="copyNotice" disabled>お知らせ文をコピー</button>
+            <ul class="r-sub" id="nUrlBox" hidden><li><span>ボタンの行き先URLに入れる</span><span id="nUrlShow"></span></li><li><span>ボタンの文字で選ぶ</span><span id="nBtnShow"></span></li></ul>
+            <p class="hint">Owndのお知らせは、本文に書いたURLがリンクにならず文字のまま出ます。なのでこの文にはURLを入れず、ボタンの行き先（https:// から）に入れます。本文の改行はそのまま表示されます。写真は入れられません。入れたら右上の「保存」。本文を空にして保存すると、お知らせは消えます。</p>
+            <p class="hint">文字数は「見た目の1文字＝1」で数えています。改行や絵文字をOwndが何文字と数えるかは、こちらでは未確認です。<b>Owndの入力欄で200文字に収まるか</b>を最後に確かめてください。<span id="nWarn"></span></p>
+            <p class="src">設定のしかた：<a href="https://help.amebaownd.com/posts/59351464" rel="noopener" target="_blank">公式ヘルプ「訪問者へのお知らせ」の設定手順</a></p>
+          </div>
+        </form>
+      </section>
+
+      <!-- ③ 手順チェック -->
+      <section role="tabpanel" id="p-steps" aria-labelledby="t-steps" hidden>
+        <div class="card">
+          <p class="progress" id="progress" aria-live="polite"></p>
+          <ol class="steps" id="steps">
+            <li><label><input type="checkbox"><span><b>引っ越し先を決める</b><span class="d">Owndの書き出しファイルが使えるのは <b>WordPress</b> と <b>Amebaブログ</b>（記事のみ）。ほかのサービスに移すなら、①で作った文章を貼って作り直します。独自ドメインを使い続けたいなら、Amebaブログは使えません。Amebaブログに3/31までに引っ越しを申し込むと、有料プラン（ライトプラン）が60日無料になると案内されています。</span></span></label></li>
+            <li><label><input type="checkbox"><span><b>パソコンで管理画面に入れるか確かめる</b><span class="d">書き出しはパソコンだけ（スマホの管理画面ではできません）。オーナーかマネージャーの人しかできません。エディター・ライターの人は、オーナーかマネージャーに頼みます。</span><span class="when">11/18から使えます</span></span></label></li>
+            <li><label><input type="checkbox"><span><b>「コンテンツのエクスポート」で書き出す</b><span class="d">左メニュー「設定」→「コンテンツのエクスポート」で、移行先（WordPress／アメブロ）を選んで「エクスポートする」。サイトごとに1回ずつ。時間がかかっても、画面を閉じて大丈夫（処理は続きます）。終わるとメールが届きます（メール通知を切っている人は管理画面の履歴で確認）。書き出せなかった記事・ページがあると履歴に出て、「一覧」からCSVで確かめられます。<a href="https://help.amebaownd.com/posts/59351300" rel="noopener" target="_blank">公式の手順</a></span></span></label></li>
+            <li><label><input type="checkbox"><span><b>7日以内にファイルを保存する</b><span class="d">完了後に出る「ダウンロードする」から保存。期限を過ぎたら、もう一度書き出します。ファイル名や中身は変えず、やり直しに備えて取り込んだあとも手元に残しておきます（終了後は書き出しもダウンロードもできません）。</span><span class="when">書き出し完了から7日</span></span></label></li>
+            <li><label><input type="checkbox"><span><b>引っ越し先に取り込む</b><span class="d">WordPress.com はZIPを開かずそのまま。自分のサーバーのWordPressはZIPを開き、中のXMLを「-01.xml」から順に1つずつ（記事が多いと複数に分かれます）。Amebaブログは、テキストが複数あれば上から順に1つずつ。反映まで1週間ほど。<a href="https://help.amebaownd.com/posts/59351462" rel="noopener" target="_blank">WordPressへの取り込み</a>／<a href="https://helps.ameba.jp/faq/blog/import/import_steps_ameba_ownd.html" rel="noopener" target="_blank">Amebaブログへの取り込み</a></span></span></label></li>
+            <li><label><input type="checkbox"><span><b>写真がちゃんと出ているか見る</b><span class="d">書き出しファイルに入るのは写真の「場所（URL）」だけ。取り込むときにOwndから写真を取ってくるので、<b>終了前に取り込みと確認まで</b>終わらせます。</span><span class="when">2027/3/31 11:00まで（最終日は混むので早めに）</span></span></label></li>
+            <li><label><input type="checkbox"><span><b>書き出せないものを手で移す</b><span class="d">デザイン、コメント、Instagram・Facebookから取り込んだ写真、Owndの素材写真、ショップの商品、一部の埋め込み（YouTube・Vimeo・SoundCloud・Spotify・X以外はリンクだけになる）。①の文章が役に立ちます。</span></span></label></li>
+            <li><label><input type="checkbox"><span><b>Owndに「移転のお知らせ」を出す</b><span class="d">左メニュー「設定」→「訪問者へのお知らせ」に②で作った文を入れ、ボタンの行き先に新しいURLを入れて「保存」。ポップアップとバナーで表示されます。<a href="https://help.amebaownd.com/posts/59351464" rel="noopener" target="_blank">公式の設定手順</a></span></span></label></li>
+            <li><label><input type="checkbox"><span><b>アドレスを載せている所を直す</b><span class="d">Googleマップ（ビジネスプロフィール）、Instagramのプロフィール、LINE公式、予約サイト、名刺・チラシ・QRコード。</span></span></label></li>
+            <li><label><input type="checkbox"><span><b>独自ドメインの人：DNSの設定を変える</b><span class="d">ドメインを買った会社の管理画面で、新しいサイトに向け直します（Ownd側の作業はなし）。</span><span class="when">2027/3/31 11:00まで</span></span></label></li>
+            <li><label><input type="checkbox"><span><b>BASEのショップの人：「カート機能のみを使用」を外す</b><span class="d">BASEの「設定」→「ショップ情報」。外すとショップページがすぐ公開されるので、先にデザインを確認。</span><span class="when">2027/3/31 11:00まで</span></span></label></li>
+            <li><label><input type="checkbox"><span><b>サイトを消すのは最後に（消さなくてもよい）</b><span class="d">削除すると、そのサイトはもう書き出せません。書き出し済みでも、取り込みが終わる前に消すと写真を取ってこられません。新しいサイトで写真まで正しく見えるのを確かめてから。ショップも<b>先に書き出してから</b>削除します（逆にすると商品がBASEへのリンクに置き換わらず、商品一覧も移りません）。削除できるのはオーナーだけ。<a href="https://help.amebaownd.com/posts/59351465" rel="noopener" target="_blank">公式の削除手順</a></span></span></label></li>
+          </ol>
+          <p class="hint">チェックはこの画面の中だけのメモです。ページを閉じると消えます。</p>
+          <p class="src">もとにした情報：Ameba Ownd公式ブログ「【重要】Ameba Owndのエクスポート機能などの提供を開始しました」（2026年11月18日）、「【重要】11月18日から提供する機能と、サービス終了までのご準備について」（同11月13日）、ヘルプ「サービス終了に関するご質問と回答」「コンテンツのエクスポート」「訪問者へのお知らせ」。<a href="https://blog.amebaownd.com/posts/59351469" rel="noopener" target="_blank">11/18の公式のお知らせ</a>／<a href="https://help.amebaownd.com/posts/59351291" rel="noopener" target="_blank">よくある質問</a></p>
+        </div>
+      </section>
+
+      <p class="help-line">自分で作る時間がない方へ：1ページの引っ越しは19,800円（公開後のお支払い）でお手伝いしています。<a href="../../ameba-ownd/">引っ越しのお手伝いを見る</a></p>
+    </div>
+
+    <aside class="side">
+      <h2>使い方</h2>
+      <dl>
+        <dt>① ページを作る</dt>
+        <dd>お店の情報を入れると、引っ越し先に貼る文章と、最低限のHTMLが同時にできます。足りない項目は上に表示します。どのサービスに引っ越しても使えるよう、Owndの書き出しファイルは使わずに作ります。</dd>
+        <dt>② お知らせ文</dt>
+        <dd>Owndのサイトを見に来たお客さんに、引っ越し先を知らせる文です。200文字を超えると赤く表示します。Owndで選ぶボタンの文字も合わせて出します。</dd>
+        <dt>③ 手順チェック</dt>
+        <dd>書き出しから、取り込み・写真の確認・ドメインまでの順番です。自分の場合の「やること」と期限をまとめて知りたいときは、<a href="../../ameba-ownd/#check">引っ越しチェッカー</a>もどうぞ。</dd>
+      </dl>
+
+      <h2 style="margin-top:28px">Owndの書き出し機能について</h2>
+      <p class="note-s" style="margin-top:0">2026年11月18日の公式のお知らせより。11月18日から使えるようになり、操作の手順は<a href="https://help.amebaownd.com/posts/59351300" rel="noopener" target="_blank">公式ヘルプ</a>にあります。</p>
+      <h3>書き出せるもの</h3>
+      <ul class="plain"><li>記事・ページ・カテゴリ・下書き・予約投稿（非公開のものも）</li><li>形式は「WordPress用（ZIP）」か「Amebaブログ用（テキスト）」。Amebaブログ用は記事だけ</li></ul>
+      <h3>書き出せないもの</h3>
+      <ul class="plain"><li>デザイン・テーマ・独自ドメインの設定・カスタマイズ</li><li>コメント、Instagram・Facebookの写真、Owndの素材写真</li><li>ショップの商品・注文情報（BASE側には残ります）</li></ul>
+      <h3>気をつけること</h3>
+      <ul class="plain"><li>写真はファイルに入らず、取り込むときにOwndから取ってくる</li><li>ダウンロードは書き出し完了から7日以内</li><li>ダウンロードしたファイルは、名前も中身も変えずに取り込みに使い、やり直しに備えて残しておく</li><li>記事が多いと、XMLやテキストが複数に分かれる。順番どおりに1つずつ取り込む</li><li>書き出しもスマホではできず、3月31日11時で終わる</li><li>記事やページの更新は、11/18以降も止まったまま</li></ul>
+
+      <p class="note-s">入力した内容は、お使いの端末の中だけで文章にしています。どこにも送信・保存しません。スケジュールや機能は変わることがあります。最新はAmeba Owndの<a href="https://blog.amebaownd.com/" rel="noopener" target="_blank">公式ブログ</a>と<a href="https://help.amebaownd.com/" rel="noopener" target="_blank">ヘルプ</a>でご確認ください。</p>
+
+      <section class="related" aria-labelledby="rel-h">
+        <h2 id="rel-h">ほかのツール</h2>
+        <ul>
+          <li><a href="../moji/">文字数カウント <span>紹介文の長さ確認に</span></a></li>
+          <li><a href="../days/">日数計算 <span>期限まであと何日</span></a></li>
+          <li><a href="../../request/">困りごとを送る <span>無料でツールにします</span></a></li>
+        </ul>
+      </section>
+    </aside>
+  </main>
+</div>
+<footer><div class="wrap"><a href="../../">こまりごとラボ トップ</a><a href="../../#tools">ほかのツール</a>© 2026 こまりごとラボ</div></footer>
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+  var END = Date.UTC(2027, 2, 31, 2, 0, 0); // 2027-03-31 11:00 JST
+  var NOTICE_MAX = 200;
+
+  // ---- helpers ----
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  function val(id){ return $(id).value.trim(); }
+  function len(s){ return Array.from(s).length; }
+  // http(s) だけ通す（javascript: などは捨てる）。全角は半角に
+  function safeUrl(u){
+    u = String(u || "").trim().replace(/[！-～]/g, function(c){ return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); });
+    if (!u) return "";
+    if (/^www\./i.test(u)) u = "https://" + u;
+    try { var x = new URL(u); return (x.protocol === "https:" || x.protocol === "http:") ? x.href : ""; } catch(e){ return ""; }
+  }
+  function telDigits(t){
+    t = String(t || "").replace(/[０-９]/g, function(c){ return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); }).replace(/[ー－―‐]/g, "-");
+    var d = t.replace(/[^0-9+]/g, "");
+    return d.length >= 6 ? d : "";
+  }
+  function lines(s){ return String(s || "").split(/\r?\n/).map(function(x){ return x.trim(); }).filter(Boolean); }
+  function today(){ var d = new Date(); return d.getFullYear() + "年" + (d.getMonth() + 1) + "月" + d.getDate() + "日"; }
+
+  // ---- countdown ----
+  (function(){
+    var ms = END - Date.now();
+    var el = $("days");
+    if (ms <= 0){ el.textContent = "0"; $("deadline").querySelector("small").textContent = "Ameba Owndは終了しました。"; return; }
+    el.textContent = Math.ceil(ms / 86400000).toLocaleString("ja-JP");
+  })();
+
+  // ---- tabs ----
+  var tabs = ["page", "notice", "steps"];
+  function showTab(k, focus){
+    tabs.forEach(function(t){
+      var b = $("t-" + t), on = t === k;
+      b.setAttribute("aria-selected", on ? "true" : "false");
+      b.tabIndex = on ? 0 : -1;
+      $("p-" + t).hidden = !on;
+      if (on && focus) b.focus();
+    });
+    if (k === "notice" && !$("nName").value) { $("nName").value = val("name"); updateNotice(); }
+  }
+  tabs.forEach(function(t, i){
+    var b = $("t-" + t);
+    b.addEventListener("click", function(){ showTab(t); });
+    b.addEventListener("keydown", function(e){
+      var n = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (!n) return; e.preventDefault(); showTab(tabs[(i + n + tabs.length) % tabs.length], true);
+    });
+  });
+
+  // ---- menu / link rows ----
+  var $menus = $("menus"), mid = 0;
+  var MENU_PH = [["例）ブレンドコーヒー", "例）550円"], ["例）本日のケーキセット", "例）1,100円"], ["例）ランチ（11時〜14時）", "例）1,200円〜"]];
+  function addMenu(){
+    if ($menus.children.length >= 30) return null;
+    var n = $menus.children.length, ph = MENU_PH[n] || ["メニュー名", "料金"]; mid++;
+    var d = document.createElement("div");
+    d.className = "menu-row";
+    d.innerHTML = '<input type="text" class="m-name" maxlength="60" aria-label="メニュー名" placeholder="' + esc(ph[0]) + '">' +
+      '<input type="text" class="m-price" maxlength="20" aria-label="料金" placeholder="' + esc(ph[1]) + '">' +
+      '<button type="button" class="rm" aria-label="このメニューを削除">×</button>';
+    $menus.appendChild(d);
+    $("addMenu").hidden = $menus.children.length >= 30;
+    return d;
+  }
+  $menus.addEventListener("click", function(e){
+    if (!e.target.classList.contains("rm")) return;
+    e.target.parentNode.remove();
+    if (!$menus.children.length) addMenu();
+    $("addMenu").hidden = false; update();
+  });
+  $("addMenu").addEventListener("click", function(){ var d = addMenu(); if (d) d.querySelector(".m-name").focus(); });
+  for (var i = 0; i < 3; i++) addMenu();
+
+  var LINK_DEF = [["Instagram", "https://www.instagram.com/〇〇"], ["LINE公式", "https://lin.ee/〇〇"], ["", "その他のURL"]];
+  LINK_DEF.forEach(function(l, i){
+    var d = document.createElement("div");
+    d.className = "link-row";
+    d.innerHTML = '<input type="text" class="l-name" maxlength="20" aria-label="リンクの名前" value="' + esc(l[0]) + '" placeholder="名前">' +
+      '<input type="url" class="l-url" inputmode="url" maxlength="500" aria-label="' + esc((l[0] || "その他") + "のURL") + '" placeholder="' + esc(l[1]) + '">';
+    $("links").appendChild(d);
+  });
+
+  // ---- read form ----
+  function read(){
+    var menus = Array.prototype.map.call($menus.children, function(d){
+      return {name: d.querySelector(".m-name").value.trim(), price: d.querySelector(".m-price").value.trim()};
+    }).filter(function(m){ return m.name; });
+    var links = Array.prototype.map.call($("links").children, function(d){
+      var raw = d.querySelector(".l-url").value.trim();
+      return {name: d.querySelector(".l-name").value.trim() || "リンク", raw: raw, url: safeUrl(raw)};
+    }).filter(function(l){ return l.raw; });
+    var resRaw = val("resUrl"), mapRaw = val("map");
+    return {
+      name: val("name"), intro: val("intro"),
+      addr: val("addr"), access: val("access"), mapRaw: mapRaw, map: safeUrl(mapRaw),
+      hours: lines($("hours").value), closed: val("closed"),
+      tel: val("tel"), telD: telDigits(val("tel")),
+      resRaw: resRaw, res: safeUrl(resRaw), resLabel: val("resLabel") || "予約する", resNote: val("resNote"),
+      menus: menus, menuNote: val("menuNote"), links: links
+    };
+  }
+
+  // ---- build (exposed for tests) ----
+  function missing(d){
+    var m = [];
+    if (!d.name) m.push("店名");
+    if (!d.addr) m.push("住所");
+    if (!d.hours.length) m.push("営業時間");
+    if (!d.closed) m.push("定休日");
+    if (!d.tel && !d.res && !d.resNote) m.push("予約・問い合わせの方法");
+    if (!d.menus.length) m.push("メニュー・料金");
+    return m;
+  }
+  function badUrls(d){
+    var b = [];
+    if (d.mapRaw && !d.map) b.push("地図のURL");
+    if (d.resRaw && !d.res) b.push("予約ページのURL");
+    d.links.forEach(function(l){ if (!l.url) b.push(l.name + "のURL"); });
+    return b;
+  }
+  function buildText(d){
+    var t = [];
+    t.push(d.name);
+    if (d.intro) t.push("", d.intro);
+    if (d.hours.length || d.closed){
+      t.push("", "【営業時間】");
+      d.hours.forEach(function(h){ t.push(h); });
+      if (d.closed) t.push("定休日：" + d.closed);
+    }
+    if (d.menus.length){
+      t.push("", "【メニュー・料金】");
+      d.menus.forEach(function(m){ t.push(m.price ? m.name + "　" + m.price : m.name); });
+      if (d.menuNote) t.push(d.menuNote);
+    }
+    if (d.tel || d.res || d.resNote){
+      t.push("", "【ご予約・お問い合わせ】");
+      if (d.resNote) t.push(d.resNote);
+      if (d.tel) t.push("電話：" + d.tel);
+      if (d.res) t.push(d.resLabel + "：" + d.res);
+    }
+    if (d.addr || d.access){
+      t.push("", "【アクセス】");
+      if (d.addr) t.push(d.addr);
+      if (d.access) t.push(d.access);
+      if (d.map) t.push("地図：" + d.map);
+    }
+    var ls = d.links.filter(function(l){ return l.url; });
+    if (ls.length){
+      t.push("", "【SNS・リンク】");
+      ls.forEach(function(l){ t.push(l.name + "：" + l.url); });
+    }
+    return t.join("\n");
+  }
+  function nl2br(s){ return esc(s).replace(/\r?\n/g, "<br>"); }
+  function buildHtml(d){
+    var name = d.name || "お店の名前";
+    var desc = (d.intro || [d.name, d.addr, d.hours[0]].filter(Boolean).join("｜")).replace(/\s+/g, " ").slice(0, 120);
+    var css = "*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,'Hiragino Sans','Noto Sans JP',sans-serif;line-height:1.8;color:#222;background:#fff}" +
+      "main,header,footer{max-width:640px;margin:0 auto;padding:0 20px}header{padding-top:32px;padding-bottom:8px}h1{font-size:28px;line-height:1.4;margin:0 0 8px}" +
+      "h2{font-size:19px;margin:36px 0 8px;padding-bottom:4px;border-bottom:2px solid #222}p{margin:0 0 8px}" +
+      ".btns{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}.btn{display:inline-block;padding:12px 20px;border-radius:999px;background:#222;color:#fff;text-decoration:none;font-weight:700}" +
+      ".btn.sub{background:#fff;color:#222;border:2px solid #222}table{width:100%;border-collapse:collapse}td{padding:8px 4px;border-bottom:1px solid #ddd;vertical-align:top}" +
+      "td.p{text-align:right;white-space:nowrap}ul{padding-left:1.2em}a{color:#1a56a0}footer{padding-top:32px;padding-bottom:40px;font-size:13px;color:#666}";
+    var h = [];
+    h.push("<!doctype html>", '<html lang="ja">', "<head>", '<meta charset="utf-8">', '<meta name="viewport" content="width=device-width, initial-scale=1">',
+      "<title>" + esc(name) + "</title>");
+    if (desc) h.push('<meta name="description" content="' + esc(desc) + '">');
+    h.push("<style>" + css + "</style>");
+    var ld = {"@context": "https://schema.org", "@type": "LocalBusiness", "name": name};
+    if (d.intro) ld.description = d.intro;
+    if (d.addr) ld.address = d.addr;
+    if (d.tel) ld.telephone = d.tel;
+    if (d.hours.length) ld.openingHours = d.hours.join(" / ");
+    h.push('<script type="application/ld+json">' + JSON.stringify(ld).replace(/</g, "\\u003c") + "<\/script>");
+    h.push("</head>", "<body>", "<header>", "<h1>" + esc(name) + "</h1>");
+    if (d.intro) h.push("<p>" + nl2br(d.intro) + "</p>");
+    if (d.res || d.telD){
+      h.push('<p class="btns">' + (d.res ? '<a class="btn" href="' + esc(d.res) + '">' + esc(d.resLabel) + "</a>" : "") +
+        (d.telD ? '<a class="btn' + (d.res ? " sub" : "") + '" href="tel:' + esc(d.telD) + '">電話する</a>' : "") + "</p>");
+    }
+    h.push("</header>", "<main>");
+    if (d.hours.length || d.closed){
+      h.push("<section>", "<h2>営業時間</h2>");
+      if (d.hours.length) h.push("<p>" + d.hours.map(esc).join("<br>") + "</p>");
+      if (d.closed) h.push("<p>定休日：" + esc(d.closed) + "</p>");
+      h.push("</section>");
+    }
+    if (d.menus.length){
+      h.push("<section>", "<h2>メニュー・料金</h2>", "<table>");
+      d.menus.forEach(function(m){ h.push("<tr><td>" + esc(m.name) + '</td><td class="p">' + esc(m.price) + "</td></tr>"); });
+      h.push("</table>");
+      if (d.menuNote) h.push("<p>" + esc(d.menuNote) + "</p>");
+      h.push("</section>");
+    }
+    if (d.tel || d.res || d.resNote){
+      h.push("<section>", "<h2>ご予約・お問い合わせ</h2>");
+      if (d.resNote) h.push("<p>" + nl2br(d.resNote) + "</p>");
+      if (d.tel) h.push("<p>電話：" + (d.telD ? '<a href="tel:' + esc(d.telD) + '">' + esc(d.tel) + "</a>" : esc(d.tel)) + "</p>");
+      if (d.res) h.push('<p><a href="' + esc(d.res) + '">' + esc(d.resLabel) + "（予約ページ）</a></p>");
+      h.push("</section>");
+    }
+    if (d.addr || d.access){
+      h.push("<section>", "<h2>アクセス</h2>");
+      if (d.addr) h.push("<p>" + esc(d.addr) + "</p>");
+      if (d.access) h.push("<p>" + esc(d.access) + "</p>");
+      if (d.map) h.push('<p><a href="' + esc(d.map) + '">地図を見る</a></p>');
+      h.push("</section>");
+    }
+    var ls = d.links.filter(function(l){ return l.url; });
+    if (ls.length){
+      h.push("<section>", "<h2>SNS・リンク</h2>", "<ul>");
+      ls.forEach(function(l){ h.push('<li><a href="' + esc(l.url) + '">' + esc(l.name) + "</a></li>"); });
+      h.push("</ul>", "</section>");
+    }
+    h.push("</main>", "<footer><p>最終更新：" + today() + "</p></footer>", "</body>", "</html>");
+    return h.join("\n");
+  }
+
+  // ---- render ① ----
+  var lastText = "", lastHtml = "", timer = 0;
+  function update(){
+    var d = read();
+    var m = missing(d), b = badUrls(d), el = $("missing");
+    var msg = [];
+    if (m.length) msg.push("まだ入っていない項目：" + m.join("・") + "（なくても作れます）");
+    if (b.length) msg.push("URLとして読めないので外しました：" + b.join("・") + "（https:// から入れてください）");
+    el.textContent = msg.length ? msg.join(" ／ ") : "引っ越し先に必要な項目がそろっています。";
+    el.className = "missing" + (msg.length ? "" : " ok");
+    if (!d.name){
+      lastText = lastHtml = "";
+      $("outText").value = ""; $("outText").placeholder = "店名を入れると、ここに文章ができます。";
+      $("textCount").textContent = "";
+      $("preview").srcdoc = '<p style="font-family:system-ui;color:#888;padding:16px">店名を入れると、ここに見本が出ます。</p>';
+      ["copyText", "copyHtml", "dlHtml"].forEach(function(id){ $(id).disabled = true; });
+      return;
+    }
+    lastText = buildText(d); lastHtml = buildHtml(d);
+    $("outText").value = lastText;
+    $("textCount").textContent = len(lastText).toLocaleString("ja-JP") + "文字";
+    clearTimeout(timer);
+    timer = setTimeout(function(){ $("preview").srcdoc = lastHtml; }, 250);
+    ["copyText", "copyHtml", "dlHtml"].forEach(function(id){ $(id).disabled = false; });
+  }
+  $("form").addEventListener("input", update);
+
+  function copy(text, btn){
+    if (!text) return;
+    var label = btn.textContent;
+    function done(){ btn.textContent = "コピーしました"; setTimeout(function(){ btn.textContent = label; }, 1500); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+    else fallback();
+    function fallback(){ var t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select(); try { document.execCommand("copy"); done(); } catch(e){} document.body.removeChild(t); }
+  }
+  $("copyText").addEventListener("click", function(){ copy(lastText, this); });
+  $("copyHtml").addEventListener("click", function(){ copy(lastHtml, this); });
+  $("dlHtml").addEventListener("click", function(){
+    if (!lastHtml) return;
+    var blob = new Blob([lastHtml], {type: "text/html;charset=utf-8"});
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = "index.html";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+  });
+
+  // ---- ② notice ----
+  function buildNotice(o){
+    var who = o.name ? o.name + "の" : "";
+    var s;
+    if (o.kind === "moved") s = who + "ホームページは、新しいサイトに引っ越しました。最新の営業時間やご予約は、新しいサイトをご覧ください。";
+    else if (o.kind === "soon"){
+      var when = "";
+      if (o.date){ var p = o.date.split("-"); when = Number(p[1]) + "月" + Number(p[2]) + "日に"; }
+      s = who + "ホームページは、" + (when || "近日中に") + "新しいサイトへ引っ越します。このサイトは2027年3月31日で見られなくなります。";
+    } else s = who + "ホームページは、2027年3月31日で見られなくなります。新しいサイトは準備中です。" + (o.contact ? "当面のご連絡は" + o.contact + "でお願いします。" : "");
+    if (o.extra) s += o.extra;
+    return s;
+  }
+  var BUTTONS = ["移設後のサイトはこちら", "詳しくはこちら", "SNSはこちら", "お問い合わせ"];
+  function pickButton(kind, choice){
+    if (choice === "none") return "";
+    if (BUTTONS.indexOf(choice) >= 0) return choice;
+    return kind === "moved" ? BUTTONS[0] : kind === "soon" ? BUTTONS[1] : BUTTONS[2];
+  }
+  function updateNotice(){
+    var k = document.querySelector("input[name=kind]:checked").value;
+    $("fDate").hidden = k !== "soon";
+    $("fContact").hidden = k !== "tbd";
+    $("nUrlLabel").textContent = k === "tbd" ? "SNSなど、当面見てほしいページのURL" : "新しいサイトのURL";
+    var o = {kind: k, name: val("nName"), date: $("nDate").value, contact: val("nContact"), extra: val("nExtra")};
+    var s = buildNotice(o), n = len(s), url = safeUrl(val("nUrl"));
+    var btn = pickButton(k, $("nBtn").value);
+    $("nOut").value = s;
+    var c = $("nCount");
+    c.textContent = n + " / " + NOTICE_MAX + "文字" + (n > NOTICE_MAX ? "（" + (n - NOTICE_MAX) + "文字多い）" : "");
+    c.className = "count" + (n > NOTICE_MAX ? " over" : "");
+    $("copyNotice").disabled = false;
+    $("nUrlBox").hidden = !url;
+    $("nUrlShow").textContent = url;
+    $("nBtnShow").textContent = btn || "ボタンを出さない";
+    $("nWarn").textContent = (/\r|\n/.test(s) || /[\uD800-\uDFFF]/.test(s) ? "（いまの文には改行か絵文字が入っています）" : "") +
+      (/https?:|www\./i.test(s) ? "（文の中のURLはリンクになりません。ボタンの行き先に入れてください）" : "");
+    window.__ownd.notice = s; window.__ownd.button = url ? (btn || "") : "";
+  }
+  $("nform").addEventListener("input", updateNotice);
+  $("nform").addEventListener("change", updateNotice);
+  $("copyNotice").addEventListener("click", function(){ copy($("nOut").value, this); });
+
+  // ---- ③ steps ----
+  var $steps = $("steps");
+  function progress(){
+    var all = $steps.querySelectorAll("input"), on = $steps.querySelectorAll("input:checked");
+    $("progress").textContent = on.length + " / " + all.length + " 済み";
+  }
+  $steps.addEventListener("change", progress);
+
+  window.__ownd = {read: read, buildText: buildText, buildHtml: buildHtml, buildNotice: buildNotice, pickButton: pickButton, missing: missing, safeUrl: safeUrl, update: update, updateNotice: updateNotice};
+  update(); updateNotice(); progress();
+})();
+</script>
+</body>
+</html>
