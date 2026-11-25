@@ -104,6 +104,22 @@ section{padding:88px 0}
 .web-mini p{margin:0;color:var(--ink-soft);font-size:15px}
 @media (max-width:860px){.web-mini{grid-template-columns:1fr}}
 
+/* apps */
+#apps{padding-top:24px}
+.app{display:grid;grid-template-columns:auto 1fr;gap:28px;background:var(--sheet);border:2px solid var(--ink);border-radius:10px;padding:30px}
+.app-icon{width:96px;height:96px;border-radius:22px;box-shadow:0 8px 20px -12px rgba(27,42,74,.5)}
+.app .q{font-family:"Klee One",cursive;font-weight:600;font-size:16px;color:var(--ink-soft);margin:0 0 4px}
+.app h3{margin:0 0 8px;font-size:26px;font-weight:900}
+.app h3 .tag{position:static;display:inline-block;vertical-align:middle;margin-left:8px}
+.app .lead{margin:0 0 14px;color:var(--ink-soft)}
+.app-feat{list-style:none;margin:0 0 18px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 28px;max-width:44em}
+@media (max-width:760px){.app-feat{grid-template-columns:1fr}}
+.app-feat li{position:relative;padding-left:22px;font-size:14.5px}
+.app-feat li::before{content:"";position:absolute;left:2px;top:.55em;width:10px;height:6px;border-left:2.5px solid var(--check);border-bottom:2.5px solid var(--check);transform:rotate(-45deg)}
+.app .note-s{font-size:13px;color:var(--ink-soft);margin:14px 0 0}
+.app .note-s a{color:var(--ink)}
+@media (max-width:600px){.app{grid-template-columns:1fr;gap:16px;padding:24px 20px}.app-icon{width:72px;height:72px;border-radius:16px}}
+
 /* products */
 #products{background:var(--sheet)}
 .groups{display:grid;gap:0}
@@ -200,6 +216,7 @@ footer{padding:40px 0 56px;font-size:13px;color:var(--ink-soft)}
     <a class="logo" href="#top" aria-label="こまりごとラボ トップへ"><span>こまりごと</span>ラボ</a>
     <nav aria-label="ページ内">
       <a href="#tools">ツール</a>
+      <a href="#apps">アプリ</a>
       <a href="request/">困りごとを教える</a>
       <a href="#products">テンプレート</a>
       <a href="#about">こまりごとラボについて</a>
@@ -240,6 +257,11 @@ footer{padding:40px 0 56px;font-size:13px;color:var(--ink-soft)}
             <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span class="w">飲み会の割り勘、端数をどうしよう</span>
             <span class="fix"><a href="tools/warikan/">傾斜も端数もすぐわかる「割り勘計算」</a></span>
+          </li>
+          <li>
+            <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="w">保育園の準備、毎朝なにか忘れてしまう</span>
+            <span class="fix"><a href="#apps">準備チェックつきの育児記録アプリ「こそだてノート」</a></span>
           </li>
         </ul>
       </div>
@@ -344,6 +366,34 @@ footer{padding:40px 0 56px;font-size:13px;color:var(--ink-soft)}
   </div>
 </section>
 
+<section id="apps" aria-labelledby="apps-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="apps-h">毎日つかうなら、<br>スマホのアプリ</h2>
+      <p>ホーム画面に追加すると、アプリのように使えます。インストールも登録もいりません。入力した内容はお使いの端末の中だけに保存されます。</p>
+    </div>
+    <div class="app">
+      <img class="app-icon" src="assets/apps/kosodate-note.png" width="96" height="96" alt="こそだてノートのアイコン">
+      <div>
+        <p class="q">「きょうだいの記録と保育園の準備、ひとりで抱えきれない」</p>
+        <h3>こそだてノート<span class="tag">無料テスト版</span></h3>
+        <p class="lead">きょうだいの育児記録と保育園の準備チェックを、ひとつのアプリに。子育て中の運営者が、自分の家で毎日使うために作りました。</p>
+        <ul class="app-feat">
+          <li>保育園の持ち物を、前の晩にチェック</li>
+          <li>授乳・睡眠・体温などをワンタップで記録</li>
+          <li>通院・予防接種などの予定とやること</li>
+          <li>身長・体重のグラフと、できたこと・思い出</li>
+        </ul>
+        <div class="btns">
+          <a class="btn primary" href="https://kosodate-note.pages.dev/">アプリを開く</a>
+          <a class="btn ghost" href="https://kosodate-note.pages.dev/privacy">プライバシーポリシー</a>
+        </div>
+        <p class="note-s">いまは無料のテスト版です。正式版はiPhoneアプリ（有料・無料お試し期間つき）として準備中です。iPhoneでは、Safariの共有ボタンから「ホーム画面に追加」してお使いください。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="products" aria-labelledby="products-h">
   <div class="wrap">
     <div class="sec-head">
@@ -418,7 +468,7 @@ footer{padding:40px 0 56px;font-size:13px;color:var(--ink-soft)}
       </ul>
       <dl class="info">
         <dt>屋号</dt><dd>こまりごとラボ（旧 MMCreate）</dd>
-        <dt>事業内容</dt><dd>暮らしと仕事の小さな悩みを解決するWebツールの制作・公開<br>スプレッドシートテンプレートの制作・販売<br>Webサイト制作<br>iPhoneアプリの開発</dd>
+        <dt>事業内容</dt><dd>暮らしと仕事の小さな悩みを解決するWebツールの制作・公開<br>スプレッドシートテンプレートの制作・販売<br>Webサイト制作<br>スマホで使えるWebアプリ・iPhoneアプリの開発</dd>
         <dt>所在地</dt><dd>福岡県福岡市南区</dd>
         <dt>連絡先</dt><dd><a href="mailto:mmcreate7@gmail.com">mmcreate7@gmail.com</a></dd>
       </dl>
