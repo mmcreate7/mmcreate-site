@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>掲載費の元が取れるか計算｜新規1人あたりの費用と、元が取れる人数がすぐわかる｜こまりごとラボ</title>
+<meta name="description" content="集客サイト・予約サイトの掲載費が元を取れているかを計算する無料ツール。毎月の費用と新規のお客様の人数、客単価を入れると、新規1人あたりの費用、元が取れる人数、今月の差し引きを、初回だけの場合とその後の来店も入れた見込みで並べて出します。媒体を3つまで比較。登録不要・入力内容は送信しません。">
+<meta property="og:title" content="掲載費の元が取れるか計算｜新規1人あたりの費用と、元が取れる人数">
+<meta property="og:description" content="集客サイト・予約サイトの掲載費が元を取れているかを計算する無料ツール。新規1人あたりの費用、元が取れる人数、今月の差し引きを、媒体を3つまで並べて出せます。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="こまりごとラボ">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://komarigoto-lab.pages.dev/tools/keisaihi/">
+<link rel="canonical" href="https://komarigoto-lab.pages.dev/tools/keisaihi/">
+<meta name="theme-color" content="#F4F7F9">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/tool.css">
+<style>
+.sec{border-top:1px dashed var(--line);margin-top:16px;padding-top:14px}
+.sec:first-child{border-top:0;margin-top:0;padding-top:0}
+.sec-h{font-size:16px;font-weight:900;margin:0 0 8px;display:flex;align-items:center;gap:8px}
+.sec-h .no{flex:none;display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--paper);font-size:13px}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.g2 .full{grid-column:1 / -1}
+.k{font-size:12.5px;font-weight:700;color:var(--ink-soft);display:block;margin-bottom:2px;line-height:1.4}
+.g2 input[type=number]{min-height:44px;padding:8px 10px}
+.media{border:1.5px solid var(--line);border-radius:12px;padding:10px;background:#FBFCFD;margin-bottom:8px}
+.media .nm{display:flex;align-items:center;gap:4px;margin-bottom:6px}
+.media .nm input{min-height:38px;padding:4px 8px;font-weight:700;font-size:14px}
+.rm{flex:none;font:inherit;border:0;background:none;color:var(--ink-soft);font-size:20px;line-height:1;cursor:pointer;padding:4px 8px;border-radius:8px;min-height:36px}
+.rm:hover{background:#EEF2F6;color:var(--warn)}
+.add{font:inherit;font-weight:700;font-size:14px;border:1.5px dashed var(--ink);background:none;border-radius:10px;padding:10px;cursor:pointer;width:100%;min-height:46px;color:var(--ink)}
+.add:hover{background:#EEF2F6}
+.res{background:var(--sheet);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:10px}
+.res:first-child{margin-top:0}
+.res .name{font-weight:900;word-break:break-all;margin:0 0 6px}
+.res .hero{background:#FFF6C8;border:2px solid var(--ink);border-radius:10px;padding:8px 12px}
+.res .hero .r-big{font-size:clamp(26px,7.5vw,34px)}
+.res ul{list-style:none;margin:8px 0 0;padding:0;font-size:14px;font-variant-numeric:tabular-nums}
+.res li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:0 8px;padding:3px 0;border-bottom:1px dotted var(--line)}
+.res li span:first-child{flex:1 1 11em}
+.res li small{display:block;font-size:11.5px;font-weight:500}
+.res li:last-child{border-bottom:0}
+.res li span:last-child{white-space:nowrap;text-align:right;font-weight:700}
+.res li.sub{color:var(--ink-soft);font-size:13px}
+.res li.sub span:last-child{font-weight:500}
+.plus{color:var(--check)}
+.minus{color:var(--warn)}
+.res .err{font-size:13.5px;margin:0}
+.cmp-h{margin:16px 0 4px;font-weight:900}
+.cmp{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums;background:var(--sheet)}
+.cmp th,.cmp td{border:1px solid var(--line);padding:6px 8px;text-align:right;vertical-align:top}
+.cmp th{background:#EEF2F6;text-align:left;font-weight:700}
+.cmp td.n{text-align:left;font-weight:700;word-break:break-all}
+.caution{margin-top:14px;font-size:13.5px;border-left:4px solid var(--warn);padding:8px 12px;background:#FFF;border-radius:0 8px 8px 0}
+.caution p{margin:0}
+.caution p + p{margin-top:4px}
+.formula{font-size:14px;background:var(--sheet);border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0 0;font-variant-numeric:tabular-nums}
+</style>
+<script src="../../assets/analytics.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="site-head">
+    <a class="logo" href="../../" aria-label="こまりごとラボ トップへ"><span>こまりごと</span>ラボ</a>
+    <nav><a href="../../#tools">ツール一覧</a></nav>
+  </header>
+  <p class="crumb"><a href="../../">トップ</a> ／ <a href="../../#tools">ツール</a> ／ 掲載費の元が取れるか計算</p>
+
+  <main class="layout">
+    <div class="tool-col">
+      <p class="worry">「<mark>掲載費、ちゃんと元が取れてる？</mark>」</p>
+      <h1>掲載費の元が取れるか計算</h1>
+      <p class="lead">集客サイト・予約サイトに毎月払っている費用と、そこから来た新規のお客様の人数・客単価を入れると、新規1人あたりの費用と「何人来れば元が取れるか」がわかります。初回だけで見た場合と、その後の来店も入れた見込みを並べて出します。</p>
+
+      <form class="card" id="form" autocomplete="off" onsubmit="return false">
+        <div class="sec">
+          <h2 class="sec-h"><span class="no">1</span>お店の数字</h2>
+          <div class="g2">
+            <div class="full"><label class="k" for="price">ふだんの客単価（1回）</label><div class="inline"><input type="number" id="price" inputmode="numeric" min="0" step="1" placeholder="例）6000"><span class="unit">円</span></div></div>
+            <div><label class="k" for="costPct">来店ごとにかかる費用の割合</label><div class="inline"><input type="number" id="costPct" inputmode="decimal" min="0" max="100" step="0.1" value="0"><span class="unit">%</span></div></div>
+            <div><label class="k" for="visits">新規の方が平均で来る回数</label><div class="inline"><input type="number" id="visits" inputmode="decimal" min="1" max="100" step="0.1" value="1"><span class="unit">回</span></div></div>
+          </div>
+          <p class="hint">「来店ごとにかかる費用」は、材料・消耗品・カード決済の手数料など、1回の売上のうち出ていく分の目安です。分からなければ0のままで構いません。</p>
+          <p class="hint">「平均で来る回数」は初回を含めた回数です。分からなければ1のまま（初回だけで計算）にしてください。</p>
+        </div>
+
+        <div class="sec">
+          <h2 class="sec-h"><span class="no">2</span>媒体ごとの数字（1か月分）</h2>
+          <div id="medias"></div>
+          <button type="button" class="add" id="addMedia">＋ 比べる媒体を追加</button>
+          <p class="hint">費用と客単価は、税込か税抜のどちらかにそろえて入れてください。どのお客様を「その媒体から来た」と数えるかは、お店の記録に合わせて決めてください。</p>
+        </div>
+
+        <div class="result" id="result" aria-live="polite"></div>
+
+        <div class="caution">
+          <p><b>この計算は、入れた数字から出した目安です。</b>掲載を続けるか・やめるかの判断や、どの集客方法がよいかをお伝えするものではありません。</p>
+          <p>「その後の来店も入れた見込み」は、平均の来店回数から出したこれからの見込みです。実際に来店があるかどうかは分かりません。</p>
+        </div>
+      </form>
+    </div>
+
+    <aside class="side">
+      <h2>使い方</h2>
+      <dl>
+        <dt>1. お店の数字</dt>
+        <dd>ふだんの客単価と、分かれば来店ごとにかかる費用の割合、新規の方が平均で来る回数を入れます。</dd>
+        <dt>2. 媒体ごとの数字</dt>
+        <dd>その媒体に毎月払っている費用と、その月に来た新規のお客様の人数を入れます。予約1件ごとの手数料や、初回だけ安い料金（クーポン価格など）があれば、それも入れます。</dd>
+        <dt>3. 比べる</dt>
+        <dd>「＋比べる媒体を追加」で3つまで並べられます。2つ以上入れると、下に比較表が出ます。順位やおすすめは出しません。</dd>
+      </dl>
+
+      <h2 style="margin-top:28px">計算のしかた</h2>
+      <dl>
+        <dt>新規1人あたりの費用</dt>
+        <dd class="formula">（毎月の費用＋1人ごとの費用×人数）÷ 新規の人数</dd>
+        <dt>新規1人から残るお金</dt>
+        <dd class="formula">初回だけ：初回の客単価 ×（1 − 来店ごとの費用の割合）</dd>
+        <dd class="formula">見込み：{初回の客単価＋ふだんの客単価×（平均回数−1）}×（1 − 来店ごとの費用の割合）</dd>
+        <dt>元が取れる人数</dt>
+        <dd class="formula">毎月の費用 ÷（1人から残るお金 − 1人ごとの費用）を切り上げ</dd>
+        <dt>今月の差し引き</dt>
+        <dd class="formula">1人から残るお金 × 新規の人数 −（毎月の費用＋1人ごとの費用×人数）</dd>
+        <dd>金額は1円未満を四捨五入して表示します。</dd>
+      </dl>
+
+      <h2 style="margin-top:28px">「元が取れる」の意味</h2>
+      <dl>
+        <dd>このツールでは、その媒体にかかった費用を、その媒体から来た新規のお客様の売上（来店ごとにかかる費用を引いた額）でまかなえることを「元が取れる」と呼んでいます。家賃・人件費・ご自身の作業時間などは入れていません。</dd>
+      </dl>
+
+      <h2 style="margin-top:28px">このツールで扱わないこと</h2>
+      <dl>
+        <dd>お店全体のもうけ、税金の計算、半年・1年などの契約期間の総額や解約の扱い、特定のサービスの料金プランの比較は扱いません。契約の内容は、各サービスの案内や契約書でご確認ください。</dd>
+      </dl>
+      <p class="note-s">結果は入力した数字にもとづく目安です。入力した内容は、お使いの端末の中だけで計算し、どこにも送信・保存しません（ページを閉じると消えます）。</p>
+
+      <section class="related" aria-labelledby="rel-h">
+        <h2 id="rel-h">ほかのツール</h2>
+        <ul>
+          <li><a href="../calculator/">かんたん電卓 <span>税込・税抜、%引きもボタンひとつ</span></a></li>
+          <li><a href="../point/">ポイント還元込みの比較 <span>どっちが安い？</span></a></li>
+          <li><a href="../kaji-anbun/">家事按分の計算 <span>家賃・光熱費の経費の割合</span></a></li>
+        </ul>
+      </section>
+    </aside>
+  </main>
+</div>
+
+<footer><div class="wrap"><a href="../../">こまりごとラボ トップ</a><a href="../../#tools">ほかのツール</a>© 2026 こまりごとラボ</div></footer>
+
+<script>
+/*CORE-START*/
+var KEISAI = (function(){
+  "use strict";
+  var EPS = 1e-9;
+  function num(v){ v = String(v == null ? "" : v).replace(/[０-９．]/g, function(c){ return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); }).replace(/[,，円%％人回\s]/g, ""); return v === "" ? NaN : Number(v); }
+  // shop: {price, costPct, visits}  media: {fixed, perHead, heads, firstPrice}
+  function checkShop(s){
+    if (isNaN(s.price)) return {empty: true};
+    if (s.price < 0) return {error: "客単価は0円以上で入れてください。"};
+    var m = isNaN(s.costPct) ? 0 : s.costPct;
+    if (m < 0 || m > 100) return {error: "来店ごとにかかる費用の割合は0〜100%で入れてください。"};
+    var n = isNaN(s.visits) ? 1 : s.visits;
+    if (n < 1 || n > 100) return {error: "平均で来る回数は1〜100回で入れてください（初回を含みます）。"};
+    return {price: s.price, costPct: m, visits: n};
+  }
+  function calcMedia(shop, md){
+    if (isNaN(md.fixed) && isNaN(md.heads)) return {empty: true};
+    if (isNaN(md.fixed)) return {error: "毎月かかる費用を入れてください（なければ0）。"};
+    if (isNaN(md.heads)) return {error: "新規のお客様の人数を入れてください。"};
+    if (md.fixed < 0) return {error: "毎月かかる費用は0円以上で入れてください。"};
+    if (md.heads < 0 || Math.floor(md.heads) !== md.heads) return {error: "新規のお客様の人数は0以上の整数で入れてください。"};
+    var c = isNaN(md.perHead) ? 0 : md.perHead;
+    if (c < 0) return {error: "1人ごとにかかる費用は0円以上で入れてください。"};
+    var p1 = isNaN(md.firstPrice) ? shop.price : md.firstPrice;
+    if (p1 < 0) return {error: "初回の客単価は0円以上で入れてください。"};
+    var keep = (100 - shop.costPct) / 100;
+    var F = md.fixed, k = md.heads;
+    var total = F + c * k;
+    function view(g){
+      var be = (g - c > EPS) ? Math.max(0, Math.ceil(F / (g - c) - EPS)) : null; // null = 人数では元が取れない
+      return {gain: g, breakEven: be, net: g * k - total};
+    }
+    var first = view(p1 * keep);
+    var repeat = shop.visits > 1 ? view((p1 + shop.price * (shop.visits - 1)) * keep) : null;
+    return {total: total, perHead: c, heads: k, firstPrice: p1, cpa: k > 0 ? total / k : null, first: first, repeat: repeat};
+  }
+  function round(n){ return Math.round(n + (n >= 0 ? EPS : -EPS)); }
+  return {num: num, checkShop: checkShop, calcMedia: calcMedia, round: round};
+})();
+if (typeof module !== "undefined") module.exports = KEISAI;
+/*CORE-END*/
+
+(function(){
+  "use strict";
+  if (typeof document === "undefined") return;
+  var $ = function(id){ return document.getElementById(id); };
+  var K = KEISAI, MAX = 3, seq = 0;
+  function yen(n){ return K.round(n).toLocaleString("ja-JP"); }
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  var $medias = $("medias");
+
+  function addMedia(){
+    seq++; var id = "m" + seq;
+    var d = document.createElement("div");
+    d.className = "media";
+    d.innerHTML =
+      '<div class="nm"><input type="text" class="m-name" maxlength="20" aria-label="媒体の名前（任意）" placeholder="媒体の名前（任意・例：予約サイトA）"><button type="button" class="rm" aria-label="この媒体を削除">×</button></div>' +
+      '<div class="g2">' +
+        '<div class="full"><label class="k" for="' + id + 'f">毎月かかる費用（掲載費・オプションなど）</label><div class="inline"><input type="number" class="m-fixed" id="' + id + 'f" inputmode="numeric" min="0" step="1" placeholder="例）30000"><span class="unit">円</span></div></div>' +
+        '<div><label class="k" for="' + id + 'h">その媒体から来た新規の方（月）</label><div class="inline"><input type="number" class="m-heads" id="' + id + 'h" inputmode="numeric" min="0" step="1" placeholder="例）8"><span class="unit">人</span></div></div>' +
+        '<div><label class="k" for="' + id + 'c">新規1人ごとにかかる費用（任意）</label><div class="inline"><input type="number" class="m-per" id="' + id + 'c" inputmode="numeric" min="0" step="1" placeholder="なければ空欄"><span class="unit">円</span></div></div>' +
+        '<div class="full"><label class="k" for="' + id + 'p">初回の客単価（任意・クーポン価格など）</label><div class="inline"><input type="number" class="m-first" id="' + id + 'p" inputmode="numeric" min="0" step="1" placeholder="空欄ならふだんの客単価"><span class="unit">円</span></div></div>' +
+      '</div>';
+    $medias.appendChild(d);
+    relabel();
+    return d;
+  }
+  function relabel(){
+    var n = $medias.children.length;
+    $("addMedia").hidden = n >= MAX;
+    $medias.querySelectorAll(".rm").forEach(function(b){ b.hidden = n <= 1; });
+  }
+  function readMedias(){
+    return Array.prototype.map.call($medias.children, function(d, i){
+      var v = function(c){ return K.num(d.querySelector(c).value); };
+      return {name: d.querySelector(".m-name").value.trim() || ("媒体" + (i + 1)), fixed: v(".m-fixed"), heads: v(".m-heads"), perHead: v(".m-per"), firstPrice: v(".m-first")};
+    });
+  }
+  function netLine(label, net, proj){
+    if (K.round(net) >= 0) return '<li><span>' + label + '</span><span class="plus">＋' + yen(net) + '円<small>' + (proj ? "見込みでは元が取れる計算" : "元が取れている計算") + '</small></span></li>';
+    return '<li><span>' + label + '</span><span class="minus">−' + yen(-net) + '円<small>' + (proj ? "見込みでも、あと" : "元が取れるまで、あと") + yen(-net) + '円</small></span></li>';
+  }
+  function beText(be){ return be === null ? "人数では元が取れない" : be + "人"; }
+  function draw(){
+    var el = $("result");
+    var shop = K.checkShop({price: K.num($("price").value), costPct: K.num($("costPct").value), visits: K.num($("visits").value)});
+    if (shop.empty){ el.innerHTML = '<p class="r-label" style="margin:0">ふだんの客単価と、媒体の費用・人数を入れると、ここに結果が出ます。</p>'; return; }
+    if (shop.error){ el.innerHTML = '<p class="err"></p>'; el.firstChild.textContent = shop.error; return; }
+    var list = readMedias().map(function(md){ var r = K.calcMedia(shop, md); r.name = md.name; return r; });
+    var shown = list.filter(function(r){ return !r.empty; });
+    if (!shown.length){ el.innerHTML = '<p class="r-label" style="margin:0">媒体の毎月の費用と、新規の方の人数を入れると、ここに結果が出ます。</p>'; return; }
+    var html = "";
+    shown.forEach(function(r){
+      html += '<div class="res"><p class="name">' + esc(r.name) + '</p>';
+      if (r.error){ html += '<p class="err">' + esc(r.error) + '</p></div>'; return; }
+      html += '<div class="hero"><div class="r-label">新規1人あたりの費用</div>' +
+        (r.cpa === null ? '<div class="r-big" style="font-size:20px">計算できません（新規0人）</div>' : '<div class="r-big">' + yen(r.cpa) + '<small>円</small></div>') + '</div>';
+      html += '<ul><li class="sub"><span>今月この媒体にかかった費用</span><span>' + yen(r.total) + '円</span></li>' +
+        '<li class="sub"><span>新規1人から残るお金（初回だけ）</span><span>' + yen(r.first.gain) + '円</span></li>' +
+        '<li><span>元が取れる新規の人数（初回だけ）</span><span>' + beText(r.first.breakEven) + '</span></li>' +
+        netLine("今月の差し引き（初回だけ）", r.first.net);
+      if (r.repeat){
+        html += '<li class="sub"><span>新規1人から残るお金（見込み）</span><span>' + yen(r.repeat.gain) + '円</span></li>' +
+          '<li><span>元が取れる新規の人数（見込み）</span><span>' + beText(r.repeat.breakEven) + '</span></li>' +
+          netLine("差し引き（その後の来店も入れた見込み）", r.repeat.net, true);
+      }
+      html += '</ul>';
+      if (r.first.breakEven === null) html += '<p class="hint">新規1人ごとにかかる費用が、1人から残るお金（初回だけ）以上になっています。初回だけでは、人数が増えるほど差が広がる計算です。</p>';
+      html += '</div>';
+    });
+    var ok = shown.filter(function(r){ return !r.error; });
+    if (ok.length >= 2){
+      var rep = ok.some(function(r){ return r.repeat; });
+      html += '<p class="cmp-h">並べて比べる（順位はつけていません）</p><div class="table-wrap"><table class="cmp"><thead><tr><th scope="col">媒体</th><th scope="col">1人あたりの費用</th><th scope="col">元が取れる人数<br>（初回だけ' + (rep ? '／見込み' : '') + '）</th><th scope="col">今月の差し引き<br>（初回だけ）</th></tr></thead><tbody>';
+      ok.forEach(function(r){
+        html += '<tr><td class="n">' + esc(r.name) + '</td><td>' + (r.cpa === null ? "—" : yen(r.cpa) + "円") + '</td><td>' + beText(r.first.breakEven) + (r.repeat ? "／" + beText(r.repeat.breakEven) : "") + '</td><td>' + (K.round(r.first.net) >= 0 ? "＋" : "−") + yen(Math.abs(r.first.net)) + '円</td></tr>';
+      });
+      html += '</tbody></table></div>';
+    }
+    el.innerHTML = html;
+  }
+  $("addMedia").addEventListener("click", function(){ var d = addMedia(); d.querySelector(".m-fixed").focus(); draw(); });
+  $medias.addEventListener("click", function(e){ if (e.target.classList.contains("rm")){ e.target.closest(".media").remove(); relabel(); draw(); } });
+  var form = $("form");
+  form.addEventListener("input", draw);
+  form.addEventListener("change", draw);
+  addMedia();
+  draw();
+})();
+</script>
+</body>
+</html>
