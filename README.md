@@ -9,7 +9,8 @@
 - 商品・価格を変えたら `index.html` の該当箇所を直して push する
 - ツールは `tools/<名前>/index.html`。新しいツールは `assets/tool.css`（共通デザイン）と `assets/analytics.js`（計測）を読み込み、トップの一覧・関連ツール・`sitemap.xml` にも追加する
 - 公開中のツール：電卓（calculator）、割り勘計算（warikan）、日数計算（days）、年齢・和暦早見表（age）、育休給付金の計算（ikukyu）、時給・月給・年収の換算（salary）、ポイント還元込みの比較（point）、文字数カウント（moji）、音声文字起こし（mojiokoshi）、やる気スイッチ診断（yaruki）、Ameba Owndの引っ越しツール（ownd-hikkoshi）、家事按分の計算（kaji-anbun）、掲載費の元が取れるか計算（keisaihi）
-- 公開中のアプリ（トップの「アプリ」セクション `#apps`）：こそだてノート（https://kosodate-note.pages.dev/ ・無料テスト版。アイコンは `assets/apps/kosodate-note.png`）。アプリ本体は別リポジトリ `mmcreate7/kosodate-note`。正式版（iOS）が出たら、この欄の説明とボタンを差し替える
+- 外部のツール（ツール一覧にカードだけ置き、別のサイトへリンク）：フリマ利益ノート（https://furima-rieki-note.pages.dev/ ・本体は別リポジトリ `mmcreate7/furima-rieki`、2026-11-26 掲載）
+- 公開中のアプリ（トップの「アプリ」セクション `#apps`）：こそだてノート（https://kosodate-note.pages.dev/ ・無料テスト版。アイコンは `assets/apps/kosodate-note.png`）。アプリ本体は別リポジトリ `mmcreate7/kosodate-note`。マイ棚（https://mytana-app.pages.dev/ ・無料テスト版。アイコンは `assets/apps/mytana.png`、本体は `mmcreate7/mytana`、LPは `apps/mytana/`。LPの画面写真は著作権に配慮し、架空のコレクションのイラストで撮影している。実物のフィギュア写真は使わない）。正式版（iOS）が出たら、この欄の説明とボタンを差し替える
 - アプリのLP：`apps/<アプリ名>/index.html`（こそだてノートは `apps/kosodate-note/`、2026-11-26 追加）。画面写真は `img/`（紹介動画の `capture.py` と同じデモデータで撮影）、OGP画像は `img/ogp.jpg`（1200×630）、紹介動画は `promo.mp4`。アプリの機能やフォームURLが変わったらLPも直す
 - 新しいアプリを載せるときは、`#apps` に `.app` のブロックを1つ追加し、アイコン（192px程度）を `assets/apps/` に置く
 - 育休給付金の上限額・下限額は毎年8月1日に変わる。厚労省「基本手当日額等の適用について」を確認し、`tools/ikukyu/index.html` の DAILY_MAX・DAILY_MIN と本文・出典の日付を更新する（次回 2027年8月）
